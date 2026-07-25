@@ -29,6 +29,9 @@ import {
 } from "lucide-react";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
+import avatar1 from "@/assets/avatar-1.webp.asset.json";
+import avatar2 from "@/assets/avatar-2.webp.asset.json";
+import avatar3 from "@/assets/avatar-3.webp.asset.json";
 import catCeramica from "@/assets/cat-ceramica.jpg";
 import catPorcelanato from "@/assets/cat-porcelanato.jpg";
 import catVinilico from "@/assets/cat-vinilico.jpg";
@@ -412,10 +415,15 @@ function Hero() {
         <Reveal className="text-white">
           <div className="mb-6 flex items-center gap-3">
             <div className="flex -space-x-2">
-              {[1, 2, 3].map((i) => (
-                <div
+              {[avatar1.url, avatar2.url, avatar3.url].map((src, i) => (
+                <img
                   key={i}
-                  className="h-10 w-10 rounded-full border-2 border-white bg-brand-cream"
+                  src={src}
+                  alt=""
+                  aria-hidden
+                  loading="lazy"
+                  decoding="async"
+                  className="h-10 w-10 rounded-full border-2 border-white object-cover bg-brand-cream"
                 />
               ))}
             </div>
@@ -427,7 +435,7 @@ function Hero() {
                     <Star key={i} className="h-3 w-3 fill-current" />
                   ))}
                 </div>
-                <span>+1950 avaliações</span>
+                <span>4.9 · 2.397 avaliações</span>
               </div>
             </div>
           </div>
@@ -440,7 +448,7 @@ function Hero() {
             <strong>entrega rápida</strong> e{" "}
             <strong>atendimento diferenciado.</strong>
           </p>
-          <div className="mt-8 space-y-3">
+          <div className="mt-8 max-w-sm space-y-3">
             {[
               { icon: DollarSign, label: "Menor Preço do Mercado" },
               { icon: Package, label: "Estoque Imediato" },
@@ -448,18 +456,18 @@ function Hero() {
             ].map(({ icon: Icon, label }) => (
               <div
                 key={label}
-                className="flex items-center gap-3 rounded-lg bg-white px-4 py-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                className="flex items-center gap-3 rounded-md bg-white px-4 py-2.5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
               >
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-whatsapp text-white">
                   <Icon className="h-5 w-5" />
                 </div>
-                <span className="font-semibold text-foreground">{label}</span>
+                <span className="text-sm font-semibold text-foreground">{label}</span>
               </div>
             ))}
           </div>
           <WhatsAppButton
             ariaLabel="Fale conosco no WhatsApp"
-            className="mt-8 w-full py-4 text-base md:w-auto"
+            className="mt-8 w-full py-4 text-base md:max-w-md"
           >
             Fale Conosco no WhatsApp
           </WhatsAppButton>
