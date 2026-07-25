@@ -474,7 +474,7 @@ function Hero() {
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative">
-          <div className="relative mx-auto w-full max-w-xs md:max-w-sm lg:max-w-md">
+          <div className="relative mx-auto w-full max-w-xs md:max-w-md lg:max-w-xl">
             <img
               src={heroVendedor}
               alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
