@@ -1061,7 +1061,7 @@ function Footer() {
           <div className="mt-1 h-1 w-10 bg-brand-orange" />
           <ul className="mt-5 space-y-3 text-sm">
             <li className="flex items-center gap-2">
-              <MessageCircle className="h-4 w-4 text-brand-orange" /> (51)
+              <WhatsAppIcon className="h-4 w-4 text-brand-orange" /> (51)
               98490-5782
             </li>
             <li className="flex items-center gap-2">
@@ -1184,7 +1184,7 @@ function FloatingWhatsApp() {
       aria-label="Fale conosco no WhatsApp"
       className="pulse-ring fixed bottom-24 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand-whatsapp text-white shadow-xl transition hover:scale-110 md:bottom-6"
     >
-      <MessageCircle className="h-7 w-7" />
+      <WhatsAppIcon className="h-7 w-7" />
     </a>
   );
 }
@@ -1229,7 +1229,7 @@ function MobileCTABar() {
           rel="noopener noreferrer"
           className="flex flex-[2] items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white shadow-md"
         >
-          <MessageCircle className="h-4 w-4" /> Fale no WhatsApp
+          <WhatsAppIcon className="h-4 w-4" /> Fale no WhatsApp
         </a>
       </div>
     </div>
