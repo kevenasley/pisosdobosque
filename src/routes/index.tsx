@@ -201,6 +201,7 @@ const categoriesData = [
     desc: "Revestimentos cerâmicos: praticidade, resistência e elegância para sua cozinha, banheiro ou área externa. Opções incríveis com preços que cabem no seu bolso, só na Pisos do Bosque!",
     image: catCeramica,
     products: ceramica,
+    bg: "bg-brand-orange/10",
   },
   {
     key: "porcelanato",
@@ -209,6 +210,7 @@ const categoriesData = [
     desc: "Beleza, resistência e fácil manutenção para qualquer ambiente. Alta qualidade e preços incríveis, só na Pisos do Bosque.",
     image: catPorcelanato,
     products: porcelanato,
+    bg: "bg-brand-green/10",
   },
   {
     key: "vinilicos",
@@ -217,6 +219,7 @@ const categoriesData = [
     desc: "Conforto, sofisticação e praticidade. Ideal para quartos, salas e escritórios com aparência de madeira e instalação rápida.",
     image: catVinilico,
     products: vinilicos,
+    bg: "bg-amber-100/50",
   },
 ] as const;
 
@@ -505,7 +508,7 @@ function Hero() {
 function Stats() {
   const items = [
     { icon: Award, value: "20+", label: "Anos de mercado" },
-    { icon: Users, value: "2.171", label: "Avaliações no Google" },
+    { icon: Users, value: "2.397", label: "Avaliações no Google" },
     { icon: Package, value: "1000+", label: "Itens em estoque" },
     { icon: Truck, value: "Toda RS", label: "Entregamos na região" },
   ];
@@ -536,7 +539,7 @@ function Stats() {
 
 function ProductCard({ p }: { p: Product }) {
   return (
-    <div className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-elegant">
+    <div className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-elegant">
       <div className="aspect-square overflow-hidden bg-muted">
         <img
           src={p.img}
@@ -546,19 +549,20 @@ function ProductCard({ p }: { p: Product }) {
           className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
         />
       </div>
-      <div className="p-4">
-        <h3 className="line-clamp-2 min-h-[3rem] font-semibold text-foreground">
+      <div className="flex flex-1 flex-col items-center px-4 pt-5 pb-4 text-center">
+        <h3 className="line-clamp-2 min-h-[3rem] text-sm font-medium text-foreground">
           {p.name}
         </h3>
-        <p className="mt-1 text-sm text-muted-foreground">{p.size}</p>
-        <p className="mt-2 text-lg font-bold text-brand-orange">{p.price}</p>
+        <p className="mt-2 text-xs text-muted-foreground">{p.size}</p>
+        <p className="mt-4 text-base font-bold text-foreground">{p.price}</p>
         <a
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Saiba mais sobre ${p.name} no WhatsApp`}
-          className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-brand-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-green-dark"
+          className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-md bg-brand-whatsapp px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:brightness-95"
         >
+          <WhatsAppIcon className="h-3.5 w-3.5" />
           Saiba Mais
         </a>
       </div>
@@ -572,15 +576,17 @@ function CategoryBlock({
   desc,
   image,
   products,
+  bg,
 }: {
   eyebrow: string;
   title: string;
   desc: string;
   image: string;
   products: Product[];
+  bg: string;
 }) {
   return (
-    <div className="mt-16 first:mt-0">
+    <div className={`mt-12 first:mt-12 rounded-2xl ${bg} p-6 md:p-10`}>
       <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
         <Reveal className="overflow-hidden rounded-2xl shadow-elegant">
           <img
@@ -637,7 +643,9 @@ function Products() {
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-3xl font-bold text-brand-green md:text-5xl">
-            Pisos e Revestimentos de Qualidade, em um Só Lugar!
+            Pisos e Revestimentos de Qualidade,
+            <br />
+            <span className="text-brand-orange">Em um Só Lugar!</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             Transforme sua casa ou projeto com produtos de alta qualidade,
@@ -675,6 +683,7 @@ function Products() {
             desc={c.desc}
             image={c.image}
             products={c.products}
+            bg={c.bg}
           />
         ))}
       </div>
@@ -852,7 +861,7 @@ function Testimonials() {
               ))}
             </div>
             <span className="text-sm text-muted-foreground">
-              2.171 Avaliações
+              2.397 Avaliações
             </span>
           </div>
         </Reveal>
