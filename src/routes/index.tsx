@@ -277,7 +277,7 @@ function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition hover:brightness-95 hover:-translate-y-0.5 active:translate-y-0 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition hover:brightness-95 hover:-translate-y-0.5 active:translate-y-0 ${className}`}
     >
       <MessageCircle className="h-5 w-5" />
       {children}
@@ -536,7 +536,7 @@ function ProductCard({ p }: { p: Product }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Saiba mais sobre ${p.name} no WhatsApp`}
-          className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-brand-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-green-dark"
+          className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-brand-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-green-dark"
         >
           Saiba Mais
         </a>
@@ -582,7 +582,7 @@ function CategoryBlock({
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-brand-green px-6 py-2.5 font-semibold text-brand-green transition hover:bg-brand-green hover:text-white"
+            className="mt-6 inline-flex items-center gap-2 rounded-md border-2 border-brand-green px-6 py-2.5 font-semibold text-brand-green transition hover:bg-brand-green hover:text-white"
           >
             Ver Mais
           </a>
@@ -627,7 +627,7 @@ function Products() {
         <div
           role="tablist"
           aria-label="Filtrar categorias"
-          className="mx-auto mt-8 flex max-w-full flex-wrap justify-center gap-2 rounded-full border border-border bg-card p-1.5 md:w-fit"
+          className="mx-auto mt-8 flex max-w-full flex-wrap justify-center gap-2 rounded-md border border-border bg-card p-1.5 md:w-fit"
         >
           {tabs.map((t) => (
             <button
@@ -635,7 +635,7 @@ function Products() {
               role="tab"
               aria-selected={active === t.key}
               onClick={() => setActive(t.key)}
-              className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+              className={`rounded-md px-5 py-2 text-sm font-semibold transition ${
                 active === t.key
                   ? "bg-brand-orange text-white shadow-orange"
                   : "text-muted-foreground hover:text-brand-green"
@@ -731,7 +731,7 @@ function MoreSolutions() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-md bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
                 >
                   Saiba Mais
                 </a>
@@ -1173,7 +1173,7 @@ function MobileCTABar() {
         <a
           href="tel:+555134701212"
           aria-label="Ligar para a loja"
-          className="flex flex-1 items-center justify-center gap-2 rounded-full border-2 border-brand-green px-4 py-2.5 text-sm font-semibold text-brand-green"
+          className="flex flex-1 items-center justify-center gap-2 rounded-md border-2 border-brand-green px-4 py-2.5 text-sm font-semibold text-brand-green"
         >
           <Phone className="h-4 w-4" /> Ligar
         </a>
@@ -1181,7 +1181,7 @@ function MobileCTABar() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-[2] items-center justify-center gap-2 rounded-full bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white shadow-md"
+          className="flex flex-[2] items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white shadow-md"
         >
           <MessageCircle className="h-4 w-4" /> Fale no WhatsApp
         </a>
