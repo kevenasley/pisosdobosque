@@ -461,8 +461,8 @@ function Comparison() {
           <div className="hidden text-center font-semibold uppercase tracking-wide text-white/70 md:block">Outros</div>
           <div className="hidden text-center font-semibold uppercase tracking-wide text-brand-orange md:block">Pisos do Bosque</div>
           {compareRows.map((r) => (
-            <>
-              <div key={r.bad} className="rounded-xl border border-white/10 bg-white/5 p-5">
+            <div key={r.bad} className="contents">
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5">
                 <div className="flex items-start gap-3">
                   <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
                     <X className="h-5 w-5 text-red-300" />
@@ -474,7 +474,7 @@ function Comparison() {
                   </div>
                 </div>
               </div>
-              <div key={r.good} className="rounded-xl border border-brand-orange/30 bg-brand-orange/10 p-5">
+              <div className="rounded-xl border border-brand-orange/30 bg-brand-orange/10 p-5">
                 <div className="flex items-start gap-3">
                   <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-orange">
                     <Check className="h-5 w-5 text-white" />
@@ -486,7 +486,7 @@ function Comparison() {
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           ))}
         </div>
       </div>
