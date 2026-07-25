@@ -46,6 +46,7 @@ import tPor3 from "@/assets/tile-porcelanato-3.jpg";
 import tVin1 from "@/assets/tile-vinilico-1.jpg";
 import tVin2 from "@/assets/tile-vinilico-2.jpg";
 import tVin3 from "@/assets/tile-vinilico-3.jpg";
+import logoAsset from "@/assets/logo-pisos-do-bosque.png.asset.json";
 
 const WHATSAPP_URL =
   "https://wa.me/5551984905782?text=Ol%C3%A1!%20Vi%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20um%20atendimento.";
