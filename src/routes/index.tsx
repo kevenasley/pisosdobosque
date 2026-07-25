@@ -411,7 +411,7 @@ function Hero() {
           backgroundSize: "24px 24px",
         }}
       />
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 py-14 md:grid-cols-2 md:gap-16 md:px-6 md:py-20 lg:gap-20">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 md:grid-cols-2 md:gap-16 md:px-8 md:py-20 lg:gap-20">
         <Reveal className="text-white">
           <div className="mb-7 flex items-center gap-3">
             <div className="flex -space-x-2">
