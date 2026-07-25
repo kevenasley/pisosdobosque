@@ -431,7 +431,7 @@ function Hero() {
               </div>
             </div>
           </div>
-          <h1 className="font-display text-4xl font-bold leading-tight md:text-6xl">
+          <h1 className="font-display text-3xl font-bold leading-[1.15] md:text-4xl lg:text-5xl">
             Somos conhecidos por ter os pisos mais baratos da região!
           </h1>
           <p className="mt-5 max-w-xl text-lg text-white/95">
