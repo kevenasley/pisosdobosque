@@ -411,9 +411,9 @@ function Hero() {
           backgroundSize: "24px 24px",
         }}
       />
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 py-10 md:grid-cols-2 md:gap-4 md:px-6 md:py-14">
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 py-14 md:grid-cols-2 md:gap-10 md:px-6 md:py-20">
         <Reveal className="text-white">
-          <div className="mb-5 flex items-center gap-3">
+          <div className="mb-7 flex items-center gap-3">
             <div className="flex -space-x-2">
               {[avatar1.url, avatar2.url, avatar3.url].map((src, i) => (
                 <img
@@ -443,13 +443,13 @@ function Hero() {
             Somos conhecidos por ter os{" "}
             <span className="font-extrabold">pisos mais baratos</span> da região!
           </h1>
-          <p className="mt-4 max-w-xl text-base text-white/95 md:text-lg">
+          <p className="mt-6 max-w-xl text-base text-white/95 md:text-lg">
             Estamos há mais de 20 anos no mercado porque oferecemos pisos e
             revestimentos com <strong>preço justo</strong>,{" "}
             <strong>entrega rápida</strong> e{" "}
             <strong>atendimento diferenciado.</strong>
           </p>
-          <div className="mt-5 w-full space-y-2.5 md:max-w-md">
+          <div className="mt-8 w-full space-y-3 md:max-w-md">
             {[
               { icon: DollarSign, label: "Menor Preço do Mercado" },
               { icon: Package, label: "Estoque Imediato" },
@@ -457,10 +457,10 @@ function Hero() {
             ].map(({ icon: Icon, label }) => (
               <div
                 key={label}
-                className="flex items-center gap-3 rounded-md bg-white px-4 py-2 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                className="flex items-center gap-3 rounded-md bg-white px-4 py-2.5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-whatsapp text-white">
-                  <Icon className="h-4 w-4" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-whatsapp text-white">
+                  <Icon className="h-4.5 w-4.5" />
                 </div>
                 <span className="text-sm font-semibold text-foreground">{label}</span>
               </div>
@@ -468,7 +468,7 @@ function Hero() {
           </div>
           <WhatsAppButton
             ariaLabel="Fale conosco no WhatsApp"
-            className="mt-5 w-full py-3.5 text-base md:max-w-md"
+            className="mt-8 w-full py-4 text-base md:max-w-md"
           >
             Fale Conosco no WhatsApp
           </WhatsAppButton>
