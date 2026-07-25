@@ -413,8 +413,8 @@ function Hero() {
       />
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-14 md:grid-cols-2 md:gap-16 md:px-8 md:py-20 lg:gap-20">
         <Reveal className="text-white">
-          <div className="mb-7 flex items-center gap-3">
-            <div className="flex -space-x-2">
+          <div className="mb-7 flex items-center gap-2">
+            <div className="flex -space-x-1.5">
               {[avatar1.url, avatar2.url, avatar3.url].map((src, i) => (
                 <img
                   key={i}
@@ -423,16 +423,16 @@ function Hero() {
                   aria-hidden
                   loading="lazy"
                   decoding="async"
-                  className="h-10 w-10 rounded-full border-2 border-white object-cover bg-brand-cream"
+                  className="h-7 w-7 rounded-full border-2 border-white object-cover bg-brand-cream"
                 />
               ))}
             </div>
-            <div className="rounded-full bg-white px-4 py-2">
-              <div className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
+            <div className="rounded-full bg-white px-2.5 py-1">
+              <div className="flex items-center gap-1 text-xs font-semibold text-foreground">
                 <span className="font-bold text-brand-orange">G</span>
                 <div className="flex text-yellow-500">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                    <Star key={i} className="h-3 w-3 fill-current" />
                   ))}
                 </div>
                 <span>4.9 · 2.397 avaliações</span>
