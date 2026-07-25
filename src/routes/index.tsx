@@ -27,6 +27,7 @@ import {
   Users,
   Shield,
 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
 import avatar1 from "@/assets/avatar-1.webp.asset.json";
@@ -282,7 +283,7 @@ function WhatsAppButton({
       aria-label={ariaLabel}
       className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition hover:brightness-95 hover:-translate-y-0.5 active:translate-y-0 ${className}`}
     >
-      <MessageCircle className="h-5 w-5" />
+      <WhatsAppIcon className="h-5 w-5" />
       {children}
     </a>
   );
@@ -473,8 +474,17 @@ function Hero() {
             Fale Conosco no WhatsApp
           </WhatsAppButton>
         </Reveal>
-        <Reveal delay={150} className="relative">
-          <div className="relative mx-auto w-full max-w-xs md:max-w-md lg:max-w-xl">
+        <Reveal delay={150} className="relative flex items-center justify-center self-center">
+          <div className="relative mx-auto w-full max-w-xs md:max-w-md lg:max-w-lg">
+            {/* Soft radial glow to anchor the image */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -z-10 blur-2xl"
+              style={{
+                background:
+                  "radial-gradient(closest-side, rgba(255,255,255,0.35), transparent 70%)",
+              }}
+            />
             <img
               src={heroVendedor}
               alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
@@ -485,40 +495,6 @@ function Hero() {
               decoding="async"
               className="float-y w-full drop-shadow-2xl"
             />
-            {/* Floating card: preço */}
-            <div className="absolute left-0 top-6 hidden -translate-x-3 items-center gap-2 rounded-md bg-white px-2.5 py-2 shadow-elegant md:flex lg:-translate-x-6">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-orange/15 text-brand-orange">
-                <DollarSign className="h-4 w-4" />
-              </div>
-              <div className="leading-tight">
-                <p className="text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
-                  A partir de
-                </p>
-                <p className="font-display text-sm font-bold text-brand-green">
-                  R$ 19,90/m²
-                </p>
-              </div>
-            </div>
-            {/* Floating card: entrega */}
-            <div className="absolute right-0 top-1/2 hidden translate-x-3 items-center gap-2 rounded-md bg-white px-2.5 py-2 shadow-elegant md:flex lg:translate-x-6">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-whatsapp/15 text-brand-whatsapp">
-                <Truck className="h-4 w-4" />
-              </div>
-              <div className="leading-tight">
-                <p className="text-[11px] font-bold text-foreground">Entrega rápida</p>
-                <p className="text-[10px] text-muted-foreground">Toda a região</p>
-              </div>
-            </div>
-            {/* Floating card: avaliação */}
-            <div className="absolute bottom-6 left-2 hidden -translate-x-2 items-center gap-2 rounded-md bg-white px-2.5 py-2 shadow-elegant md:flex lg:-translate-x-5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-yellow-100 text-yellow-600">
-                <Star className="h-4 w-4 fill-current" />
-              </div>
-              <div className="leading-tight">
-                <p className="font-display text-sm font-bold text-foreground">4.9</p>
-                <p className="text-[10px] text-muted-foreground">2.397 avaliações</p>
-              </div>
-            </div>
           </div>
         </Reveal>
       </div>
@@ -1060,7 +1036,7 @@ function Footer() {
           <div className="mt-1 h-1 w-10 bg-brand-orange" />
           <ul className="mt-5 space-y-3 text-sm">
             <li className="flex items-center gap-2">
-              <MessageCircle className="h-4 w-4 text-brand-orange" /> (51)
+              <WhatsAppIcon className="h-4 w-4 text-brand-orange" /> (51)
               98490-5782
             </li>
             <li className="flex items-center gap-2">
@@ -1183,7 +1159,7 @@ function FloatingWhatsApp() {
       aria-label="Fale conosco no WhatsApp"
       className="pulse-ring fixed bottom-24 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand-whatsapp text-white shadow-xl transition hover:scale-110 md:bottom-6"
     >
-      <MessageCircle className="h-7 w-7" />
+      <WhatsAppIcon className="h-7 w-7" />
     </a>
   );
 }
@@ -1228,7 +1204,7 @@ function MobileCTABar() {
           rel="noopener noreferrer"
           className="flex flex-[2] items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white shadow-md"
         >
-          <MessageCircle className="h-4 w-4" /> Fale no WhatsApp
+          <WhatsAppIcon className="h-4 w-4" /> Fale no WhatsApp
         </a>
       </div>
     </div>
