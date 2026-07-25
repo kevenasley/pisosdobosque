@@ -27,6 +27,7 @@ import {
   Users,
   Shield,
 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
 import avatar1 from "@/assets/avatar-1.webp.asset.json";
