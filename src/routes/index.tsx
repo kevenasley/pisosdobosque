@@ -542,10 +542,6 @@ function ProductCard({ p }: { p: Product }) {
           decoding="async"
           className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
         />
-        <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-sm bg-brand-green px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
-          Em estoque
-        </span>
       </div>
       <div className="flex flex-1 flex-col px-4 pt-4 pb-4 text-center">
         <h3 className="text-sm font-semibold leading-snug text-foreground">
@@ -553,12 +549,9 @@ function ProductCard({ p }: { p: Product }) {
         </h3>
         <p className="mt-1.5 text-xs text-muted-foreground">{p.size}</p>
         <div className="mt-3 flex flex-1 flex-col justify-end">
-          <p className="text-[10px] uppercase tracking-wide text-muted-foreground">
-            A partir de
-          </p>
           <p className="text-lg font-extrabold text-brand-green">{p.price}</p>
           <p className="mt-0.5 text-[11px] text-muted-foreground">
-            ou <span className="font-semibold text-foreground">12x sem juros</span>
+            em até 12x sem juros
           </p>
           <a
             href={WHATSAPP_URL}
@@ -570,9 +563,6 @@ function ProductCard({ p }: { p: Product }) {
             <WhatsAppIcon className="h-3.5 w-3.5" />
             Consultar no WhatsApp
           </a>
-          <p className="mt-2 text-[10px] text-muted-foreground">
-            Resposta em até 5 min • Seg-Sáb
-          </p>
         </div>
       </div>
     </div>
