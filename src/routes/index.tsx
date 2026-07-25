@@ -285,16 +285,17 @@ function WhatsAppButton({
   );
 }
 
-function Logo() {
+function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-green">
-        <TreePine className="h-6 w-6 text-brand-orange" />
-      </div>
-      <span className="font-display text-lg font-bold text-brand-green">
-        pisos do <span className="text-brand-orange">Bosque</span>
-      </span>
-    </div>
+    <img
+      src={logoAsset.url}
+      alt="Pisos do Bosque"
+      width={2730}
+      height={655}
+      className={`h-10 w-auto md:h-12 ${variant === "light" ? "brightness-0 invert" : ""}`}
+      loading="eager"
+      decoding="async"
+    />
   );
 }
 
