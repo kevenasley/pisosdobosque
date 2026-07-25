@@ -536,7 +536,7 @@ function Stats() {
 
 function ProductCard({ p }: { p: Product }) {
   return (
-    <div className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-elegant">
+    <div className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-elegant">
       <div className="aspect-square overflow-hidden bg-muted">
         <img
           src={p.img}
@@ -546,19 +546,20 @@ function ProductCard({ p }: { p: Product }) {
           className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
         />
       </div>
-      <div className="p-4">
-        <h3 className="line-clamp-2 min-h-[3rem] font-semibold text-foreground">
+      <div className="flex flex-1 flex-col items-center px-4 pt-5 pb-4 text-center">
+        <h3 className="line-clamp-2 min-h-[3rem] text-sm font-medium text-foreground">
           {p.name}
         </h3>
-        <p className="mt-1 text-sm text-muted-foreground">{p.size}</p>
-        <p className="mt-2 text-lg font-bold text-brand-orange">{p.price}</p>
+        <p className="mt-2 text-xs text-muted-foreground">{p.size}</p>
+        <p className="mt-4 text-base font-bold text-foreground">{p.price}</p>
         <a
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Saiba mais sobre ${p.name} no WhatsApp`}
-          className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-brand-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-green-dark"
+          className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-md bg-brand-whatsapp px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:brightness-95"
         >
+          <WhatsAppIcon className="h-3.5 w-3.5" />
           Saiba Mais
         </a>
       </div>
