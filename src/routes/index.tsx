@@ -474,7 +474,7 @@ function Hero() {
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative">
-          <div className="relative mx-auto w-full max-w-sm md:max-w-md lg:max-w-lg">
+          <div className="relative mx-auto w-full max-w-xs md:max-w-sm lg:max-w-md">
             <img
               src={heroVendedor}
               alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
@@ -486,37 +486,37 @@ function Hero() {
               className="float-y w-full drop-shadow-2xl"
             />
             {/* Floating card: preço */}
-            <div className="absolute left-0 top-6 hidden -translate-x-4 items-center gap-2.5 rounded-md bg-white px-3.5 py-2.5 shadow-elegant md:flex lg:-translate-x-8">
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-brand-orange/15 text-brand-orange">
-                <DollarSign className="h-5 w-5" />
+            <div className="absolute left-0 top-6 hidden -translate-x-3 items-center gap-2 rounded-md bg-white px-2.5 py-2 shadow-elegant md:flex lg:-translate-x-6">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-orange/15 text-brand-orange">
+                <DollarSign className="h-4 w-4" />
               </div>
               <div className="leading-tight">
-                <p className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                <p className="text-[9px] font-medium uppercase tracking-wide text-muted-foreground">
                   A partir de
                 </p>
-                <p className="font-display text-base font-bold text-brand-green">
+                <p className="font-display text-sm font-bold text-brand-green">
                   R$ 19,90/m²
                 </p>
               </div>
             </div>
             {/* Floating card: entrega */}
-            <div className="absolute right-0 top-1/2 hidden translate-x-4 items-center gap-2.5 rounded-md bg-white px-3.5 py-2.5 shadow-elegant md:flex lg:translate-x-8">
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-brand-whatsapp/15 text-brand-whatsapp">
-                <Truck className="h-5 w-5" />
+            <div className="absolute right-0 top-1/2 hidden translate-x-3 items-center gap-2 rounded-md bg-white px-2.5 py-2 shadow-elegant md:flex lg:translate-x-6">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-whatsapp/15 text-brand-whatsapp">
+                <Truck className="h-4 w-4" />
               </div>
               <div className="leading-tight">
-                <p className="text-xs font-bold text-foreground">Entrega rápida</p>
-                <p className="text-[11px] text-muted-foreground">Toda a região</p>
+                <p className="text-[11px] font-bold text-foreground">Entrega rápida</p>
+                <p className="text-[10px] text-muted-foreground">Toda a região</p>
               </div>
             </div>
             {/* Floating card: avaliação */}
-            <div className="absolute bottom-6 left-2 hidden -translate-x-2 items-center gap-2.5 rounded-md bg-white px-3.5 py-2.5 shadow-elegant md:flex lg:-translate-x-6">
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-yellow-100 text-yellow-600">
-                <Star className="h-5 w-5 fill-current" />
+            <div className="absolute bottom-6 left-2 hidden -translate-x-2 items-center gap-2 rounded-md bg-white px-2.5 py-2 shadow-elegant md:flex lg:-translate-x-5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-yellow-100 text-yellow-600">
+                <Star className="h-4 w-4 fill-current" />
               </div>
               <div className="leading-tight">
-                <p className="font-display text-base font-bold text-foreground">4.9</p>
-                <p className="text-[11px] text-muted-foreground">2.397 avaliações</p>
+                <p className="font-display text-sm font-bold text-foreground">4.9</p>
+                <p className="text-[10px] text-muted-foreground">2.397 avaliações</p>
               </div>
             </div>
           </div>
