@@ -390,12 +390,6 @@ function Header() {
               {n.label}
             </a>
           ))}
-          <WhatsAppButton
-            ariaLabel="Fale conosco no WhatsApp"
-            className="mt-3 w-full py-3"
-          >
-            Fale Conosco no WhatsApp
-          </WhatsAppButton>
         </nav>
       </div>
     </header>
