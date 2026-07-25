@@ -854,7 +854,7 @@ function Testimonials() {
               ))}
             </div>
             <span className="text-sm text-muted-foreground">
-              2.171 Avaliações
+              2.397 Avaliações
             </span>
           </div>
         </Reveal>
