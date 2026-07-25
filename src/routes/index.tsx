@@ -411,9 +411,9 @@ function Hero() {
           backgroundSize: "24px 24px",
         }}
       />
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-4 py-12 md:grid-cols-2 md:gap-6 md:px-8 md:py-20">
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-6 px-4 py-10 md:grid-cols-2 md:gap-4 md:px-6 md:py-14">
         <Reveal className="text-white">
-          <div className="mb-6 flex items-center gap-3">
+          <div className="mb-5 flex items-center gap-3">
             <div className="flex -space-x-2">
               {[avatar1.url, avatar2.url, avatar3.url].map((src, i) => (
                 <img
@@ -441,22 +441,15 @@ function Hero() {
           </div>
           <h1 className="font-display text-3xl font-bold leading-[1.15] md:text-4xl lg:text-5xl">
             Somos conhecidos por ter os{" "}
-            <span className="relative inline-block">
-              <span
-                aria-hidden
-                className="absolute inset-x-0 bottom-0.5 -z-0 h-3 bg-brand-green/70 md:h-4"
-              />
-              <span className="relative z-10 text-white">pisos mais baratos</span>
-            </span>{" "}
-            da região!
+            <span className="font-extrabold">pisos mais baratos</span> da região!
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-white/95">
+          <p className="mt-4 max-w-xl text-base text-white/95 md:text-lg">
             Estamos há mais de 20 anos no mercado porque oferecemos pisos e
             revestimentos com <strong>preço justo</strong>,{" "}
             <strong>entrega rápida</strong> e{" "}
             <strong>atendimento diferenciado.</strong>
           </p>
-          <div className="mt-8 w-full space-y-3 md:max-w-md">
+          <div className="mt-5 w-full space-y-2.5 md:max-w-md">
             {[
               { icon: DollarSign, label: "Menor Preço do Mercado" },
               { icon: Package, label: "Estoque Imediato" },
@@ -464,10 +457,10 @@ function Hero() {
             ].map(({ icon: Icon, label }) => (
               <div
                 key={label}
-                className="flex items-center gap-3 rounded-md bg-white px-4 py-2.5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                className="flex items-center gap-3 rounded-md bg-white px-4 py-2 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-whatsapp text-white">
-                  <Icon className="h-5 w-5" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-whatsapp text-white">
+                  <Icon className="h-4 w-4" />
                 </div>
                 <span className="text-sm font-semibold text-foreground">{label}</span>
               </div>
@@ -475,12 +468,12 @@ function Hero() {
           </div>
           <WhatsAppButton
             ariaLabel="Fale conosco no WhatsApp"
-            className="mt-6 w-full py-4 text-base md:max-w-md"
+            className="mt-5 w-full py-3.5 text-base md:max-w-md"
           >
             Fale Conosco no WhatsApp
           </WhatsAppButton>
         </Reveal>
-        <Reveal delay={150} className="relative">
+        <Reveal delay={150} className="relative md:-ml-6 lg:-ml-10">
           <img
             src={heroVendedor}
             alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
@@ -489,7 +482,7 @@ function Hero() {
             fetchPriority="high"
             loading="eager"
             decoding="async"
-            className="float-y mx-auto w-full max-w-lg drop-shadow-2xl"
+            className="float-y mx-auto w-full max-w-md drop-shadow-2xl md:max-w-none"
           />
         </Reveal>
       </div>
