@@ -505,7 +505,7 @@ function Hero() {
 function Stats() {
   const items = [
     { icon: Award, value: "20+", label: "Anos de mercado" },
-    { icon: Users, value: "2.171", label: "Avaliações no Google" },
+    { icon: Users, value: "2.397", label: "Avaliações no Google" },
     { icon: Package, value: "1000+", label: "Itens em estoque" },
     { icon: Truck, value: "Toda RS", label: "Entregamos na região" },
   ];
@@ -637,7 +637,9 @@ function Products() {
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-3xl font-bold text-brand-green md:text-5xl">
-            Pisos e Revestimentos de Qualidade, em um Só Lugar!
+            Pisos e Revestimentos de Qualidade,
+            <br />
+            <span className="text-brand-orange">Em um Só Lugar!</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             Transforme sua casa ou projeto com produtos de alta qualidade,
