@@ -20,7 +20,6 @@ import {
   Headphones,
   Check,
   X,
-  TreePine,
   Menu,
   ArrowUp,
   Truck,
@@ -46,6 +45,7 @@ import tPor3 from "@/assets/tile-porcelanato-3.jpg";
 import tVin1 from "@/assets/tile-vinilico-1.jpg";
 import tVin2 from "@/assets/tile-vinilico-2.jpg";
 import tVin3 from "@/assets/tile-vinilico-3.jpg";
+import logoAsset from "@/assets/logo-pisos-do-bosque.png.asset.json";
 
 const WHATSAPP_URL =
   "https://wa.me/5551984905782?text=Ol%C3%A1!%20Vi%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20um%20atendimento.";
@@ -285,16 +285,17 @@ function WhatsAppButton({
   );
 }
 
-function Logo() {
+function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-green">
-        <TreePine className="h-6 w-6 text-brand-orange" />
-      </div>
-      <span className="font-display text-lg font-bold text-brand-green">
-        pisos do <span className="text-brand-orange">Bosque</span>
-      </span>
-    </div>
+    <img
+      src={logoAsset.url}
+      alt="Pisos do Bosque"
+      width={2730}
+      height={655}
+      className={`h-10 w-auto md:h-12 ${variant === "light" ? "brightness-0 invert" : ""}`}
+      loading="eager"
+      decoding="async"
+    />
   );
 }
 
