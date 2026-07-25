@@ -243,23 +243,20 @@ function useReveal<T extends HTMLElement>() {
 }
 
 function Reveal({
-  as: Tag = "div",
   className = "",
   delay,
   children,
 }: {
-  as?: keyof JSX.IntrinsicElements;
   className?: string;
   delay?: number;
   children: React.ReactNode;
 }) {
-  const ref = useReveal<HTMLElement>();
+  const ref = useReveal<HTMLDivElement>();
   const style = delay ? { transitionDelay: `${delay}ms` } : undefined;
   return (
-    // @ts-expect-error dynamic tag typing
-    <Tag ref={ref} style={style} className={`reveal ${className}`}>
+    <div ref={ref} style={style} className={`reveal ${className}`}>
       {children}
-    </Tag>
+    </div>
   );
 }
 
