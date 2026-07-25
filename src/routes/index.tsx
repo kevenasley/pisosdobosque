@@ -427,12 +427,12 @@ function Hero() {
                 />
               ))}
             </div>
-            <div className="rounded-full bg-white px-3 py-1.5">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+            <div className="rounded-full bg-white px-4 py-2">
+              <div className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
                 <span className="font-bold text-brand-orange">G</span>
                 <div className="flex text-yellow-500">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-current" />
+                    <Star key={i} className="h-3.5 w-3.5 fill-current" />
                   ))}
                 </div>
                 <span>4.9 · 2.397 avaliações</span>
@@ -440,7 +440,15 @@ function Hero() {
             </div>
           </div>
           <h1 className="font-display text-3xl font-bold leading-[1.15] md:text-4xl lg:text-5xl">
-            Somos conhecidos por ter os pisos mais baratos da região!
+            Somos conhecidos por ter os{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10 text-brand-orange">pisos mais baratos</span>
+              <span
+                aria-hidden
+                className="absolute inset-x-0 bottom-1 -z-0 h-2.5 bg-white/25 md:h-3"
+              />
+            </span>{" "}
+            da região!
           </h1>
           <p className="mt-5 max-w-xl text-lg text-white/95">
             Estamos há mais de 20 anos no mercado porque oferecemos pisos e
@@ -448,7 +456,7 @@ function Hero() {
             <strong>entrega rápida</strong> e{" "}
             <strong>atendimento diferenciado.</strong>
           </p>
-          <div className="mt-8 max-w-sm space-y-3">
+          <div className="mt-8 w-full space-y-3 md:max-w-md">
             {[
               { icon: DollarSign, label: "Menor Preço do Mercado" },
               { icon: Package, label: "Estoque Imediato" },
@@ -467,7 +475,7 @@ function Hero() {
           </div>
           <WhatsAppButton
             ariaLabel="Fale conosco no WhatsApp"
-            className="mt-8 w-full py-4 text-base md:max-w-md"
+            className="mt-6 w-full py-4 text-base md:max-w-md"
           >
             Fale Conosco no WhatsApp
           </WhatsAppButton>
