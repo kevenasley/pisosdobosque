@@ -442,11 +442,11 @@ function Hero() {
           <h1 className="font-display text-3xl font-bold leading-[1.15] md:text-4xl lg:text-5xl">
             Somos conhecidos por ter os{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 text-brand-orange">pisos mais baratos</span>
               <span
                 aria-hidden
-                className="absolute inset-x-0 bottom-1 -z-0 h-2.5 bg-white/25 md:h-3"
+                className="absolute inset-x-0 bottom-0.5 -z-0 h-3 bg-brand-green/70 md:h-4"
               />
+              <span className="relative z-10 text-white">pisos mais baratos</span>
             </span>{" "}
             da região!
           </h1>
