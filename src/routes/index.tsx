@@ -201,6 +201,7 @@ const categoriesData = [
     desc: "Revestimentos cerâmicos: praticidade, resistência e elegância para sua cozinha, banheiro ou área externa. Opções incríveis com preços que cabem no seu bolso, só na Pisos do Bosque!",
     image: catCeramica,
     products: ceramica,
+    bg: "bg-brand-orange/10",
   },
   {
     key: "porcelanato",
@@ -209,6 +210,7 @@ const categoriesData = [
     desc: "Beleza, resistência e fácil manutenção para qualquer ambiente. Alta qualidade e preços incríveis, só na Pisos do Bosque.",
     image: catPorcelanato,
     products: porcelanato,
+    bg: "bg-brand-green/10",
   },
   {
     key: "vinilicos",
@@ -217,6 +219,7 @@ const categoriesData = [
     desc: "Conforto, sofisticação e praticidade. Ideal para quartos, salas e escritórios com aparência de madeira e instalação rápida.",
     image: catVinilico,
     products: vinilicos,
+    bg: "bg-amber-100/50",
   },
 ] as const;
 
@@ -573,15 +576,17 @@ function CategoryBlock({
   desc,
   image,
   products,
+  bg,
 }: {
   eyebrow: string;
   title: string;
   desc: string;
   image: string;
   products: Product[];
+  bg: string;
 }) {
   return (
-    <div className="mt-16 first:mt-0">
+    <div className={`mt-12 first:mt-12 rounded-2xl ${bg} p-6 md:p-10`}>
       <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
         <Reveal className="overflow-hidden rounded-2xl shadow-elegant">
           <img
@@ -678,6 +683,7 @@ function Products() {
             desc={c.desc}
             image={c.image}
             products={c.products}
+            bg={c.bg}
           />
         ))}
       </div>
