@@ -20,7 +20,6 @@ import {
   Headphones,
   Check,
   X,
-  TreePine,
   Menu,
   ArrowUp,
   Truck,
