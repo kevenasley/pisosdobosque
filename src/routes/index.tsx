@@ -29,6 +29,9 @@ import {
 } from "lucide-react";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
+import avatar1 from "@/assets/avatar-1.webp.asset.json";
+import avatar2 from "@/assets/avatar-2.webp.asset.json";
+import avatar3 from "@/assets/avatar-3.webp.asset.json";
 import catCeramica from "@/assets/cat-ceramica.jpg";
 import catPorcelanato from "@/assets/cat-porcelanato.jpg";
 import catVinilico from "@/assets/cat-vinilico.jpg";
