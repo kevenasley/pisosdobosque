@@ -354,12 +354,14 @@ function Header() {
             </a>
           ))}
         </nav>
-        <WhatsAppButton
-          ariaLabel="Fale conosco no WhatsApp"
-          className="hidden text-sm md:inline-flex"
-        >
-          Fale Conosco no WhatsApp
-        </WhatsAppButton>
+        <div className="hidden md:block">
+          <WhatsAppButton
+            ariaLabel="Fale conosco no WhatsApp"
+            className="text-sm"
+          >
+            Fale Conosco no WhatsApp
+          </WhatsAppButton>
+        </div>
         <button
           type="button"
           aria-label={open ? "Fechar menu" : "Abrir menu"}
