@@ -29,7 +29,7 @@ import {
   Shield,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
-import { handleAnchorClick, smoothScrollTo } from "@/lib/smooth-scroll";
+import { smoothScrollTo } from "@/lib/smoothScrollTo";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
 import toolHammer from "@/assets/tool-hammer.png";
@@ -383,7 +383,10 @@ function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
         <a
           href="#top"
-          onClick={(e) => handleAnchorClick(e, "#top")}
+          onClick={(e) => {
+            e.preventDefault();
+            smoothScrollTo("top");
+          }}
           aria-label="Ir para o topo"
         >
           <Logo />
@@ -393,7 +396,10 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              onClick={(e) => handleAnchorClick(e, n.href)}
+              onClick={(e) => {
+                e.preventDefault();
+                smoothScrollTo(n.href);
+              }}
               className="text-sm font-medium text-foreground transition-all duration-300 ease-in-out hover:text-brand-orange"
             >
               {n.label}
@@ -432,7 +438,11 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              onClick={(e) => handleAnchorClick(e, n.href, () => setOpen(false))}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpen(false);
+                smoothScrollTo(n.href);
+              }}
               className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition-all duration-300 ease-in-out hover:bg-brand-cream hover:text-brand-orange"
             >
               {n.label}
@@ -1565,7 +1575,7 @@ function BackToTop() {
     <button
       type="button"
       aria-label="Voltar ao topo"
-      onClick={() => smoothScrollTo(document.body, { offset: 0, duration: 600 })}
+      onClick={() => smoothScrollTo("top")}
       className={`fixed bottom-6 right-5 z-40 hidden h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-md md:flex ${
         visible
           ? "translate-y-0 opacity-100"
@@ -1617,7 +1627,7 @@ function HomePage() {
     <div className="min-h-screen bg-background font-sans">
       <a
         href="#top"
-        onClick={(e) => handleAnchorClick(e, "#top")}
+        onClick={(e) => { e.preventDefault(); smoothScrollTo("top"); }}
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand-green focus:px-4 focus:py-2 focus:text-white"
       >
         Pular para o conteúdo

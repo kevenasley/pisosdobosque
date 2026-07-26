@@ -123,6 +123,34 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    let destroyed = false;
+    let cleanup: (() => void) | undefined;
+    (async () => {
+      const { default: Lenis } = await import("lenis");
+      if (destroyed) return;
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+      let rafId = 0;
+      const raf = (time: number) => {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+      };
+      rafId = requestAnimationFrame(raf);
+      cleanup = () => {
+        cancelAnimationFrame(rafId);
+        lenis.destroy();
+      };
+    })();
+    return () => {
+      destroyed = true;
+      cleanup?.();
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
