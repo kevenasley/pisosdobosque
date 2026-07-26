@@ -1472,7 +1472,7 @@ function FooterColumn({
   return (
     <>
       {/* Mobile: accordion */}
-      <details className="group border-b border-white/10 py-4 md:hidden [&_summary::-webkit-details-marker]:hidden">
+      <details className="group border-b border-white/10 py-4 last:border-b-0 md:hidden [&_summary::-webkit-details-marker]:hidden">
         <summary className="flex cursor-pointer list-none items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-white">
           <span>{title}</span>
           <svg
