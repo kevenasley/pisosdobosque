@@ -333,7 +333,7 @@ function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+      className={`relative z-50 border-b transition-all duration-300 md:sticky md:top-0 ${
         scrolled
           ? "border-border/60 bg-background/90 shadow-sm backdrop-blur-lg"
           : "border-transparent bg-background/70 backdrop-blur"
