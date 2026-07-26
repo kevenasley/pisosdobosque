@@ -140,6 +140,15 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="gtm"
+          />
+        </noscript>
         {children}
         <Scripts />
       </body>
@@ -149,6 +158,32 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    captureAttribution();
+  }, []);
+
+  useEffect(() => {
+    // Intercepta cliques em links do WhatsApp para abrir modal de captura.
+    // Permite bypass com data-lead-bypass ou tecla modificadora.
+    function onClick(ev: MouseEvent) {
+      const target = (ev.target as HTMLElement | null)?.closest?.(
+        'a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]',
+      ) as HTMLAnchorElement | null;
+      if (!target) return;
+      if (target.dataset.leadBypass === "true") return;
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+      ev.preventDefault();
+      const ctaOrigin =
+        target.dataset.ctaOrigin ||
+        target.getAttribute("aria-label") ||
+        target.textContent?.trim().slice(0, 40) ||
+        "whatsapp_link";
+      openLeadCapture({ ctaOrigin });
+    }
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   useEffect(() => {
     let destroyed = false;
@@ -182,6 +217,8 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <LeadCapture />
+      <ConsentBanner />
     </QueryClientProvider>
   );
 }
