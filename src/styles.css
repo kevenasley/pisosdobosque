@@ -218,6 +218,21 @@ html.lenis body {
   animation: float-y 4s ease-in-out infinite;
 }
 
+/* Global microinteraction defaults — smooth hover/press on interactive elements */
+a,
+button,
+[role="button"],
+[role="tab"],
+summary {
+  transition:
+    color 300ms ease-out,
+    background-color 300ms ease-out,
+    border-color 300ms ease-out,
+    box-shadow 300ms ease-out,
+    transform 300ms ease-out,
+    opacity 300ms ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -226,3 +241,4 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 }
+
