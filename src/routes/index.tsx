@@ -840,7 +840,7 @@ function Comparison() {
             conquistas. Veja os benefícios que só a Pisos do Bosque oferece.
           </p>
         </Reveal>
-        <div className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur">
+        <div className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
           {/* Header */}
           <div className="grid grid-cols-2 border-b border-white/10">
             <div className="px-4 py-4 text-center sm:px-6 sm:py-5">
@@ -894,7 +894,7 @@ function Comparison() {
                 </Reveal>
                 <Reveal
                   delay={i * 60 + 40}
-                  className="flex flex-col items-center gap-2 border-l border-white/10 bg-brand-orange/[0.06] px-4 py-5 text-center sm:px-6 sm:py-6"
+                  className="flex flex-col items-center gap-2 border-l border-white/10 bg-brand-orange/5 px-4 py-5 text-center sm:px-6 sm:py-6"
                 >
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange">
                     <Check className="h-4 w-4 text-white" />
