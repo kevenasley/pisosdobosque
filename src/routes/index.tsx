@@ -327,7 +327,7 @@ function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
-      className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition hover:brightness-95 hover:-translate-y-0.5 active:translate-y-0 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 ease-out hover:brightness-95 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] ${className}`}
     >
       <WhatsAppIcon className="h-5 w-5" />
       {children}
