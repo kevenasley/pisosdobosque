@@ -175,11 +175,11 @@ const vinilicos: Product[] = [
 ];
 
 const compareRows = [
-  { bad: "Atraso na Entrega", badDesc: "Nada pior do que ter sua obra parada esperando por materiais que nunca chegam. O prazo prometido nunca é cumprido.", good: "Estoque Imediato", goodDesc: "Com o maior estoque da região, garantimos os materiais certos, na hora certa. Sua obra nunca para." },
-  { bad: "Preços Altos", badDesc: "Pagando caro por materiais básicos, você estoura o orçamento antes de terminar a obra.", good: "Preço Justo e Competitivo", goodDesc: "Produtos de alta qualidade a preços que cabem no bolso. Sua obra merece o melhor sem pesar no orçamento." },
-  { bad: "Atendimento Genérico", badDesc: "Você é tratado como apenas mais um cliente. Ninguém entende suas dúvidas ou ajuda a escolher.", good: "Atendimento Personalizado", goodDesc: "Nossa equipe ouve suas necessidades e ajuda você a encontrar a melhor solução para sua obra." },
-  { bad: "Pouca Variedade", badDesc: "A falta de opções obriga você a escolher o que tem, não o que combina com seu projeto.", good: "Maior Estoque da Região", goodDesc: "Ampla variedade de porcelanatos, vinílicos, forros e mais. Encontre exatamente o que precisa." },
-  { bad: "Dificuldade em Negociação", badDesc: "Pouca flexibilidade para negociar valores e condições de pagamento.", good: "Condições Flexíveis", goodDesc: "Cada cliente é único. Oferecemos condições flexíveis para a melhor experiência de compra." },
+  { topic: "Entrega e Prazo", bad: "Atraso na Entrega", badDesc: "Nada pior do que ter sua obra parada esperando por materiais que nunca chegam. O prazo prometido nunca é cumprido.", good: "Estoque Imediato", goodDesc: "Com o maior estoque da região, garantimos os materiais certos, na hora certa. Sua obra nunca para." },
+  { topic: "Preço", bad: "Preços Altos", badDesc: "Pagando caro por materiais básicos, você estoura o orçamento antes de terminar a obra.", good: "Preço Justo e Competitivo", goodDesc: "Produtos de alta qualidade a preços que cabem no bolso. Sua obra merece o melhor sem pesar no orçamento." },
+  { topic: "Atendimento", bad: "Atendimento Genérico", badDesc: "Você é tratado como apenas mais um cliente. Ninguém entende suas dúvidas ou ajuda a escolher.", good: "Atendimento Personalizado", goodDesc: "Nossa equipe ouve suas necessidades e ajuda você a encontrar a melhor solução para sua obra." },
+  { topic: "Variedade de Produtos", bad: "Pouca Variedade", badDesc: "A falta de opções obriga você a escolher o que tem, não o que combina com seu projeto.", good: "Maior Estoque da Região", goodDesc: "Ampla variedade de porcelanatos, vinílicos, forros e mais. Encontre exatamente o que precisa." },
+  { topic: "Condições de Pagamento", bad: "Dificuldade em Negociação", badDesc: "Pouca flexibilidade para negociar valores e condições de pagamento.", good: "Condições Flexíveis", goodDesc: "Cada cliente é único. Oferecemos condições flexíveis para a melhor experiência de compra." },
 ];
 
 const reviews = [
@@ -562,7 +562,7 @@ function ProductCard({ p }: { p: Product }) {
         />
       </div>
       <div className="flex flex-1 flex-col p-4 text-center">
-        <h4 className="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-tight [text-wrap:balance] text-foreground">
+        <h4 className="line-clamp-3 min-h-[3.75rem] text-sm font-semibold leading-tight [text-wrap:balance] text-foreground">
           {p.name}
         </h4>
         <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
@@ -1286,7 +1286,7 @@ function BackToTop() {
       type="button"
       aria-label="Voltar ao topo"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-24 left-5 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all md:bottom-6 ${
+      className={`fixed bottom-6 right-5 z-40 hidden h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all md:flex ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"
