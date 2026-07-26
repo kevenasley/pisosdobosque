@@ -381,8 +381,8 @@ function Header() {
     { href: "#top", label: "Início" },
     { href: "#produtos", label: "Produtos" },
     { href: "#sobre", label: "Sobre Nós" },
-    { href: "#parceria", label: "Parceria" },
   ];
+
 
   // Scroll spy to highlight active nav item
   useEffect(() => {
