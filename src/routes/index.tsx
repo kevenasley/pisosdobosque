@@ -1529,13 +1529,19 @@ function Footer() {
         {/* Content grid — accordion on mobile, balanced 4 columns on desktop */}
         <div className="mt-8 md:mt-0 md:grid md:grid-cols-[1.3fr_1fr_1fr_1.2fr] md:gap-10 lg:gap-14">
           {/* Desktop brand column */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex md:flex-col">
             <Logo variant="light" />
             <p className="mt-5 text-sm text-white/70 [text-wrap:balance]">
               Há mais de 20 anos oferecendo pisos e revestimentos com preço
               justo em Cachoeirinha e região metropolitana.
             </p>
-            {socials}
+            <div className="mt-5 inline-flex w-fit items-center gap-2 rounded-md border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/80">
+              <span className="text-brand-orange">★★★★★</span>
+              <span className="font-semibold text-white">4.9</span>
+              <span className="text-white/50">·</span>
+              <span>2.397 avaliações no Google</span>
+            </div>
+            <div className="mt-auto pt-6">{socials}</div>
           </div>
 
           <FooterColumn title="Navegação">
