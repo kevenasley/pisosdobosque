@@ -793,7 +793,7 @@ function Comparison() {
     >
       <div className="mx-auto max-w-6xl px-4 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold md:text-4xl">
+          <h2 className="font-display text-3xl font-bold [text-wrap:balance] md:text-4xl">
             Por Que a Pisos do Bosque é a Escolha Certa para Sua Obra?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-white/80">
