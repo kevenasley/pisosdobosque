@@ -1426,8 +1426,8 @@ function BackToTop() {
     <button
       type="button"
       aria-label="Voltar ao topo"
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-6 right-5 z-40 hidden h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all md:flex ${
+      onClick={() => smoothScrollTo(document.body, { offset: 0, duration: 600 })}
+      className={`fixed bottom-6 right-5 z-40 hidden h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-md md:flex ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"
