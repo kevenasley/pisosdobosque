@@ -211,11 +211,18 @@ html.lenis body {
 
 @keyframes float-y {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(calc(var(--float-amp, 8px) * -1)); }
 }
 
 @utility float-y {
   animation: float-y 4s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .float-y { --float-amp: 14px; animation-duration: 5s; }
+}
+@media (min-width: 1280px) {
+  .float-y { --float-amp: 20px; animation-duration: 5.5s; }
 }
 
 /* Global microinteraction defaults — smooth hover/press on interactive elements */
