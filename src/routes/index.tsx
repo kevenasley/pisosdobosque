@@ -767,34 +767,55 @@ function Products() {
           aria-label="Filtrar categorias"
           className="mx-auto mt-8 flex max-w-full flex-wrap justify-center gap-2 rounded-md border border-border bg-card p-1.5 md:w-fit"
         >
-          {tabs.map((t) => (
-            <button
-              key={t.key}
-              role="tab"
-              aria-selected={active === t.key}
-              onClick={() => setActive(t.key)}
-              className={`rounded-md px-5 py-2 text-sm font-semibold transition ${
-                active === t.key
-                  ? "bg-brand-orange text-white shadow-orange"
-                  : "text-muted-foreground hover:text-brand-green"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
+          {tabs.map((t) => {
+            const isActive = active === t.key;
+            return (
+              <button
+                key={t.key}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActive(t.key)}
+                className={`relative rounded-md px-5 py-2 text-sm font-semibold transition-colors duration-300 ease-out ${
+                  isActive
+                    ? "text-white"
+                    : "text-muted-foreground hover:text-brand-green"
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="products-tab-indicator"
+                    className="absolute inset-0 -z-10 rounded-md bg-brand-orange shadow-orange"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                {t.label}
+              </button>
+            );
+          })}
         </div>
 
-        {filtered.map((c) => (
-          <CategoryBlock
-            key={c.key}
-            eyebrow={c.eyebrow}
-            title={c.title}
-            desc={c.desc}
-            image={c.image}
-            products={c.products}
-            bg={c.bg}
-          />
-        ))}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+          >
+            {filtered.map((c) => (
+              <CategoryBlock
+                key={c.key}
+                eyebrow={c.eyebrow}
+                title={c.title}
+                desc={c.desc}
+                image={c.image}
+                products={c.products}
+                bg={c.bg}
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
       </div>
     </section>
   );
