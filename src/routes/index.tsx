@@ -511,22 +511,22 @@ function Stats() {
     { icon: Truck, value: "Toda RS", label: "Entregamos na região" },
   ];
   return (
-    <section className="border-y border-border bg-brand-cream py-10">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 md:grid-cols-4 md:px-8">
+    <section className="border-y border-border bg-brand-cream py-8 md:py-10">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-4 md:grid-cols-4 md:gap-6 md:px-8">
         {items.map((it, i) => (
           <Reveal
             key={it.label}
             delay={i * 80}
-            className="flex items-center gap-3"
+            className="flex flex-col items-center gap-2 rounded-md border border-border/60 bg-white p-3 text-center shadow-sm md:flex-row md:items-center md:gap-3 md:border-0 md:bg-transparent md:p-0 md:text-left md:shadow-none"
           >
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange">
-              <it.icon className="h-6 w-6" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange md:h-12 md:w-12">
+              <it.icon className="h-5 w-5 md:h-6 md:w-6" />
             </div>
-            <div>
-              <p className="font-display text-2xl font-bold text-brand-green">
+            <div className="min-w-0">
+              <p className="font-display text-lg font-bold leading-tight text-brand-green md:text-2xl">
                 {it.value}
               </p>
-              <p className="text-xs text-muted-foreground">{it.label}</p>
+              <p className="text-[11px] leading-tight text-muted-foreground md:text-xs">{it.label}</p>
             </div>
           </Reveal>
         ))}
