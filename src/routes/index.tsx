@@ -1722,7 +1722,7 @@ function HomePage() {
         <Comparison />
         <Testimonials />
         <About />
-        <CTA />
+        
         <FAQ />
       </main>
       <Footer />
