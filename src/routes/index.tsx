@@ -30,6 +30,9 @@ import {
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
+import toolHammer from "@/assets/tool-hammer.png";
+import toolTape from "@/assets/tool-tape.png";
+import toolTiles from "@/assets/tool-tiles.png";
 import avatar1 from "@/assets/avatar-1.webp.asset.json";
 import avatar2 from "@/assets/avatar-2.webp.asset.json";
 import avatar3 from "@/assets/avatar-3.webp.asset.json";
@@ -495,6 +498,31 @@ function Hero() {
               loading="eager"
               decoding="async"
               className="float-y w-full drop-shadow-2xl"
+            />
+            {/* Floating tool overlays — hidden on small screens to keep the hero clean */}
+            <img
+              src={toolHammer}
+              alt=""
+              aria-hidden
+              loading="lazy"
+              className="pointer-events-none absolute -top-4 -left-6 hidden w-20 rotate-[-18deg] opacity-90 drop-shadow-xl md:block lg:w-24"
+              style={{ filter: "blur(1px)" }}
+            />
+            <img
+              src={toolTape}
+              alt=""
+              aria-hidden
+              loading="lazy"
+              className="pointer-events-none absolute bottom-6 -left-8 hidden w-24 rotate-[10deg] opacity-90 drop-shadow-xl md:block lg:w-28"
+              style={{ filter: "blur(1.5px)" }}
+            />
+            <img
+              src={toolTiles}
+              alt=""
+              aria-hidden
+              loading="lazy"
+              className="pointer-events-none absolute -top-2 -right-6 hidden w-24 rotate-[12deg] opacity-95 drop-shadow-xl md:block lg:w-28"
+              style={{ filter: "blur(0.5px)" }}
             />
           </div>
         </Reveal>
