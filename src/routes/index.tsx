@@ -743,7 +743,7 @@ function MoreSolutions() {
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
 
             Mais Soluções para Sua Obra ou Reforma
           </h2>
@@ -806,7 +806,7 @@ function Comparison() {
     >
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight md:text-4xl">
             Por Que a Pisos do Bosque é a Escolha Certa para Sua Obra?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-white/80">
@@ -894,7 +894,7 @@ function Testimonials() {
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
 
             O Que Nossos Clientes Dizem Sobre Nós
           </h2>
@@ -954,7 +954,7 @@ function About() {
     <section id="sobre" className="bg-brand-cream py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
-          <h2 className="text-center font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+          <h2 className="text-center font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
             Conheça Nossa História
           </h2>
         </Reveal>
@@ -1125,7 +1125,7 @@ function FAQ() {
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-3xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
             Perguntas Frequentes
           </h2>
           <p className="mt-3 text-muted-foreground">
