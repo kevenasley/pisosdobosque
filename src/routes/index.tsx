@@ -1279,9 +1279,9 @@ function About() {
           </h2>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 items-center gap-10 md:mt-14 md:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-10 md:mt-14 md:grid-cols-2 md:items-stretch">
           {/* Left: story + bullets */}
-          <Reveal>
+          <Reveal className="md:h-full md:flex md:flex-col md:justify-center">
             <p className="italic text-muted-foreground">
               Há mais de 20 anos, a Pisos do Bosque vem transformando ambientes
               com qualidade e confiança. Situados em Cachoeirinha, atendemos
@@ -1308,28 +1308,28 @@ function About() {
             </ul>
           </Reveal>
 
-          {/* Right: facade + map (lighter framing) */}
-          <Reveal delay={150}>
-            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          {/* Right: facade + map (matches left column height on desktop) */}
+          <Reveal delay={150} className="md:h-full">
+            <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
               <img
                 src={storeFront}
                 alt="Fachada da loja Pisos do Bosque em Cachoeirinha"
                 loading="lazy"
-                className="h-40 w-full object-cover sm:h-48 md:h-56"
+                className="h-40 w-full shrink-0 object-cover sm:h-48 md:h-56"
               />
               <iframe
                 title="Localização Pisos do Bosque"
                 src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="block h-48 w-full border-0 border-t border-border sm:h-56 md:h-64"
+                className="block h-48 w-full flex-1 border-0 border-t border-border sm:h-56 md:h-auto md:min-h-56"
                 allowFullScreen
               />
               <a
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 border-t border-border bg-white p-3 text-sm font-semibold text-brand-green transition hover:bg-brand-cream"
+                className="flex shrink-0 items-center justify-center gap-2 border-t border-border bg-white p-3 text-sm font-semibold text-brand-green transition hover:bg-brand-cream"
               >
                 <MapPin className="h-5 w-5 text-brand-orange" />
                 Abrir rota no Google Maps
