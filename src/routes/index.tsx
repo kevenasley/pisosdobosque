@@ -1478,114 +1478,134 @@ function Footer() {
     { href: "#produtos", label: "Louças & Metais" },
   ];
 
+  const socials = (
+    <div className="mt-6 flex gap-3 md:justify-start justify-center">
+      <a
+        href="https://www.instagram.com/pisosdobosque"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
+      >
+        <Instagram className="h-4 w-4" />
+      </a>
+      <a
+        href="https://www.facebook.com/pisosdobosque"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Facebook"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
+      >
+        <Facebook className="h-4 w-4" />
+      </a>
+      <a
+        href="https://wa.me/5551984905782"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
+      >
+        <WhatsAppIcon className="h-4 w-4" />
+      </a>
+    </div>
+  );
+
   return (
     <footer className="bg-brand-green-dark text-white/85">
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
-        {/* Top: brand + tagline + social */}
-        <div className="flex flex-col items-center text-center">
+        {/* Mobile: centered brand block */}
+        <div className="flex flex-col items-center text-center md:hidden">
           <Logo variant="light" />
-          <p className="mt-5 max-w-md text-sm text-white/70 [text-wrap:balance] md:text-base">
+          <p className="mt-5 max-w-md text-sm text-white/70 [text-wrap:balance]">
             Há mais de 20 anos oferecendo pisos e revestimentos com preço justo
             em Cachoeirinha e região metropolitana.
           </p>
-          <div className="mt-6 flex gap-3">
-            <a
-              href="https://www.instagram.com/pisosdobosque"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-            <a
-              href="https://www.facebook.com/pisosdobosque"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
-            >
-              <Facebook className="h-4 w-4" />
-            </a>
-            <a
-              href="https://wa.me/5551984905782"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
-            >
-              <WhatsAppIcon className="h-4 w-4" />
-            </a>
-          </div>
+          {socials}
         </div>
 
-        {/* Divider */}
-        <div className="mt-12 h-px w-full bg-white/10" />
+        {/* Mobile divider */}
+        <div className="mt-12 h-px w-full bg-white/10 md:hidden" />
 
-        {/* Columns — accordion on mobile, grid on desktop */}
-        <div className="mt-8 md:mt-12 md:grid md:grid-cols-3 md:gap-12">
-          <FooterColumn title="Navegação">
-            <ul className="space-y-2.5 text-sm text-white/75">
-              {navLinks.map((l) => (
-                <li key={l.label}>
-                  <a href={l.href} className="transition hover:text-brand-orange">
-                    {l.label}
+        {/* Content grid — accordion on mobile, 4 columns on desktop */}
+        <div className="mt-8 md:mt-0 md:grid md:grid-cols-12 md:gap-10 lg:gap-12">
+          {/* Desktop brand column */}
+          <div className="hidden md:col-span-4 md:block lg:col-span-5">
+            <Logo variant="light" />
+            <p className="mt-5 max-w-sm text-sm text-white/70 [text-wrap:balance] md:text-base">
+              Há mais de 20 anos oferecendo pisos e revestimentos com preço
+              justo em Cachoeirinha e região metropolitana.
+            </p>
+            {socials}
+          </div>
+
+          <div className="md:col-span-2 lg:col-span-2">
+            <FooterColumn title="Navegação">
+              <ul className="space-y-2.5 text-sm text-white/75">
+                {navLinks.map((l) => (
+                  <li key={l.label}>
+                    <a href={l.href} className="transition hover:text-brand-orange">
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </FooterColumn>
+          </div>
+
+          <div className="md:col-span-3 lg:col-span-2">
+            <FooterColumn title="Categorias">
+              <ul className="space-y-2.5 text-sm text-white/75">
+                {categorias.map((c) => (
+                  <li key={c.label}>
+                    <a href={c.href} className="transition hover:text-brand-orange">
+                      {c.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </FooterColumn>
+          </div>
+
+          <div className="md:col-span-3 lg:col-span-3">
+            <FooterColumn title="Contato">
+              <ul className="space-y-3 text-sm text-white/75">
+                <li className="flex items-start gap-2.5">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
+                  <span className="[text-wrap:balance]">
+                    Av. Capitão Garibaldi Pinto dos Santos, 468
+                    <br />
+                    Jardim do Bosque — Cachoeirinha/RS
+                  </span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <WhatsAppIcon className="h-4 w-4 shrink-0 text-brand-orange" />
+                  <a
+                    href="https://wa.me/5551984905782"
+                    className="hover:text-brand-orange"
+                  >
+                    (51) 98490-5782
                   </a>
                 </li>
-              ))}
-            </ul>
-          </FooterColumn>
-
-          <FooterColumn title="Categorias">
-            <ul className="space-y-2.5 text-sm text-white/75">
-              {categorias.map((c) => (
-                <li key={c.label}>
-                  <a href={c.href} className="transition hover:text-brand-orange">
-                    {c.label}
+                <li className="flex items-center gap-2.5">
+                  <Mail className="h-4 w-4 shrink-0 text-brand-orange" />
+                  <a
+                    href="mailto:pisosdobosque2019@gmail.com"
+                    className="break-all hover:text-brand-orange"
+                  >
+                    pisosdobosque2019@gmail.com
                   </a>
                 </li>
-              ))}
-            </ul>
-          </FooterColumn>
-
-          <FooterColumn title="Contato">
-            <ul className="space-y-3 text-sm text-white/75">
-              <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
-                <span className="[text-wrap:balance]">
-                  Av. Capitão Garibaldi Pinto dos Santos, 468
-                  <br />
-                  Jardim do Bosque — Cachoeirinha/RS
-                </span>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <WhatsAppIcon className="h-4 w-4 shrink-0 text-brand-orange" />
-                <a
-                  href="https://wa.me/5551984905782"
-                  className="hover:text-brand-orange"
-                >
-                  (51) 98490-5782
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Mail className="h-4 w-4 shrink-0 text-brand-orange" />
-                <a
-                  href="mailto:pisosdobosque2019@gmail.com"
-                  className="break-all hover:text-brand-orange"
-                >
-                  pisosdobosque2019@gmail.com
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
-                <span>
-                  Seg a Sex: 8h–12h · 13h30–18h30
-                  <br />
-                  Sábado: 8h–12h · 13h30–17h
-                </span>
-              </li>
-            </ul>
-          </FooterColumn>
+                <li className="flex items-start gap-2.5">
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
+                  <span>
+                    Seg a Sex: 8h–12h · 13h30–18h30
+                    <br />
+                    Sábado: 8h–12h · 13h30–17h
+                  </span>
+                </li>
+              </ul>
+            </FooterColumn>
+          </div>
         </div>
 
         {/* Bottom bar */}
