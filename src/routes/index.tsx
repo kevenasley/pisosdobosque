@@ -599,13 +599,14 @@ function CategoryBlock({
           />
         </Reveal>
         <Reveal delay={100}>
-          <p className="text-sm font-semibold uppercase tracking-wide text-brand-orange">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-brand-orange">
             {eyebrow}
           </p>
-          <h3 className="mt-2 font-display text-3xl font-bold text-brand-green md:text-4xl">
+          <h3 className="mt-2 font-display text-2xl font-bold leading-tight text-brand-green md:text-3xl">
             Piso em <span className="text-brand-orange">{title}</span>
           </h3>
-          <p className="mt-4 text-muted-foreground">{desc}</p>
+          <p className="mt-3 text-sm text-muted-foreground md:text-base">{desc}</p>
+
           <a
             href={WHATSAPP_URL}
             target="_blank"
