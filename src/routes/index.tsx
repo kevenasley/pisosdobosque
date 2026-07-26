@@ -1547,14 +1547,10 @@ function Footer() {
         {/* Divider */}
         <div className="mt-12 h-px w-full bg-white/10" />
 
-        {/* Columns */}
-        <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
-          <div className="text-center md:text-left">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">
-              Navegação
-            </h4>
-            <div className="mx-auto mt-3 h-0.5 w-8 bg-brand-orange md:mx-0" />
-            <ul className="mt-5 space-y-2.5 text-sm text-white/75">
+        {/* Columns — accordion on mobile, grid on desktop */}
+        <div className="mt-8 md:mt-12 md:grid md:grid-cols-3 md:gap-12">
+          <FooterColumn title="Navegação">
+            <ul className="space-y-2.5 text-sm text-white/75">
               {navLinks.map((l) => (
                 <li key={l.label}>
                   <a href={l.href} className="transition hover:text-brand-orange">
@@ -1563,14 +1559,10 @@ function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </FooterColumn>
 
-          <div className="text-center md:text-left">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">
-              Categorias
-            </h4>
-            <div className="mx-auto mt-3 h-0.5 w-8 bg-brand-orange md:mx-0" />
-            <ul className="mt-5 space-y-2.5 text-sm text-white/75">
+          <FooterColumn title="Categorias">
+            <ul className="space-y-2.5 text-sm text-white/75">
               {categorias.map((c) => (
                 <li key={c.label}>
                   <a href={c.href} className="transition hover:text-brand-orange">
@@ -1579,15 +1571,11 @@ function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </FooterColumn>
 
-          <div className="text-center md:text-left">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">
-              Contato
-            </h4>
-            <div className="mx-auto mt-3 h-0.5 w-8 bg-brand-orange md:mx-0" />
-            <ul className="mt-5 space-y-3 text-sm text-white/75">
-              <li className="flex items-start justify-center gap-2.5 md:justify-start">
+          <FooterColumn title="Contato">
+            <ul className="space-y-3 text-sm text-white/75">
+              <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
                 <span className="[text-wrap:balance]">
                   Av. Capitão Garibaldi Pinto dos Santos, 468
@@ -1595,7 +1583,7 @@ function Footer() {
                   Jardim do Bosque — Cachoeirinha/RS
                 </span>
               </li>
-              <li className="flex items-center justify-center gap-2.5 md:justify-start">
+              <li className="flex items-center gap-2.5">
                 <WhatsAppIcon className="h-4 w-4 shrink-0 text-brand-orange" />
                 <a
                   href="https://wa.me/5551984905782"
@@ -1604,7 +1592,7 @@ function Footer() {
                   (51) 98490-5782
                 </a>
               </li>
-              <li className="flex items-center justify-center gap-2.5 md:justify-start">
+              <li className="flex items-center gap-2.5">
                 <Mail className="h-4 w-4 shrink-0 text-brand-orange" />
                 <a
                   href="mailto:pisosdobosque2019@gmail.com"
@@ -1613,7 +1601,7 @@ function Footer() {
                   pisosdobosque2019@gmail.com
                 </a>
               </li>
-              <li className="flex items-start justify-center gap-2.5 md:justify-start">
+              <li className="flex items-start gap-2.5">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
                 <span>
                   Seg a Sex: 8h–12h · 13h30–18h30
@@ -1622,7 +1610,7 @@ function Footer() {
                 </span>
               </li>
             </ul>
-          </div>
+          </FooterColumn>
         </div>
 
         {/* Bottom bar */}
