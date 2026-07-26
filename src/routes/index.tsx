@@ -352,6 +352,7 @@ function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
 function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("top");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -374,6 +375,27 @@ function Header() {
     { href: "#parceria", label: "Parceria" },
   ];
 
+  // Scroll spy to highlight active nav item
+  useEffect(() => {
+    const ids = navItems.map((n) => n.href.slice(1));
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <header
       className={`relative z-50 border-b transition-all duration-300 md:sticky md:top-0 ${
@@ -390,24 +412,38 @@ function Header() {
             smoothScrollTo("top");
           }}
           aria-label="Ir para o topo"
+          className="transition-opacity duration-200 hover:opacity-80"
         >
           <Logo />
         </a>
-        <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
-          {navItems.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              onClick={(e) => {
-                e.preventDefault();
-                smoothScrollTo(n.href);
-              }}
-              className="text-sm font-medium text-foreground transition-all duration-300 ease-in-out hover:text-brand-orange"
-            >
-              {n.label}
-            </a>
-          ))}
+        <nav aria-label="Principal" className="hidden items-center gap-2 md:flex">
+          {navItems.map((n) => {
+            const isActive = activeSection === n.href.slice(1);
+            return (
+              <a
+                key={n.href}
+                href={n.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  smoothScrollTo(n.href);
+                }}
+                className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-300 ease-out ${
+                  isActive ? "text-brand-orange" : "text-foreground hover:text-brand-orange"
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="navbar-active-indicator"
+                    className="absolute inset-0 -z-10 rounded-lg bg-brand-orange/10"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                {n.label}
+              </a>
+            );
+          })}
         </nav>
+
         <div className="hidden md:block">
           <WhatsAppButton
             ariaLabel="Fale conosco no WhatsApp"
