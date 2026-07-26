@@ -977,12 +977,17 @@ function Testimonials() {
             </div>
           </div>
         </Reveal>
-        <div className="mt-10 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-3 md:gap-6">
+        {/* Mobile: auto-playing carousel */}
+        <div className="mt-10 md:hidden">
+          <TestimonialsCarousel />
+        </div>
+        {/* Desktop/Tablet: grid */}
+        <div className="mt-10 hidden gap-5 md:mt-14 md:grid md:grid-cols-3 md:gap-6">
           {reviews.map((r, i) => (
             <Reveal
               key={i}
               delay={i * 80}
-              className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-elegant"
+              className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-elegant"
             >
               <Quote className="h-7 w-7 text-brand-orange/70" aria-hidden="true" />
               <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
