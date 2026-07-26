@@ -587,7 +587,7 @@ function Hero() {
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative flex items-center justify-center self-center">
-          <div className="relative mx-auto w-full max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg">
+          <div className="relative mx-auto w-full max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6">
             {/* Soft radial glow to anchor the image */}
             <div
               aria-hidden
