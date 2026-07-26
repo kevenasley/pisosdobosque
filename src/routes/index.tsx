@@ -29,6 +29,7 @@ import {
   Shield,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { handleAnchorClick, smoothScrollTo } from "@/lib/smooth-scroll";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
 import toolHammer from "@/assets/tool-hammer.png";
@@ -266,6 +267,12 @@ function useReveal<T extends HTMLElement>() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      el.classList.add("reveal-in");
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -374,7 +381,11 @@ function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
-        <a href="#top" aria-label="Ir para o topo">
+        <a
+          href="#top"
+          onClick={(e) => handleAnchorClick(e, "#top")}
+          aria-label="Ir para o topo"
+        >
           <Logo />
         </a>
         <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
@@ -382,7 +393,8 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              className="text-sm font-medium text-foreground transition hover:text-brand-orange"
+              onClick={(e) => handleAnchorClick(e, n.href)}
+              className="text-sm font-medium text-foreground transition-all duration-300 ease-in-out hover:text-brand-orange"
             >
               {n.label}
             </a>
@@ -420,8 +432,8 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition hover:bg-brand-cream hover:text-brand-orange"
+              onClick={(e) => handleAnchorClick(e, n.href, () => setOpen(false))}
+              className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition-all duration-300 ease-in-out hover:bg-brand-cream hover:text-brand-orange"
             >
               {n.label}
             </a>
@@ -840,7 +852,7 @@ function Comparison() {
             conquistas. Veja os benefícios que só a Pisos do Bosque oferece.
           </p>
         </Reveal>
-        <div className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur">
+        <div className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
           {/* Header */}
           <div className="grid grid-cols-2 border-b border-white/10">
             <div className="px-4 py-4 text-center sm:px-6 sm:py-5">
@@ -894,7 +906,7 @@ function Comparison() {
                 </Reveal>
                 <Reveal
                   delay={i * 60 + 40}
-                  className="flex flex-col items-center gap-2 border-l border-white/10 bg-brand-orange/[0.06] px-4 py-5 text-center sm:px-6 sm:py-6"
+                  className="flex flex-col items-center gap-2 border-l border-white/10 bg-brand-orange/5 px-4 py-5 text-center sm:px-6 sm:py-6"
                 >
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange">
                     <Check className="h-4 w-4 text-white" />
@@ -1414,8 +1426,8 @@ function BackToTop() {
     <button
       type="button"
       aria-label="Voltar ao topo"
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-6 right-5 z-40 hidden h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all md:flex ${
+      onClick={() => smoothScrollTo(document.body, { offset: 0, duration: 600 })}
+      className={`fixed bottom-6 right-5 z-40 hidden h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-md md:flex ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"
@@ -1466,6 +1478,7 @@ function HomePage() {
     <div className="min-h-screen bg-background font-sans">
       <a
         href="#top"
+        onClick={(e) => handleAnchorClick(e, "#top")}
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand-green focus:px-4 focus:py-2 focus:text-white"
       >
         Pular para o conteúdo

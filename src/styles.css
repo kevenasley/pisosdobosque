@@ -113,14 +113,17 @@
   }
 
   html {
+    /* Native fallback; primary scroll motion is rAF-based (see smooth-scroll.ts) */
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
+    overflow-x: clip;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -137,6 +140,7 @@
     color: white;
   }
 }
+
 
 @utility gradient-hero {
   background-image: var(--gradient-hero);
