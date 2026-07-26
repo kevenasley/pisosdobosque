@@ -275,6 +275,14 @@ function useReveal<T extends HTMLElement>() {
       el.classList.add("reveal-in");
       return;
     }
+    // Immediate check: if the element is already in the viewport at mount
+    // (e.g. after a filter/tab swap), reveal it right away.
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.top < vh - 40 && rect.bottom > 0) {
+      el.classList.add("reveal-in");
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -291,6 +299,7 @@ function useReveal<T extends HTMLElement>() {
   }, []);
   return ref;
 }
+
 
 function Reveal({
   className = "",
@@ -349,6 +358,35 @@ function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
   );
 }
 
+function TopBar() {
+  return (
+    <div
+      aria-label="Informações de contato"
+      className="hidden border-b border-white/5 bg-[oklch(0.22_0.02_150)] text-white/70 md:block"
+    >
+      <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-6 px-5 text-[12px] md:px-8">
+        <div className="flex items-center gap-5">
+          <span className="inline-flex items-center gap-1.5">
+            <MapPin className="h-3.5 w-3.5 text-brand-orange/80" aria-hidden />
+            Av. Capitão Garibaldi Pinto dos Santos, 468 — Cachoeirinha/RS
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Clock className="h-3.5 w-3.5 text-brand-orange/80" aria-hidden />
+            Seg a Sex 8h–18h30 · Sáb 8h–13h
+          </span>
+        </div>
+        <a
+          href="tel:+555134701212"
+          className="inline-flex items-center gap-1.5 text-white/80 transition-colors duration-200 hover:text-white"
+        >
+          <Phone className="h-3.5 w-3.5 text-brand-orange/80" aria-hidden />
+          (51) 3470-1212
+        </a>
+      </div>
+    </div>
+  );
+}
+
 function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -372,8 +410,8 @@ function Header() {
     { href: "#top", label: "Início" },
     { href: "#produtos", label: "Produtos" },
     { href: "#sobre", label: "Sobre Nós" },
-    { href: "#parceria", label: "Parceria" },
   ];
+
 
   // Scroll spy to highlight active nav item
   useEffect(() => {
@@ -1453,7 +1491,7 @@ function Footer() {
   const navLinks = [
     { href: "#sobre", label: "Sobre Nós" },
     { href: "#produtos", label: "Produtos" },
-    { href: "#parceria", label: "Por que escolher" },
+    
     { href: "#depoimentos", label: "Depoimentos" },
     { href: "#faq", label: "Dúvidas Frequentes" },
   ];
@@ -1691,6 +1729,7 @@ function HomePage() {
       >
         Pular para o conteúdo
       </a>
+      <TopBar />
       <Header />
       <main>
         <Hero />
