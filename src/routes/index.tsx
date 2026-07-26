@@ -1755,7 +1755,7 @@ function HomePage() {
       >
         Pular para o conteúdo
       </a>
-      <TopBar />
+      
       <Header />
       <main>
         <Hero />
