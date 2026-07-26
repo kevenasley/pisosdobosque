@@ -548,19 +548,20 @@ function ProductCard({ p }: { p: Product }) {
         />
       </div>
       <div className="flex flex-1 flex-col p-4 text-center">
-        <h4 className="min-h-[2.5rem] text-sm font-semibold leading-tight text-foreground">
+        <h4 className="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-tight [text-wrap:balance] text-foreground">
           {p.name}
         </h4>
         <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
           {p.size}
         </p>
         <div className="mt-3 flex flex-1 flex-col justify-end">
-          <p className="font-display text-xl font-extrabold leading-none text-brand-green">
+          <p className="font-display text-lg font-bold leading-none text-brand-green">
             {p.price}
           </p>
           <p className="mt-1 text-[11px] text-muted-foreground">
             em até 12x sem juros
           </p>
+
           <a
             href={WHATSAPP_URL}
             target="_blank"
