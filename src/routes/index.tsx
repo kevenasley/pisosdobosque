@@ -814,49 +814,73 @@ function Comparison() {
             conquistas. Veja os benefícios que só a Pisos do Bosque oferece.
           </p>
         </Reveal>
-        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-          <div className="hidden text-center font-semibold uppercase tracking-wide text-white/70 md:block">
-            Outros
+        <div className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur">
+          {/* Header */}
+          <div className="grid grid-cols-2 border-b border-white/10">
+            <div className="px-4 py-4 text-center sm:px-6 sm:py-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60 sm:text-xs">
+                Tradicional
+              </p>
+              <p className="mt-1 font-display text-sm font-semibold text-white/80 sm:text-base">
+                Outras Lojas
+              </p>
+            </div>
+            <div className="border-l border-white/10 bg-brand-orange/10 px-4 py-4 text-center sm:px-6 sm:py-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-orange sm:text-xs">
+                Recomendado
+              </p>
+              <p className="mt-1 font-display text-sm font-semibold text-white sm:text-base">
+                Pisos do Bosque
+              </p>
+            </div>
           </div>
-          <div className="hidden text-center font-semibold uppercase tracking-wide text-brand-orange md:block">
-            Pisos do Bosque
-          </div>
+
+          {/* Rows */}
           {compareRows.map((r, i) => (
-            <div key={r.bad} className="contents">
+            <div
+              key={r.topic}
+              className={i < compareRows.length - 1 ? "border-b border-white/10" : ""}
+            >
+              {/* Topic bar */}
               <Reveal
                 delay={i * 60}
-                className="rounded-xl border border-white/10 bg-white/5 p-5"
+                className="px-4 py-3 text-center sm:py-4"
               >
-                <div className="flex items-start gap-3">
-                  <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
-                    <X className="h-5 w-5 text-red-300" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-white/60 md:hidden">
-                      Outros
-                    </p>
-                    <h4 className="font-semibold text-white">{r.bad}</h4>
-                    <p className="mt-1 text-sm text-white/70">{r.badDesc}</p>
-                  </div>
-                </div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-orange sm:text-xs">
+                  {r.topic}
+                </p>
               </Reveal>
-              <Reveal
-                delay={i * 60 + 30}
-                className="rounded-xl border border-brand-orange/30 bg-brand-orange/10 p-5"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-orange">
-                    <Check className="h-5 w-5 text-white" />
+
+              <div className="grid grid-cols-2">
+                <Reveal
+                  delay={i * 60 + 20}
+                  className="flex flex-col items-center gap-2 px-4 py-5 text-center sm:px-6 sm:py-6"
+                >
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10">
+                    <X className="h-4 w-4 text-white/60" />
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-brand-orange md:hidden">
-                      Pisos do Bosque
-                    </p>
-                    <h4 className="font-semibold text-white">{r.good}</h4>
-                    <p className="mt-1 text-sm text-white/80">{r.goodDesc}</p>
+                  <h4 className="text-sm font-semibold text-white/90 [text-wrap:balance] sm:text-base">
+                    {r.bad}
+                  </h4>
+                  <p className="text-xs text-white/60 [text-wrap:balance] sm:text-sm">
+                    {r.badDesc}
+                  </p>
+                </Reveal>
+                <Reveal
+                  delay={i * 60 + 40}
+                  className="flex flex-col items-center gap-2 border-l border-white/10 bg-brand-orange/[0.06] px-4 py-5 text-center sm:px-6 sm:py-6"
+                >
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange">
+                    <Check className="h-4 w-4 text-white" />
                   </div>
-                </div>
-              </Reveal>
+                  <h4 className="text-sm font-semibold text-white [text-wrap:balance] sm:text-base">
+                    {r.good}
+                  </h4>
+                  <p className="text-xs text-white/80 [text-wrap:balance] sm:text-sm">
+                    {r.goodDesc}
+                  </p>
+                </Reveal>
+              </div>
             </div>
           ))}
         </div>
