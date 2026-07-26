@@ -990,7 +990,7 @@ function CTA() {
     <section className="relative overflow-hidden gradient-hero py-14">
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 text-center text-white md:px-8">
         <Shield className="h-10 w-10" />
-        <h2 className="font-display text-2xl font-bold md:text-4xl">
+        <h2 className="font-display text-2xl font-bold [text-wrap:balance] md:text-4xl">
           Pronto para transformar sua obra com preço justo?
         </h2>
         <p className="max-w-2xl text-white/90">
