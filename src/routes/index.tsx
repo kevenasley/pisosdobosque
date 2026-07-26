@@ -544,7 +544,7 @@ function ProductCard({ p }: { p: Product }) {
       aria-label={`Consultar ${p.name} no WhatsApp`}
       className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-elegant"
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+      <div className="relative aspect-square overflow-hidden bg-muted">
         <img
           src={p.img}
           alt={p.name}
