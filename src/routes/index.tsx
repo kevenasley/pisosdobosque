@@ -412,10 +412,8 @@ function Header() {
 
   return (
     <header
-      className={`relative z-50 border-b transition-all duration-300 md:sticky md:top-0 ${
-        scrolled
-          ? "border-border/60 bg-background/90 shadow-sm backdrop-blur-lg"
-          : "border-transparent bg-background/70 backdrop-blur"
+      className={`relative z-50 border-b bg-white transition-all duration-300 md:sticky md:top-0 ${
+        scrolled ? "border-border/60 shadow-sm" : "border-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
