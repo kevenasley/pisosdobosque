@@ -9,4 +9,4 @@ export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURICo
   WHATSAPP_DEFAULT_MESSAGE,
 )}`;
 export const SHEETS_WEBHOOK_URL =
-  "https://script.google.com/macros/s/XXX/exec";
+  "https://script.google.com/macros/s/AKfycbxYvuZx6bJ90DpL2zggkDGepJlBGN3o1DtjJtqVHHbrpUOG5-zBZrgMjJqjqUi2uuCv_g/exec";
