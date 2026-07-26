@@ -1379,28 +1379,6 @@ function About() {
   );
 }
 
-function CTA() {
-  return (
-    <section className="relative overflow-hidden gradient-hero py-14">
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-6 px-5 text-center text-white md:px-8">
-        <Shield className="h-10 w-10" />
-        <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight md:text-4xl">
-          Pronto para transformar sua obra com preço justo?
-        </h2>
-        <p className="max-w-2xl text-white/90">
-          Fale agora com nosso time e receba um atendimento personalizado. Sem
-          compromisso, com o melhor preço da região.
-        </p>
-        <WhatsAppButton
-          ariaLabel="Falar agora no WhatsApp"
-          className="px-8 py-4 text-base"
-        >
-          Falar Agora no WhatsApp
-        </WhatsAppButton>
-      </div>
-    </section>
-  );
-}
 
 function FAQ() {
   return (
