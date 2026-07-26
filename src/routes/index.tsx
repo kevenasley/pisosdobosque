@@ -1338,6 +1338,7 @@ function About() {
             </div>
           </Reveal>
         </div>
+        </div>
 
         {/* Compact info strip */}
         <Reveal delay={200}>
