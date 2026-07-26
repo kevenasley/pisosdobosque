@@ -906,7 +906,8 @@ function About() {
     <section id="sobre" className="bg-brand-cream py-16 md:py-24">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 md:grid-cols-2 md:px-8">
         <Reveal>
-          <h2 className="font-display text-3xl font-bold text-brand-green md:text-4xl">
+          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+
             Conheça Nossa História
           </h2>
           <p className="mt-4 italic text-muted-foreground">
