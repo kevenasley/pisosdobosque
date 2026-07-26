@@ -767,8 +767,10 @@ function Products() {
     { key: "vinilicos", label: "Vinílicos" },
   ];
 
+  const totalCount = filtered.reduce((sum, c) => sum + c.products.length, 0);
+
   return (
-    <section id="produtos" className="bg-brand-cream py-16 md:py-24">
+    <section id="produtos" className="bg-brand-showroom py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
@@ -786,7 +788,7 @@ function Products() {
         <div
           role="tablist"
           aria-label="Filtrar categorias"
-          className="mx-auto mt-8 flex max-w-full flex-wrap justify-center gap-2 rounded-md border border-border bg-card p-1.5 md:w-fit"
+          className="mt-8 flex flex-wrap justify-center gap-2"
         >
           {tabs.map((t) => {
             const isActive = active === t.key;
@@ -796,16 +798,16 @@ function Products() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActive(t.key)}
-                className={`relative rounded-md px-5 py-2 text-sm font-semibold transition-colors duration-300 ease-out ${
+                className={`relative rounded-full px-5 py-2 text-sm font-semibold transition-colors duration-300 ease-out ${
                   isActive
                     ? "text-white"
-                    : "text-muted-foreground hover:text-brand-green"
+                    : "border border-border bg-white text-muted-foreground hover:border-brand-orange/40 hover:text-brand-green"
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="products-tab-indicator"
-                    className="absolute inset-0 rounded-md bg-brand-orange shadow-orange"
+                    className="absolute inset-0 rounded-full bg-brand-orange shadow-orange"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -814,6 +816,16 @@ function Products() {
             );
           })}
         </div>
+
+        <Reveal className="mt-10 flex flex-col items-start justify-between gap-2 border-b border-border/70 pb-4 sm:flex-row sm:items-end">
+          <h3 className="font-display text-xl font-bold leading-tight text-foreground md:text-2xl">
+            Nossos Pisos e Revestimentos
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Exibindo <span className="font-semibold text-foreground">{totalCount}</span>{" "}
+            {totalCount === 1 ? "produto" : "produtos"}
+          </p>
+        </Reveal>
 
         <AnimatePresence mode="wait">
           <motion.div
