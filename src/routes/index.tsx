@@ -1487,6 +1487,39 @@ function FAQ() {
   );
 }
 
+function FooterColumn({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <details
+      className="group border-b border-white/10 py-4 md:border-0 md:py-0 [&_summary::-webkit-details-marker]:hidden"
+      // Desktop: always expanded via CSS
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-white md:cursor-default md:pointer-events-none">
+        <span>{title}</span>
+        <svg
+          className="h-4 w-4 text-white/60 transition-transform duration-300 group-open:rotate-180 md:hidden"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </summary>
+      <div className="hidden mt-3 h-0.5 w-8 bg-brand-orange md:block" />
+      <div className="mt-4 md:mt-5">{children}</div>
+    </details>
+  );
+}
+
 function Footer() {
   const navLinks = [
     { href: "#sobre", label: "Sobre Nós" },
