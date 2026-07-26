@@ -358,37 +358,6 @@ function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
   );
 }
 
-function TopBar() {
-  return (
-    <div
-      aria-label="Informações de contato"
-      className="hidden border-b border-black/[0.06] bg-[oklch(0.985_0.004_85)] text-[oklch(0.45_0.01_150)] md:block"
-    >
-      <div className="mx-auto flex h-10 max-w-7xl items-center justify-between gap-6 px-5 text-[12px] tracking-tight md:px-8">
-        {/* Left: endereço completo */}
-        <span className="inline-flex items-center gap-1.5">
-          <MapPin className="h-3.5 w-3.5 shrink-0 text-[oklch(0.55_0.01_150)]" aria-hidden />
-          Av. Capitão Garibaldi Pinto dos Santos, 468 — Jardim do Bosque, Cachoeirinha/RS
-        </span>
-
-        {/* Right: horário + telefone */}
-        <div className="flex items-center divide-x divide-black/10">
-          <span className="inline-flex items-center gap-1.5 pr-4">
-            <Clock className="h-3.5 w-3.5 text-[oklch(0.55_0.01_150)]" aria-hidden />
-            Seg–Sex 8h–18h30 · Sáb 8h–13h
-          </span>
-          <a
-            href="tel:+555134701212"
-            className="inline-flex items-center gap-1.5 pl-4 font-medium text-[oklch(0.35_0.01_150)] transition-colors duration-200 hover:text-brand-orange"
-          >
-            <Phone className="h-3.5 w-3.5 text-[oklch(0.55_0.01_150)]" aria-hidden />
-            (51) 3470-1212
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 
 
@@ -633,8 +602,62 @@ function Hero() {
               decoding="async"
               className="float-y w-full drop-shadow-2xl"
             />
+
+            {/* Floating info badges — desktop only */}
+            <div
+              aria-label="Endereço da loja"
+              className="hidden md:flex absolute -left-6 top-6 lg:-left-10 lg:top-10 items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 animate-[float-y_6s_ease-in-out_infinite]"
+            >
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-orange/10 text-brand-orange">
+                <MapPin className="h-4 w-4" aria-hidden />
+              </div>
+              <div className="text-left leading-tight">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Nossa loja
+                </div>
+                <div className="text-[13px] font-semibold text-foreground">
+                  Cachoeirinha/RS
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="tel:+555134701212"
+              aria-label="Ligar para (51) 3470-1212"
+              className="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 lg:-right-10 items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 transition hover:-translate-y-[calc(50%+2px)] hover:shadow-xl animate-[float-y_6s_ease-in-out_infinite_1s]"
+            >
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-green/10 text-brand-green">
+                <Phone className="h-4 w-4" aria-hidden />
+              </div>
+              <div className="text-left leading-tight">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Ligue agora
+                </div>
+                <div className="text-[13px] font-semibold text-foreground">
+                  (51) 3470-1212
+                </div>
+              </div>
+            </a>
+
+            <div
+              aria-label="Horário de atendimento"
+              className="hidden md:flex absolute -left-4 bottom-8 lg:-left-8 lg:bottom-12 items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 animate-[float-y_6s_ease-in-out_infinite_2s]"
+            >
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-orange/10 text-brand-orange">
+                <Clock className="h-4 w-4" aria-hidden />
+              </div>
+              <div className="text-left leading-tight">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Aberto agora
+                </div>
+                <div className="text-[13px] font-semibold text-foreground">
+                  Seg–Sex 8h–18h30
+                </div>
+              </div>
+            </div>
           </div>
         </Reveal>
+
       </div>
     </section>
   );
@@ -1755,7 +1778,7 @@ function HomePage() {
       >
         Pular para o conteúdo
       </a>
-      <TopBar />
+      
       <Header />
       <main>
         <Hero />
