@@ -606,8 +606,8 @@ function Hero() {
               loading="eager"
               decoding="async"
               className="w-full drop-shadow-2xl will-change-transform"
-              animate={{ y: [0, -18, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
         </Reveal>
