@@ -461,12 +461,16 @@ function Header() {
         </nav>
 
         <div className="hidden md:block">
-          <WhatsAppButton
-            ariaLabel="Fale conosco no WhatsApp"
-            className="text-sm"
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Fale conosco no WhatsApp"
+            className="inline-flex items-center justify-center gap-2 rounded-md border-2 border-brand-green bg-transparent px-5 py-2.5 text-sm font-semibold text-brand-green transition-all duration-300 ease-out hover:bg-brand-green hover:text-white hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
           >
+            <WhatsAppIcon className="h-4 w-4" />
             Fale Conosco no WhatsApp
-          </WhatsAppButton>
+          </a>
         </div>
         <button
           type="button"
@@ -655,7 +659,7 @@ function ProductCard({ p }: { p: Product }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Consultar ${p.name} no WhatsApp`}
-      className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-orange/30 hover:shadow-xl active:translate-y-0 active:scale-[0.99]"
+      className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md active:translate-y-0 active:scale-[0.99]"
     >
       <div className="relative aspect-square overflow-hidden bg-muted">
         <img
@@ -670,26 +674,24 @@ function ProductCard({ p }: { p: Product }) {
         <h4 className="line-clamp-3 min-h-[3.75rem] text-sm font-semibold leading-tight [text-wrap:balance] text-foreground">
           {p.name}
         </h4>
-        <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
+        <p className="mt-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground md:text-[13px]">
           {p.size}
         </p>
 
         <div className="mt-auto pt-4">
-          <div className="border-t border-border pt-3">
-            <p className="font-display text-base font-bold leading-none text-brand-green sm:text-lg">
-              {p.price}
-            </p>
-            <p className="mt-1 text-[11px] text-muted-foreground">
-              em até 12x sem juros
-            </p>
+          <p className="font-display text-lg font-bold leading-none text-brand-green sm:text-xl">
+            {p.price}
+          </p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            em até 12x sem juros
+          </p>
 
-            <span
-              className="mt-3 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-3 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
-            >
-              <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
-              Quero este
-            </span>
-          </div>
+          <span
+            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-3 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
+          >
+            <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
+            Quero este
+          </span>
         </div>
       </div>
     </a>
@@ -765,8 +767,11 @@ function Products() {
     { key: "vinilicos", label: "Vinílicos" },
   ];
 
+  let totalCount = 0;
+  for (const c of filtered) totalCount += c.products.length;
+
   return (
-    <section id="produtos" className="bg-brand-cream py-16 md:py-24">
+    <section id="produtos" className="bg-brand-showroom py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
@@ -784,7 +789,7 @@ function Products() {
         <div
           role="tablist"
           aria-label="Filtrar categorias"
-          className="mx-auto mt-8 flex max-w-full flex-wrap justify-center gap-2 rounded-md border border-border bg-card p-1.5 md:w-fit"
+          className="mt-8 flex flex-wrap justify-center gap-2"
         >
           {tabs.map((t) => {
             const isActive = active === t.key;
@@ -794,16 +799,16 @@ function Products() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActive(t.key)}
-                className={`relative rounded-md px-5 py-2 text-sm font-semibold transition-colors duration-300 ease-out ${
+                className={`relative rounded-full px-5 py-2 text-sm font-semibold transition-colors duration-300 ease-out ${
                   isActive
                     ? "text-white"
-                    : "text-muted-foreground hover:text-brand-green"
+                    : "border border-border bg-white text-muted-foreground hover:border-brand-orange/40 hover:text-brand-green"
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="products-tab-indicator"
-                    className="absolute inset-0 rounded-md bg-brand-orange shadow-orange"
+                    className="absolute inset-0 rounded-full bg-brand-orange shadow-orange"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -812,6 +817,16 @@ function Products() {
             );
           })}
         </div>
+
+        <Reveal className="mt-10 flex flex-col items-start justify-between gap-2 border-b border-border/70 pb-4 sm:flex-row sm:items-end">
+          <h3 className="font-display text-xl font-bold leading-tight text-foreground md:text-2xl">
+            Nossos Pisos e Revestimentos
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Exibindo <span className="font-semibold text-foreground">{totalCount}</span>{" "}
+            {totalCount === 1 ? "produto" : "produtos"}
+          </p>
+        </Reveal>
 
         <AnimatePresence mode="wait">
           <motion.div

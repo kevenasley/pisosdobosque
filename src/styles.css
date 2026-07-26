@@ -52,6 +52,7 @@
   --color-brand-green-dark: var(--brand-green-dark);
   --color-brand-whatsapp: var(--brand-whatsapp);
   --color-brand-cream: var(--brand-cream);
+  --color-brand-showroom: var(--brand-showroom);
 
   --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
@@ -100,6 +101,7 @@
   --brand-green-dark: oklch(0.28 0.08 155);
   --brand-whatsapp: oklch(0.72 0.18 155);
   --brand-cream: oklch(0.98 0.015 85);
+  --brand-showroom: oklch(0.975 0.003 250);
 
   --gradient-hero: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-orange-dark) 100%);
   --gradient-green: linear-gradient(160deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
