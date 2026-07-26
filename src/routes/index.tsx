@@ -1462,7 +1462,7 @@ function Footer() {
   const navLinks = [
     { href: "#sobre", label: "Sobre Nós" },
     { href: "#produtos", label: "Produtos" },
-    { href: "#parceria", label: "Por que escolher" },
+    
     { href: "#depoimentos", label: "Depoimentos" },
     { href: "#faq", label: "Dúvidas Frequentes" },
   ];
