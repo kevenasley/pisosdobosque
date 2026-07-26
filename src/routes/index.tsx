@@ -30,6 +30,8 @@ import {
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
+import { AnimatePresence, motion } from "framer-motion";
+
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
 import toolHammer from "@/assets/tool-hammer.png";
@@ -325,7 +327,7 @@ function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
-      className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition hover:brightness-95 hover:-translate-y-0.5 active:translate-y-0 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 ease-out hover:brightness-95 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] ${className}`}
     >
       <WhatsAppIcon className="h-5 w-5" />
       {children}
@@ -350,6 +352,7 @@ function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
 function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("top");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -372,6 +375,27 @@ function Header() {
     { href: "#parceria", label: "Parceria" },
   ];
 
+  // Scroll spy to highlight active nav item
+  useEffect(() => {
+    const ids = navItems.map((n) => n.href.slice(1));
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <header
       className={`relative z-50 border-b transition-all duration-300 md:sticky md:top-0 ${
@@ -388,24 +412,38 @@ function Header() {
             smoothScrollTo("top");
           }}
           aria-label="Ir para o topo"
+          className="transition-opacity duration-200 hover:opacity-80"
         >
           <Logo />
         </a>
-        <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
-          {navItems.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              onClick={(e) => {
-                e.preventDefault();
-                smoothScrollTo(n.href);
-              }}
-              className="text-sm font-medium text-foreground transition-all duration-300 ease-in-out hover:text-brand-orange"
-            >
-              {n.label}
-            </a>
-          ))}
+        <nav aria-label="Principal" className="hidden items-center gap-2 md:flex">
+          {navItems.map((n) => {
+            const isActive = activeSection === n.href.slice(1);
+            return (
+              <a
+                key={n.href}
+                href={n.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  smoothScrollTo(n.href);
+                }}
+                className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-300 ease-out ${
+                  isActive ? "text-brand-orange" : "text-foreground hover:text-brand-orange"
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="navbar-active-indicator"
+                    className="absolute inset-0 -z-10 rounded-lg bg-brand-orange/10"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                {n.label}
+              </a>
+            );
+          })}
         </nav>
+
         <div className="hidden md:block">
           <WhatsAppButton
             ariaLabel="Fale conosco no WhatsApp"
@@ -598,7 +636,7 @@ function ProductCard({ p }: { p: Product }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Consultar ${p.name} no WhatsApp`}
-      className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-elegant"
+      className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-orange/30 hover:shadow-xl active:translate-y-0 active:scale-[0.99]"
     >
       <div className="relative aspect-square overflow-hidden bg-muted">
         <img
@@ -729,34 +767,55 @@ function Products() {
           aria-label="Filtrar categorias"
           className="mx-auto mt-8 flex max-w-full flex-wrap justify-center gap-2 rounded-md border border-border bg-card p-1.5 md:w-fit"
         >
-          {tabs.map((t) => (
-            <button
-              key={t.key}
-              role="tab"
-              aria-selected={active === t.key}
-              onClick={() => setActive(t.key)}
-              className={`rounded-md px-5 py-2 text-sm font-semibold transition ${
-                active === t.key
-                  ? "bg-brand-orange text-white shadow-orange"
-                  : "text-muted-foreground hover:text-brand-green"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
+          {tabs.map((t) => {
+            const isActive = active === t.key;
+            return (
+              <button
+                key={t.key}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActive(t.key)}
+                className={`relative rounded-md px-5 py-2 text-sm font-semibold transition-colors duration-300 ease-out ${
+                  isActive
+                    ? "text-white"
+                    : "text-muted-foreground hover:text-brand-green"
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="products-tab-indicator"
+                    className="absolute inset-0 -z-10 rounded-md bg-brand-orange shadow-orange"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                {t.label}
+              </button>
+            );
+          })}
         </div>
 
-        {filtered.map((c) => (
-          <CategoryBlock
-            key={c.key}
-            eyebrow={c.eyebrow}
-            title={c.title}
-            desc={c.desc}
-            image={c.image}
-            products={c.products}
-            bg={c.bg}
-          />
-        ))}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+          >
+            {filtered.map((c) => (
+              <CategoryBlock
+                key={c.key}
+                eyebrow={c.eyebrow}
+                title={c.title}
+                desc={c.desc}
+                image={c.image}
+                products={c.products}
+                bg={c.bg}
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
       </div>
     </section>
   );
