@@ -1374,6 +1374,7 @@ function About() {
             </div>
           </div>
         </Reveal>
+      </div>
     </section>
   );
 }
