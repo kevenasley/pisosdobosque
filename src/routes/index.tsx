@@ -603,13 +603,8 @@ function Hero() {
               className="float-y w-full drop-shadow-2xl"
             />
 
+            </div>
           </div>
-        </Reveal>
-
-      </div>
-    </section>
-  );
-}
         </Reveal>
 
       </div>
