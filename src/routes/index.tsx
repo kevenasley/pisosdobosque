@@ -1341,13 +1341,23 @@ function About() {
           {/* Right: interactive Google Map */}
           <Reveal delay={150}>
             <div className="overflow-hidden rounded-2xl border-4 border-brand-green bg-brand-green p-2 shadow-elegant">
+              {/* Facade image */}
               <div className="overflow-hidden rounded-lg">
+                <img
+                  src={storeFront}
+                  alt="Fachada da loja Pisos do Bosque em Cachoeirinha"
+                  loading="lazy"
+                  className="h-40 w-full object-cover sm:h-48 md:h-56"
+                />
+              </div>
+              {/* Map below facade */}
+              <div className="mt-2 overflow-hidden rounded-lg">
                 <iframe
                   title="Localização Pisos do Bosque"
                   src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS&output=embed"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="h-[360px] w-full border-0 md:h-[420px]"
+                  className="h-48 w-full border-0 sm:h-56 md:h-64"
                   allowFullScreen
                 />
               </div>
@@ -1355,15 +1365,10 @@ function About() {
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 flex items-center gap-3 rounded-lg bg-white/95 p-3 transition hover:bg-white"
+                className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-white/95 p-3 text-sm font-semibold text-brand-green transition hover:bg-white"
               >
-                <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-brand-orange/20 to-brand-green/20">
-                  <MapPin className="h-6 w-6 text-brand-orange" />
-                </div>
-                <p className="text-sm text-foreground">
-                  Abrir rota no Google Maps e{" "}
-                  <strong className="text-brand-green">visitar a loja</strong>
-                </p>
+                <MapPin className="h-5 w-5 text-brand-orange" />
+                Abrir rota no Google Maps
               </a>
             </div>
           </Reveal>
