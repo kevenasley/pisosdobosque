@@ -605,9 +605,9 @@ function ProductCard({ p }: { p: Product }) {
             </p>
 
             <span
-              className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-brand-whatsapp px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
+              className="mt-3 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-3 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
             >
-              <WhatsAppIcon className="h-3.5 w-3.5" />
+              <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
               Quero este
             </span>
           </div>
