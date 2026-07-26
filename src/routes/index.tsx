@@ -352,7 +352,7 @@ function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
       alt="Pisos do Bosque"
       width={2730}
       height={655}
-      className={`h-10 w-auto md:h-12 ${variant === "light" ? "brightness-0 invert" : ""}`}
+      className={`w-auto ${variant === "light" ? "h-12 brightness-0 invert md:h-16" : "h-10 md:h-12"}`}
       loading="eager"
       decoding="async"
     />
