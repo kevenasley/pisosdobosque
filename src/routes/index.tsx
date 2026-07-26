@@ -478,7 +478,7 @@ function Hero() {
           </div>
           <WhatsAppButton
             ariaLabel="Fale conosco no WhatsApp"
-            className="mt-8 w-full py-4 text-base md:max-w-md"
+            className="mx-auto mt-8 w-full max-w-xs py-4 text-base md:mx-0 md:max-w-md"
           >
             Fale Conosco no WhatsApp
           </WhatsAppButton>
