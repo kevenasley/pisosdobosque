@@ -1279,7 +1279,8 @@ function About() {
           </h2>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-10 md:mt-14 md:grid-cols-2 md:items-stretch">
+        <div className="mt-10 rounded-3xl border border-border bg-white p-5 shadow-sm md:mt-14 md:p-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-stretch">
           {/* Left: story + bullets */}
           <Reveal className="md:h-full md:flex md:flex-col md:justify-center">
             <p className="italic text-muted-foreground">
