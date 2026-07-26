@@ -1279,7 +1279,8 @@ function About() {
           </h2>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-10 md:mt-14 md:grid-cols-2 md:items-stretch">
+        <div className="mt-10 rounded-3xl border border-border bg-white p-5 shadow-sm md:mt-14 md:p-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-stretch">
           {/* Left: story + bullets */}
           <Reveal className="md:h-full md:flex md:flex-col md:justify-center">
             <p className="italic text-muted-foreground">
@@ -1337,6 +1338,7 @@ function About() {
             </div>
           </Reveal>
         </div>
+        </div>
 
         {/* Compact info strip */}
         <Reveal delay={200}>
@@ -1379,28 +1381,6 @@ function About() {
   );
 }
 
-function CTA() {
-  return (
-    <section className="relative overflow-hidden gradient-hero py-14">
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-6 px-5 text-center text-white md:px-8">
-        <Shield className="h-10 w-10" />
-        <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight md:text-4xl">
-          Pronto para transformar sua obra com preço justo?
-        </h2>
-        <p className="max-w-2xl text-white/90">
-          Fale agora com nosso time e receba um atendimento personalizado. Sem
-          compromisso, com o melhor preço da região.
-        </p>
-        <WhatsAppButton
-          ariaLabel="Falar agora no WhatsApp"
-          className="px-8 py-4 text-base"
-        >
-          Falar Agora no WhatsApp
-        </WhatsAppButton>
-      </div>
-    </section>
-  );
-}
 
 function FAQ() {
   return (
@@ -1722,7 +1702,7 @@ function HomePage() {
         <Comparison />
         <Testimonials />
         <About />
-        <CTA />
+        
         <FAQ />
       </main>
       <Footer />
