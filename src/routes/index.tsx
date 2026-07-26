@@ -915,83 +915,158 @@ function Testimonials() {
 }
 
 function About() {
+  const showroomImages = [
+    { src: showroom1, alt: "Showroom com painéis de amostras de pisos" },
+    { src: showroom2, alt: "Corredor principal do showroom Pisos do Bosque" },
+    { src: showroom3, alt: "Área de louças sanitárias e boxes de banheiro" },
+    { src: showroom4, alt: "Atendimento consultivo dentro da loja" },
+    { src: showroom5, alt: "Ambiente de bancada e revestimentos premium" },
+    { src: storeFront, alt: "Fachada da loja Pisos do Bosque em Cachoeirinha" },
+  ];
+  const mapsUrl =
+    "https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS";
+
   return (
     <section id="sobre" className="bg-brand-cream py-16 md:py-24">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-5 md:grid-cols-2 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
-
+          <h2 className="text-center font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
             Conheça Nossa História
           </h2>
-          <p className="mt-4 italic text-muted-foreground">
-            Há mais de 20 anos, a Pisos do Bosque vem transformando ambientes
-            com qualidade e confiança. Situados em Cachoeirinha, atendemos Porto
-            Alegre e toda a região metropolitana, oferecendo um estoque completo
-            para sua obra ou reforma.
-          </p>
-          <p className="mt-6 font-semibold text-foreground">
-            Motivos pelos quais somos referência na região:
-          </p>
-          <ul className="mt-3 space-y-2 text-sm text-foreground">
-            {[
-              ["Maior estoque da região:", "sempre preparados para suprir sua obra com prontidão."],
-              ["Equipe especializada:", "profissionais prontos para auxiliar você na escolha ideal."],
-              ["Compromisso com prazos:", "entrega rápida para garantir que sua obra não pare."],
-              ["Atendimento abrangente:", "levamos nossos produtos até você em toda a região."],
-            ].map(([b, t]) => (
-              <li key={b} className="flex gap-2">
-                <Check className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
-                <span>
-                  <strong>{b}</strong> {t}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
-            <div className="rounded-lg bg-card p-4 shadow-sm">
-              <p className="flex items-center gap-2 font-semibold text-brand-green">
-                <MapPin className="h-4 w-4" /> Localização
-              </p>
-              <p className="mt-1 text-muted-foreground">
-                Av. Capitão Garibaldi Pinto dos Santos, 468 — Jardim do Bosque,
-                Cachoeirinha/RS
+        </Reveal>
+
+        <div className="mt-10 grid grid-cols-1 items-start gap-10 md:mt-14 md:grid-cols-2">
+          {/* Left: story + info cards */}
+          <Reveal>
+            <p className="italic text-muted-foreground">
+              Há mais de 20 anos, a Pisos do Bosque vem transformando ambientes
+              com qualidade e confiança. Situados em Cachoeirinha, atendemos
+              Porto Alegre e toda a região metropolitana, oferecendo um estoque
+              completo para sua obra ou reforma.
+            </p>
+            <p className="mt-6 font-semibold text-foreground">
+              Motivos pelos quais somos referência na região:
+            </p>
+            <ul className="mt-3 space-y-2 text-sm text-foreground">
+              {[
+                ["Maior estoque da região:", "sempre preparados para suprir sua obra com prontidão."],
+                ["Equipe especializada:", "profissionais prontos para auxiliar você na escolha ideal."],
+                ["Compromisso com prazos:", "entrega rápida para garantir que sua obra não pare."],
+                ["Atendimento abrangente:", "levamos nossos produtos até você em toda a região."],
+              ].map(([b, t]) => (
+                <li key={b} className="flex gap-2">
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
+                  <span>
+                    <strong>{b}</strong> {t}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
+              <div className="rounded-lg bg-card p-4 shadow-sm">
+                <p className="flex items-center gap-2 font-semibold text-brand-green">
+                  <MapPin className="h-4 w-4" /> Localização
+                </p>
+                <p className="mt-1 text-muted-foreground">
+                  Av. Capitão Garibaldi Pinto dos Santos, 468 — Jardim do
+                  Bosque, Cachoeirinha/RS
+                </p>
+              </div>
+              <div className="rounded-lg bg-card p-4 shadow-sm">
+                <p className="flex items-center gap-2 font-semibold text-brand-green">
+                  <Phone className="h-4 w-4" /> Contato
+                </p>
+                <p className="mt-1 text-muted-foreground">
+                  WhatsApp: (51) 98490-5782
+                  <br />
+                  Telefone: (51) 3470-1212
+                </p>
+              </div>
+              <div className="rounded-lg bg-card p-4 shadow-sm sm:col-span-2">
+                <p className="flex items-center gap-2 font-semibold text-brand-green">
+                  <Clock className="h-4 w-4" /> Horário
+                </p>
+                <p className="mt-1 text-muted-foreground">
+                  Seg. a Sex.: 8h–12h e 13h30–18h30 · Sáb.: 8h–12h e 13h30–17h
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Right: framed store image + map CTA */}
+          <Reveal delay={150}>
+            <div className="rounded-2xl border-4 border-brand-green bg-brand-green p-2 shadow-elegant">
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block overflow-hidden rounded-lg"
+              >
+                <img
+                  src={storeFront}
+                  alt="Fachada da loja Pisos do Bosque"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3] h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+              </a>
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex items-center gap-3 rounded-lg bg-white/95 p-3 transition hover:bg-white"
+              >
+                <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-brand-orange/20 to-brand-green/20">
+                  <MapPin className="h-6 w-6 text-brand-orange" />
+                </div>
+                <p className="text-sm text-foreground">
+                  Clique no mapa ao lado e{" "}
+                  <strong className="text-brand-green">visite nossa loja</strong>
+                </p>
+              </a>
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Showroom carousel */}
+        <Reveal delay={200}>
+          <div className="mt-12 md:mt-16">
+            <div className="mb-4 flex items-end justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-brand-orange">
+                  Nosso showroom
+                </p>
+                <h3 className="font-display text-xl font-bold text-brand-green md:text-2xl">
+                  Um passeio pela nossa loja
+                </h3>
+              </div>
+              <p className="hidden text-xs text-muted-foreground sm:block">
+                Deslize para o lado →
               </p>
             </div>
-            <div className="rounded-lg bg-card p-4 shadow-sm">
-              <p className="flex items-center gap-2 font-semibold text-brand-green">
-                <Phone className="h-4 w-4" /> Contato
-              </p>
-              <p className="mt-1 text-muted-foreground">
-                WhatsApp: (51) 98490-5782
-                <br />
-                Telefone: (51) 3470-1212
-              </p>
-            </div>
-            <div className="rounded-lg bg-card p-4 shadow-sm sm:col-span-2">
-              <p className="flex items-center gap-2 font-semibold text-brand-green">
-                <Clock className="h-4 w-4" /> Horário
-              </p>
-              <p className="mt-1 text-muted-foreground">
-                Seg. a Sex.: 8h–12h e 13h30–18h30 · Sáb.: 8h–12h e 13h30–17h
-              </p>
+            <div className="rounded-2xl border-4 border-brand-green bg-brand-green p-2">
+              <div
+                className="flex snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth"
+                style={{ scrollbarWidth: "thin" }}
+              >
+                {showroomImages.map((img, i) => (
+                  <div
+                    key={i}
+                    className="relative aspect-[4/3] w-[75%] shrink-0 snap-start overflow-hidden rounded-md sm:w-[45%] md:w-[32%] lg:w-[24%]"
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover transition duration-500 hover:scale-105"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </Reveal>
-        <Reveal delay={150}>
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block overflow-hidden rounded-2xl shadow-elegant"
-          >
-            <img
-              src={storeFront}
-              alt="Fachada da loja Pisos do Bosque"
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-            />
-          </a>
         </Reveal>
       </div>
     </section>
