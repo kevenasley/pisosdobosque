@@ -381,7 +381,11 @@ function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
-        <a href="#top" aria-label="Ir para o topo">
+        <a
+          href="#top"
+          onClick={(e) => handleAnchorClick(e, "#top")}
+          aria-label="Ir para o topo"
+        >
           <Logo />
         </a>
         <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
@@ -389,7 +393,8 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              className="text-sm font-medium text-foreground transition hover:text-brand-orange"
+              onClick={(e) => handleAnchorClick(e, n.href)}
+              className="text-sm font-medium text-foreground transition-all duration-300 ease-in-out hover:text-brand-orange"
             >
               {n.label}
             </a>
@@ -427,8 +432,8 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition hover:bg-brand-cream hover:text-brand-orange"
+              onClick={(e) => handleAnchorClick(e, n.href, () => setOpen(false))}
+              className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition-all duration-300 ease-in-out hover:bg-brand-cream hover:text-brand-orange"
             >
               {n.label}
             </a>
