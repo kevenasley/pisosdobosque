@@ -431,15 +431,17 @@ function Header() {
         </a>
         <nav aria-label="Principal" className="hidden items-center gap-2 md:flex">
           {navItems.map((n) => {
-            const isActive = activeSection === n.href.slice(1);
+            const isActive = !n.disabled && activeSection === n.href.slice(1);
             return (
               <a
-                key={n.href}
+                key={n.label}
                 href={n.href}
                 onClick={(e) => {
                   e.preventDefault();
+                  if (n.disabled) return;
                   smoothScrollTo(n.href);
                 }}
+                aria-disabled={n.disabled || undefined}
                 className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-300 ease-out ${
                   isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
