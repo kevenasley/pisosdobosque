@@ -11,6 +11,29 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { captureAttribution } from "../lib/attribution";
+import { LeadCapture, openLeadCapture } from "../components/lead/LeadCapture";
+import { ConsentBanner } from "../components/ConsentBanner";
+import { GTM_ID } from "../lib/config";
+
+const consentModeScript = `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  ad_storage: 'denied', ad_user_data: 'denied',
+  ad_personalization: 'denied', analytics_storage: 'denied',
+  region: ['EEA','GB','CH']
+});
+gtag('consent', 'default', {
+  ad_storage: 'granted', ad_user_data: 'granted',
+  ad_personalization: 'granted', analytics_storage: 'granted'
+});
+gtag('set', 'ads_data_redaction', true);
+`;
+
+const gtmScript = `
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');
+`;
 
 function NotFoundComponent() {
   return (
@@ -99,6 +122,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
+    scripts: [
+      { children: consentModeScript },
+      { children: gtmScript },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -113,6 +140,15 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="gtm"
+          />
+        </noscript>
         {children}
         <Scripts />
       </body>
@@ -122,6 +158,32 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    captureAttribution();
+  }, []);
+
+  useEffect(() => {
+    // Intercepta cliques em links do WhatsApp para abrir modal de captura.
+    // Permite bypass com data-lead-bypass ou tecla modificadora.
+    function onClick(ev: MouseEvent) {
+      const target = (ev.target as HTMLElement | null)?.closest?.(
+        'a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]',
+      ) as HTMLAnchorElement | null;
+      if (!target) return;
+      if (target.dataset.leadBypass === "true") return;
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+      ev.preventDefault();
+      const ctaOrigin =
+        target.dataset.ctaOrigin ||
+        target.getAttribute("aria-label") ||
+        target.textContent?.trim().slice(0, 40) ||
+        "whatsapp_link";
+      openLeadCapture({ ctaOrigin });
+    }
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   useEffect(() => {
     let destroyed = false;
@@ -155,6 +217,8 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <LeadCapture />
+      <ConsentBanner />
     </QueryClientProvider>
   );
 }
