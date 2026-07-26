@@ -773,7 +773,7 @@ function Products() {
   for (const c of filtered) totalCount += c.products.length;
 
   return (
-    <section id="produtos" className="bg-brand-showroom py-16 md:py-24">
+    <section id="produtos" className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
