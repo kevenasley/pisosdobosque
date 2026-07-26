@@ -537,14 +537,20 @@ function Stats() {
 
 function ProductCard({ p }: { p: Product }) {
   return (
-    <div className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-elegant">
-      <div className="relative aspect-square overflow-hidden bg-muted">
+    <a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Consultar ${p.name} no WhatsApp`}
+      className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-elegant"
+    >
+      <div className="relative aspect-[4/5] overflow-hidden bg-muted">
         <img
           src={p.img}
           alt={p.name}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
         />
       </div>
       <div className="flex flex-1 flex-col p-4 text-center">
@@ -554,28 +560,29 @@ function ProductCard({ p }: { p: Product }) {
         <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
           {p.size}
         </p>
-        <div className="mt-3 flex flex-1 flex-col justify-end">
-          <p className="font-display text-lg font-bold leading-none text-brand-green">
-            {p.price}
-          </p>
-          <p className="mt-1 text-[11px] text-muted-foreground">
-            em até 12x sem juros
-          </p>
 
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Saiba mais sobre ${p.name} no WhatsApp`}
-            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-brand-whatsapp px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:brightness-95"
-          >
-            <WhatsAppIcon className="h-3.5 w-3.5" />
-            Consultar no WhatsApp
-          </a>
+        <div className="mt-auto pt-4">
+          <div className="border-t border-border pt-3">
+            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              A partir de
+            </p>
+            <p className="mt-0.5 font-display text-lg font-bold leading-none text-brand-green">
+              {p.price}
+            </p>
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              em até 12x sem juros
+            </p>
+
+            <span
+              className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-brand-whatsapp px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
+            >
+              <WhatsAppIcon className="h-3.5 w-3.5" />
+              Consultar no WhatsApp
+            </span>
+          </div>
         </div>
       </div>
-
-    </div>
+    </a>
   );
 }
 
@@ -625,7 +632,7 @@ function CategoryBlock({
           </a>
         </Reveal>
       </div>
-      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
         {products.map((p, i) => (
           <ProductCard key={i} p={p} />
         ))}
