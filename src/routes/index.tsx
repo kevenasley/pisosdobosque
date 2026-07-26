@@ -439,7 +439,7 @@ function Hero() {
               </div>
             </div>
           </div>
-          <h1 className="font-display text-3xl font-bold leading-[1.15] [text-wrap:balance] md:text-[2.25rem] lg:text-[2.5rem]">
+          <h1 className="font-display text-[2rem] font-bold leading-[1.15] [text-wrap:balance] md:text-[2.75rem] lg:text-[3.25rem]">
             Somos conhecidos por ter os{" "}
             <span className="font-extrabold">pisos mais baratos</span> da região!
           </h1>
