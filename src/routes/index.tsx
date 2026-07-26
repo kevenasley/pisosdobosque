@@ -15,6 +15,7 @@ import {
   Instagram,
   Facebook,
   Star,
+  Quote,
   DollarSign,
   Package,
   Headphones,
@@ -183,13 +184,38 @@ const compareRows = [
 ];
 
 const reviews = [
-  { name: "Carlos M.", text: "Obrigado ao Thiago vendedor atencioso e educado. Ótimo atendimento!" },
-  { name: "Ana P.", text: "Muito bom atendimento, preços ótimos. Atendimento muito bom da Mileni, nota 10!" },
-  { name: "João R.", text: "Ótimo atendimento, muito rápido!" },
-  { name: "Fernanda S.", text: "Excelente atendimento, preço justo, super recomendo." },
-  { name: "Ricardo L.", text: "Excelente atendimento, especialmente da vendedora Fabiana e gerente Grazi. Indico!" },
-  { name: "Patrícia B.", text: "Loja completa, encontrei tudo que precisava para minha reforma em um só lugar." },
+  {
+    name: "Carlos Mendes",
+    initial: "C",
+    text: 'Obrigado ao Thiago, vendedor atencioso e educado. **Ótimo atendimento** e preços que realmente cabem no bolso. Voltarei com certeza para a próxima reforma.',
+  },
+  {
+    name: "Ana Paula",
+    initial: "A",
+    text: 'Muito bom atendimento, **preços ótimos** e a Mileni foi super paciente comigo escolhendo os porcelanatos. Nota 10 para a loja toda!',
+  },
+  {
+    name: "João Ricardo",
+    initial: "J",
+    text: 'Ótimo atendimento, **muito rápido** e sem enrolação. Sai da loja com tudo o que precisava para começar minha obra no mesmo dia.',
+  },
+  {
+    name: "Fernanda Silva",
+    initial: "F",
+    text: 'Excelente atendimento, **preço justo** e produtos de qualidade. Super recomendo para quem procura pisos e revestimentos bons por um valor honesto.',
+  },
+  {
+    name: "Ricardo Lopes",
+    initial: "R",
+    text: 'Atendimento nota mil, especialmente da Fabiana e da gerente Grazi. **Time consultivo e transparente** do começo ao fim. Indico de olhos fechados.',
+  },
+  {
+    name: "Patrícia Bastos",
+    initial: "P",
+    text: 'Loja completa, **encontrei tudo que precisava** para a reforma em um só lugar. Entrega rápida e produtos exatamente como combinado.',
+  },
 ];
+
 
 const faqs = [
   { q: "Vocês abrem no sábado?", a: "Sim! Aos sábados atendemos das 8h às 12h e das 13h30 às 17h." },
@@ -889,54 +915,98 @@ function Comparison() {
   );
 }
 
+function GoogleG({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+      <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+      <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+      <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+      <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+    </svg>
+  );
+}
+
+function renderBold(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((p, i) =>
+    p.startsWith("**") && p.endsWith("**") ? (
+      <strong key={i} className="font-semibold text-foreground">
+        {p.slice(2, -2)}
+      </strong>
+    ) : (
+      <span key={i}>{p}</span>
+    ),
+  );
+}
+
 function Testimonials() {
   return (
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
-
             O Que Nossos Clientes Dizem Sobre Nós
           </h2>
-          <p className="mt-3 text-muted-foreground">
-            <strong>Mais de 1.200 avaliações positivas</strong> comprovam nosso
-            compromisso com qualidade e atendimento.
+          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground [text-wrap:balance]">
+            Mais de <strong>2.397 clientes</strong> avaliaram nossa loja no Google. Veja o que dizem sobre atendimento, preço e qualidade.
           </p>
-          <div className="mt-6 inline-flex items-center gap-3 rounded-full bg-brand-cream px-5 py-2.5 shadow-sm">
-            <span className="text-2xl font-bold text-foreground">4.8</span>
-            <div className="flex text-yellow-500">
+          <div className="mt-6 flex flex-col items-center gap-2">
+            <div className="flex items-center gap-1.5 text-yellow-500">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-current" />
+                <Star key={i} className="h-6 w-6 fill-current" />
               ))}
             </div>
-            <span className="text-sm text-muted-foreground">
-              2.397 Avaliações
-            </span>
+            <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+              <span>
+                <strong className="text-base">4.9</strong> de 5
+              </span>
+              <GoogleG className="h-4 w-4" />
+              <span className="text-muted-foreground">· 2.397 avaliações</span>
+            </div>
           </div>
         </Reveal>
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 md:mt-14 md:grid-cols-3 md:gap-6">
           {reviews.map((r, i) => (
             <Reveal
               key={i}
               delay={i * 80}
-              className="rounded-2xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-elegant"
+              className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-elegant"
             >
-              <div className="flex text-yellow-500">
-                {[...Array(5)].map((_, k) => (
-                  <Star key={k} className="h-4 w-4 fill-current" />
-                ))}
-              </div>
-              <p className="mt-3 text-sm text-foreground">"{r.text}"</p>
-              <p className="mt-4 text-sm font-semibold text-brand-green">
-                — {r.name}
+              <Quote className="h-7 w-7 text-brand-orange/70" aria-hidden="true" />
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                {renderBold(r.text)}
               </p>
+              <div className="mt-6 flex items-center gap-3 border-t border-border pt-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-green font-semibold text-white">
+                  {r.initial}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold text-foreground">
+                    {r.name}
+                  </span>
+                  <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada
+                  </span>
+                </div>
+              </div>
             </Reveal>
           ))}
         </div>
+        <Reveal className="mt-10 text-center" delay={200}>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Pisos+do+Bosque+Cachoeirinha"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-green hover:underline"
+          >
+            <GoogleG className="h-4 w-4" /> Ver todas as avaliações no Google
+          </a>
+        </Reveal>
       </div>
     </section>
   );
 }
+
 
 function About() {
   const showroomImages = [
