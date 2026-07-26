@@ -15,6 +15,7 @@ import {
   Instagram,
   Facebook,
   Star,
+  Quote,
   DollarSign,
   Package,
   Headphones,
