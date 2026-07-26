@@ -275,6 +275,14 @@ function useReveal<T extends HTMLElement>() {
       el.classList.add("reveal-in");
       return;
     }
+    // Immediate check: if the element is already in the viewport at mount
+    // (e.g. after a filter/tab swap), reveal it right away.
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.top < vh - 40 && rect.bottom > 0) {
+      el.classList.add("reveal-in");
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -291,6 +299,7 @@ function useReveal<T extends HTMLElement>() {
   }, []);
   return ref;
 }
+
 
 function Reveal({
   className = "",
