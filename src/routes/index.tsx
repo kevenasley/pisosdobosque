@@ -1250,7 +1250,7 @@ function HomePage() {
         <FAQ />
       </main>
       <Footer />
-      <FloatingWhatsApp />
+      
       <BackToTop />
       <MobileCTABar />
     </div>
