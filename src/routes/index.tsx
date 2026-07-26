@@ -25,7 +25,7 @@ import {
   ArrowUp,
   Truck,
   Award,
-  Crown,
+  
   Users,
   Shield,
 } from "lucide-react";
