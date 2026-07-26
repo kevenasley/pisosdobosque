@@ -441,13 +441,13 @@ function Header() {
                   smoothScrollTo(n.href);
                 }}
                 className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-300 ease-out ${
-                  isActive ? "text-brand-orange" : "text-foreground hover:text-brand-orange"
+                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="navbar-active-indicator"
-                    className="absolute inset-0 -z-10 rounded-lg bg-brand-orange/10"
+                    className="absolute inset-x-3 -bottom-0.5 h-[2px] rounded-full bg-brand-orange/70"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
