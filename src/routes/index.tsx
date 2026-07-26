@@ -358,37 +358,6 @@ function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
   );
 }
 
-function TopBar() {
-  return (
-    <div
-      aria-label="Informações de contato"
-      className="hidden border-b border-black/[0.06] bg-[oklch(0.985_0.004_85)] text-[oklch(0.45_0.01_150)] md:block"
-    >
-      <div className="mx-auto flex h-10 max-w-7xl items-center justify-between gap-6 px-5 text-[12px] tracking-tight md:px-8">
-        {/* Left: endereço completo */}
-        <span className="inline-flex items-center gap-1.5">
-          <MapPin className="h-3.5 w-3.5 shrink-0 text-[oklch(0.55_0.01_150)]" aria-hidden />
-          Av. Capitão Garibaldi Pinto dos Santos, 468 — Jardim do Bosque, Cachoeirinha/RS
-        </span>
-
-        {/* Right: horário + telefone */}
-        <div className="flex items-center divide-x divide-black/10">
-          <span className="inline-flex items-center gap-1.5 pr-4">
-            <Clock className="h-3.5 w-3.5 text-[oklch(0.55_0.01_150)]" aria-hidden />
-            Seg–Sex 8h–18h30 · Sáb 8h–13h
-          </span>
-          <a
-            href="tel:+555134701212"
-            className="inline-flex items-center gap-1.5 pl-4 font-medium text-[oklch(0.35_0.01_150)] transition-colors duration-200 hover:text-brand-orange"
-          >
-            <Phone className="h-3.5 w-3.5 text-[oklch(0.55_0.01_150)]" aria-hidden />
-            (51) 3470-1212
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 
 
