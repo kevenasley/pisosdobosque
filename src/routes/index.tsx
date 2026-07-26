@@ -29,7 +29,7 @@ import {
   Shield,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
-import { handleAnchorClick, smoothScrollTo } from "@/lib/smooth-scroll";
+import { smoothScrollTo } from "@/lib/smoothScrollTo";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
 import toolHammer from "@/assets/tool-hammer.png";
@@ -383,7 +383,10 @@ function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
         <a
           href="#top"
-          onClick={(e) => handleAnchorClick(e, "#top")}
+          onClick={(e) => {
+            e.preventDefault();
+            smoothScrollTo("top");
+          }}
           aria-label="Ir para o topo"
         >
           <Logo />
@@ -393,7 +396,10 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              onClick={(e) => handleAnchorClick(e, n.href)}
+              onClick={(e) => {
+                e.preventDefault();
+                smoothScrollTo(n.href);
+              }}
               className="text-sm font-medium text-foreground transition-all duration-300 ease-in-out hover:text-brand-orange"
             >
               {n.label}
@@ -432,7 +438,11 @@ function Header() {
             <a
               key={n.href}
               href={n.href}
-              onClick={(e) => handleAnchorClick(e, n.href, () => setOpen(false))}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpen(false);
+                smoothScrollTo(n.href);
+              }}
               className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition-all duration-300 ease-in-out hover:bg-brand-cream hover:text-brand-orange"
             >
               {n.label}
