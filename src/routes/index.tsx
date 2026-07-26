@@ -664,7 +664,7 @@ function Products() {
     <section id="produtos" className="bg-brand-cream py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-2xl font-bold leading-tight text-brand-green md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
             Pisos e Revestimentos de Qualidade,
             <br />
             <span className="text-brand-orange">Em um Só Lugar!</span>
@@ -743,7 +743,7 @@ function MoreSolutions() {
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
 
             Mais Soluções para Sua Obra ou Reforma
           </h2>
@@ -806,7 +806,7 @@ function Comparison() {
     >
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight md:text-4xl">
             Por Que a Pisos do Bosque é a Escolha Certa para Sua Obra?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-white/80">
@@ -894,7 +894,7 @@ function Testimonials() {
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
 
             O Que Nossos Clientes Dizem Sobre Nós
           </h2>
@@ -954,7 +954,7 @@ function About() {
     <section id="sobre" className="bg-brand-cream py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
-          <h2 className="text-center font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+          <h2 className="text-center font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
             Conheça Nossa História
           </h2>
         </Reveal>
@@ -1102,7 +1102,7 @@ function CTA() {
     <section className="relative overflow-hidden gradient-hero py-14">
       <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-6 px-5 text-center text-white md:px-8">
         <Shield className="h-10 w-10" />
-        <h2 className="font-display text-2xl font-bold [text-wrap:balance] md:text-4xl">
+        <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight md:text-4xl">
           Pronto para transformar sua obra com preço justo?
         </h2>
         <p className="max-w-2xl text-white/90">
@@ -1125,7 +1125,7 @@ function FAQ() {
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-3xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
             Perguntas Frequentes
           </h2>
           <p className="mt-3 text-muted-foreground">
