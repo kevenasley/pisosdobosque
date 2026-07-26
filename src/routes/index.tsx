@@ -439,7 +439,7 @@ function Hero() {
               </div>
             </div>
           </div>
-          <h1 className="font-display text-4xl font-bold leading-[1.15] md:text-4xl lg:text-5xl">
+          <h1 className="font-display text-4xl font-bold leading-[1.1] md:text-5xl lg:text-6xl">
             Somos conhecidos por ter os{" "}
             <span className="font-extrabold">pisos mais baratos</span> da região!
           </h1>
@@ -545,14 +545,18 @@ function ProductCard({ p }: { p: Product }) {
           className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
         />
       </div>
-      <div className="flex flex-1 flex-col px-4 pt-4 pb-4 text-center">
-        <h3 className="text-sm font-semibold leading-snug text-foreground">
+      <div className="flex flex-1 flex-col p-4 text-center">
+        <h4 className="min-h-[2.5rem] text-sm font-semibold leading-tight text-foreground">
           {p.name}
-        </h3>
-        <p className="mt-1.5 text-xs text-muted-foreground">{p.size}</p>
+        </h4>
+        <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
+          {p.size}
+        </p>
         <div className="mt-3 flex flex-1 flex-col justify-end">
-          <p className="text-lg font-extrabold text-brand-green">{p.price}</p>
-          <p className="mt-0.5 text-[11px] text-muted-foreground">
+          <p className="font-display text-xl font-extrabold leading-none text-brand-green">
+            {p.price}
+          </p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
             em até 12x sem juros
           </p>
           <a
@@ -567,6 +571,7 @@ function ProductCard({ p }: { p: Product }) {
           </a>
         </div>
       </div>
+
     </div>
   );
 }
@@ -599,13 +604,14 @@ function CategoryBlock({
           />
         </Reveal>
         <Reveal delay={100}>
-          <p className="text-sm font-semibold uppercase tracking-wide text-brand-orange">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-brand-orange">
             {eyebrow}
           </p>
-          <h3 className="mt-2 font-display text-3xl font-bold text-brand-green md:text-4xl">
+          <h3 className="mt-2 font-display text-2xl font-bold leading-tight text-brand-green md:text-3xl">
             Piso em <span className="text-brand-orange">{title}</span>
           </h3>
-          <p className="mt-4 text-muted-foreground">{desc}</p>
+          <p className="mt-3 text-sm text-muted-foreground md:text-base">{desc}</p>
+
           <a
             href={WHATSAPP_URL}
             target="_blank"
@@ -643,11 +649,12 @@ function Products() {
     <section id="produtos" className="bg-brand-cream py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold text-brand-green md:text-5xl">
+          <h2 className="font-display text-2xl font-bold leading-tight text-brand-green md:text-4xl">
             Pisos e Revestimentos de Qualidade,
             <br />
             <span className="text-brand-orange">Em um Só Lugar!</span>
           </h2>
+
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             Transforme sua casa ou projeto com produtos de alta qualidade,
             preços competitivos e entrega garantida no prazo.
@@ -1243,7 +1250,7 @@ function HomePage() {
         <FAQ />
       </main>
       <Footer />
-      <FloatingWhatsApp />
+      
       <BackToTop />
       <MobileCTABar />
     </div>
