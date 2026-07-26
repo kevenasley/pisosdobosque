@@ -571,7 +571,7 @@ function ProductCard({ p }: { p: Product }) {
 
         <div className="mt-auto pt-4">
           <div className="border-t border-border pt-3">
-            <p className="font-display text-lg font-bold leading-none text-brand-green">
+            <p className="font-display text-base font-bold leading-none text-brand-green sm:text-lg">
               {p.price}
             </p>
             <p className="mt-1 text-[11px] text-muted-foreground">
@@ -582,7 +582,7 @@ function ProductCard({ p }: { p: Product }) {
               className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-brand-whatsapp px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
             >
               <WhatsAppIcon className="h-3.5 w-3.5" />
-              Consultar no WhatsApp
+              Quero este
             </span>
           </div>
         </div>
