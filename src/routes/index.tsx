@@ -489,13 +489,15 @@ function Header() {
         <nav className="flex flex-col px-5 py-4">
           {navItems.map((n) => (
             <a
-              key={n.href}
+              key={n.label}
               href={n.href}
               onClick={(e) => {
                 e.preventDefault();
                 setOpen(false);
+                if (n.disabled) return;
                 smoothScrollTo(n.href);
               }}
+              aria-disabled={n.disabled || undefined}
               className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition-all duration-300 ease-in-out hover:bg-brand-cream hover:text-brand-orange"
             >
               {n.label}
