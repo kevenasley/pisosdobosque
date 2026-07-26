@@ -636,7 +636,7 @@ function ProductCard({ p }: { p: Product }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Consultar ${p.name} no WhatsApp`}
-      className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-elegant"
+      className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-orange/30 hover:shadow-xl active:translate-y-0 active:scale-[0.99]"
     >
       <div className="relative aspect-square overflow-hidden bg-muted">
         <img
