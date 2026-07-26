@@ -659,7 +659,7 @@ function ProductCard({ p }: { p: Product }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Consultar ${p.name} no WhatsApp`}
-      className="group flex flex-col overflow-hidden rounded-md border border-border bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-brand-orange/30 hover:shadow-xl active:translate-y-0 active:scale-[0.99]"
+      className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md active:translate-y-0 active:scale-[0.99]"
     >
       <div className="relative aspect-square overflow-hidden bg-muted">
         <img
@@ -674,26 +674,24 @@ function ProductCard({ p }: { p: Product }) {
         <h4 className="line-clamp-3 min-h-[3.75rem] text-sm font-semibold leading-tight [text-wrap:balance] text-foreground">
           {p.name}
         </h4>
-        <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
+        <p className="mt-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground md:text-[13px]">
           {p.size}
         </p>
 
         <div className="mt-auto pt-4">
-          <div className="border-t border-border pt-3">
-            <p className="font-display text-base font-bold leading-none text-brand-green sm:text-lg">
-              {p.price}
-            </p>
-            <p className="mt-1 text-[11px] text-muted-foreground">
-              em até 12x sem juros
-            </p>
+          <p className="font-display text-lg font-bold leading-none text-brand-green sm:text-xl">
+            {p.price}
+          </p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            em até 12x sem juros
+          </p>
 
-            <span
-              className="mt-3 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-3 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
-            >
-              <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
-              Quero este
-            </span>
-          </div>
+          <span
+            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-3 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
+          >
+            <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
+            Quero este
+          </span>
         </div>
       </div>
     </a>
