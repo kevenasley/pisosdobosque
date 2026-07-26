@@ -464,7 +464,7 @@ function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Fale conosco no WhatsApp"
-            className="inline-flex items-center justify-center gap-2 rounded-md border-2 border-brand-green bg-transparent px-5 py-2.5 text-sm font-semibold text-brand-green transition-all duration-300 ease-out hover:bg-brand-green hover:text-white hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+            className="inline-flex items-center justify-center gap-2 rounded-md border border-brand-green bg-transparent px-5 py-2.5 text-sm font-semibold text-brand-green transition-all duration-300 ease-out hover:bg-brand-green hover:text-white hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
           >
             <WhatsAppIcon className="h-4 w-4" />
             Fale Conosco no WhatsApp
