@@ -333,7 +333,7 @@ function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
+      className={`relative z-50 border-b transition-all duration-300 md:sticky md:top-0 ${
         scrolled
           ? "border-border/60 bg-background/90 shadow-sm backdrop-blur-lg"
           : "border-transparent bg-background/70 backdrop-blur"
@@ -354,12 +354,14 @@ function Header() {
             </a>
           ))}
         </nav>
-        <WhatsAppButton
-          ariaLabel="Fale conosco no WhatsApp"
-          className="hidden text-sm md:inline-flex"
-        >
-          Fale Conosco no WhatsApp
-        </WhatsAppButton>
+        <div className="hidden md:block">
+          <WhatsAppButton
+            ariaLabel="Fale conosco no WhatsApp"
+            className="text-sm"
+          >
+            Fale Conosco no WhatsApp
+          </WhatsAppButton>
+        </div>
         <button
           type="button"
           aria-label={open ? "Fechar menu" : "Abrir menu"}
@@ -614,7 +616,7 @@ function CategoryBlock({
           </a>
         </Reveal>
       </div>
-      <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p, i) => (
           <ProductCard key={i} p={p} />
         ))}
@@ -1165,7 +1167,7 @@ function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Fale conosco no WhatsApp"
-      className="pulse-ring fixed bottom-24 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-brand-whatsapp text-white shadow-xl transition hover:scale-110 md:bottom-6"
+      className="pulse-ring fixed bottom-6 right-5 z-50 hidden h-14 w-14 items-center justify-center rounded-full bg-brand-whatsapp text-white shadow-xl transition hover:scale-110 md:flex"
     >
       <WhatsAppIcon className="h-7 w-7" />
     </a>
