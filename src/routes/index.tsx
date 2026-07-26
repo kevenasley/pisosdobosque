@@ -657,7 +657,7 @@ function ProductCard({ p }: { p: Product }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Consultar ${p.name} no WhatsApp`}
-      className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md active:translate-y-0 active:scale-[0.99]"
+      className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.10)] active:translate-y-0 active:scale-[0.99]"
     >
       <div className="relative aspect-square overflow-hidden bg-muted">
         <img
@@ -668,30 +668,31 @@ function ProductCard({ p }: { p: Product }) {
           className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
         />
       </div>
-      <div className="flex flex-1 flex-col p-4 text-center">
-        <h4 className="line-clamp-3 min-h-[3.75rem] text-sm font-semibold leading-tight [text-wrap:balance] text-foreground">
+      <div className="flex flex-1 flex-col px-4 pt-5 pb-4 text-center sm:px-5">
+        <h4 className="line-clamp-2 min-h-[2.75rem] text-sm font-bold leading-tight [text-wrap:balance] text-foreground sm:text-[15px]">
           {p.name}
         </h4>
-        <p className="mt-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground md:text-[13px]">
-          {p.size}
-        </p>
 
-        <div className="mt-auto pt-4">
-          <p className="font-display text-lg font-bold leading-none text-brand-green sm:text-xl">
+        <div className="mt-4 flex flex-1 flex-col">
+          <p className="text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground sm:text-[13px]">
+            {p.size}
+          </p>
+          <p className="mt-3 font-display text-xl font-extrabold leading-none text-brand-green sm:text-2xl">
             {p.price}
           </p>
-          <p className="mt-1 text-[11px] text-muted-foreground">
+          <p className="mt-1.5 text-[11px] text-muted-foreground sm:text-xs">
             em até 12x sem juros
           </p>
 
           <span
-            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-3 py-2.5 text-xs font-semibold text-white shadow-sm transition group-hover:brightness-95"
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-md bg-brand-whatsapp px-3 py-3 text-sm font-semibold text-white shadow-sm transition group-hover:brightness-95"
           >
-            <WhatsAppIcon className="h-3.5 w-3.5 shrink-0" />
+            <WhatsAppIcon className="h-4 w-4 shrink-0" />
             Quero este
           </span>
         </div>
       </div>
+
     </a>
   );
 }
