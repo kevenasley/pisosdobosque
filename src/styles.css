@@ -242,10 +242,3 @@ summary {
   }
 }
 
-
-/* Footer accordion: force open on desktop */
-@media (min-width: 768px) {
-  footer details > *:not(summary) {
-    display: block !important;
-  }
-}

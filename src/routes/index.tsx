@@ -380,11 +380,11 @@ function Header() {
     };
   }, [open]);
 
-  const navItems = [
+  const navItems: Array<{ href: string; label: string; disabled?: boolean }> = [
     { href: "#top", label: "Início" },
     { href: "#produtos", label: "Produtos" },
     { href: "#sobre", label: "Sobre Nós" },
-    { href: "#parceria", label: "Seja nosso parceiro" },
+    { href: "#", label: "Seja nosso parceiro", disabled: true },
   ];
 
 
@@ -431,15 +431,17 @@ function Header() {
         </a>
         <nav aria-label="Principal" className="hidden items-center gap-2 md:flex">
           {navItems.map((n) => {
-            const isActive = activeSection === n.href.slice(1);
+            const isActive = !n.disabled && activeSection === n.href.slice(1);
             return (
               <a
-                key={n.href}
+                key={n.label}
                 href={n.href}
                 onClick={(e) => {
                   e.preventDefault();
+                  if (n.disabled) return;
                   smoothScrollTo(n.href);
                 }}
+                aria-disabled={n.disabled || undefined}
                 className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-300 ease-out ${
                   isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
@@ -487,13 +489,15 @@ function Header() {
         <nav className="flex flex-col px-5 py-4">
           {navItems.map((n) => (
             <a
-              key={n.href}
+              key={n.label}
               href={n.href}
               onClick={(e) => {
                 e.preventDefault();
                 setOpen(false);
+                if (n.disabled) return;
                 smoothScrollTo(n.href);
               }}
+              aria-disabled={n.disabled || undefined}
               className="rounded-lg px-3 py-3 text-base font-medium text-foreground transition-all duration-300 ease-in-out hover:bg-brand-cream hover:text-brand-orange"
             >
               {n.label}
@@ -1471,28 +1475,36 @@ function FooterColumn({
   children: React.ReactNode;
 }) {
   return (
-    <details
-      className="group border-b border-white/10 py-4 md:border-0 md:py-0 [&_summary::-webkit-details-marker]:hidden"
-      // Desktop: always expanded via CSS
-    >
-      <summary className="flex cursor-pointer list-none items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-white md:cursor-default md:pointer-events-none">
-        <span>{title}</span>
-        <svg
-          className="h-4 w-4 text-white/60 transition-transform duration-300 group-open:rotate-180 md:hidden"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-        >
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </summary>
-      <div className="hidden mt-3 h-0.5 w-8 bg-brand-orange md:block" />
-      <div className="mt-4 md:mt-5">{children}</div>
-    </details>
+    <>
+      {/* Mobile: accordion */}
+      <details className="group border-b border-white/10 py-4 md:hidden [&_summary::-webkit-details-marker]:hidden">
+        <summary className="flex cursor-pointer list-none items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-white">
+          <span>{title}</span>
+          <svg
+            className="h-4 w-4 text-white/60 transition-transform duration-300 group-open:rotate-180"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </summary>
+        <div className="mt-4">{children}</div>
+      </details>
+
+      {/* Desktop: plain column */}
+      <div className="hidden md:block">
+        <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">
+          {title}
+        </h4>
+        <div className="mt-3 h-0.5 w-8 bg-brand-orange" />
+        <div className="mt-5">{children}</div>
+      </div>
+    </>
   );
 }
 
