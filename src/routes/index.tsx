@@ -563,10 +563,7 @@ function ProductCard({ p }: { p: Product }) {
 
         <div className="mt-auto pt-4">
           <div className="border-t border-border pt-3">
-            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-              A partir de
-            </p>
-            <p className="mt-0.5 font-display text-lg font-bold leading-none text-brand-green">
+            <p className="font-display text-lg font-bold leading-none text-brand-green">
               {p.price}
             </p>
             <p className="mt-1 text-[11px] text-muted-foreground">
