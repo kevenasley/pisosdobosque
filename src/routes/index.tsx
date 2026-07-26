@@ -1279,8 +1279,8 @@ function About() {
           </h2>
         </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 items-start gap-10 md:mt-14 md:grid-cols-2">
-          {/* Left: story + info cards */}
+        <div className="mt-10 grid grid-cols-1 items-center gap-10 md:mt-14 md:grid-cols-2">
+          {/* Left: story + bullets */}
           <Reveal>
             <p className="italic text-muted-foreground">
               Há mais de 20 anos, a Pisos do Bosque vem transformando ambientes
@@ -1306,115 +1306,74 @@ function About() {
                 </li>
               ))}
             </ul>
-
-            <div className="mt-8 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
-              <div className="rounded-lg bg-card p-4 shadow-sm">
-                <p className="flex items-center gap-2 font-semibold text-brand-green">
-                  <MapPin className="h-4 w-4" /> Localização
-                </p>
-                <p className="mt-1 text-muted-foreground">
-                  Av. Capitão Garibaldi Pinto dos Santos, 468 — Jardim do
-                  Bosque, Cachoeirinha/RS
-                </p>
-              </div>
-              <div className="rounded-lg bg-card p-4 shadow-sm">
-                <p className="flex items-center gap-2 font-semibold text-brand-green">
-                  <Phone className="h-4 w-4" /> Contato
-                </p>
-                <p className="mt-1 text-muted-foreground">
-                  WhatsApp: (51) 98490-5782
-                  <br />
-                  Telefone: (51) 3470-1212
-                </p>
-              </div>
-              <div className="rounded-lg bg-card p-4 shadow-sm sm:col-span-2">
-                <p className="flex items-center gap-2 font-semibold text-brand-green">
-                  <Clock className="h-4 w-4" /> Horário
-                </p>
-                <p className="mt-1 text-muted-foreground">
-                  Seg. a Sex.: 8h–12h e 13h30–18h30 · Sáb.: 8h–12h e 13h30–17h
-                </p>
-              </div>
-            </div>
           </Reveal>
 
-          {/* Right: interactive Google Map */}
+          {/* Right: facade + map (lighter framing) */}
           <Reveal delay={150}>
-            <div className="overflow-hidden rounded-2xl border-4 border-brand-green bg-brand-green p-2 shadow-elegant">
-              {/* Facade image */}
-              <div className="overflow-hidden rounded-lg">
-                <img
-                  src={storeFront}
-                  alt="Fachada da loja Pisos do Bosque em Cachoeirinha"
-                  loading="lazy"
-                  className="h-40 w-full object-cover sm:h-48 md:h-56"
-                />
-              </div>
-              {/* Map below facade */}
-              <div className="mt-2 overflow-hidden rounded-lg">
-                <iframe
-                  title="Localização Pisos do Bosque"
-                  src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS&output=embed"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="h-48 w-full border-0 sm:h-56 md:h-64"
-                  allowFullScreen
-                />
-              </div>
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+              <img
+                src={storeFront}
+                alt="Fachada da loja Pisos do Bosque em Cachoeirinha"
+                loading="lazy"
+                className="h-40 w-full object-cover sm:h-48 md:h-56"
+              />
+              <iframe
+                title="Localização Pisos do Bosque"
+                src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="block h-48 w-full border-0 border-t border-border sm:h-56 md:h-64"
+                allowFullScreen
+              />
               <a
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-white/95 p-3 text-sm font-semibold text-brand-green transition hover:bg-white"
+                className="flex items-center justify-center gap-2 border-t border-border bg-white p-3 text-sm font-semibold text-brand-green transition hover:bg-brand-cream"
               >
                 <MapPin className="h-5 w-5 text-brand-orange" />
                 Abrir rota no Google Maps
               </a>
             </div>
           </Reveal>
-
         </div>
 
-        {/* Showroom carousel */}
+        {/* Compact info strip */}
         <Reveal delay={200}>
-          <div className="mt-12 md:mt-16">
-            <div className="mb-4 flex items-end justify-between">
+          <div className="mt-10 grid grid-cols-1 gap-4 rounded-2xl border border-border bg-card p-5 text-sm shadow-sm sm:grid-cols-3 md:mt-14">
+            <div className="flex items-start gap-3">
+              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-brand-orange">
-                  Nosso showroom
+                <p className="font-semibold text-brand-green">Localização</p>
+                <p className="mt-0.5 text-muted-foreground">
+                  Av. Capitão Garibaldi Pinto dos Santos, 468 — Cachoeirinha/RS
                 </p>
-                <h3 className="font-display text-xl font-bold text-brand-green md:text-2xl">
-                  Um passeio pela nossa loja
-                </h3>
               </div>
-              <p className="hidden text-xs text-muted-foreground sm:block">
-                Deslize para o lado →
-              </p>
             </div>
-            <div className="rounded-2xl border-4 border-brand-green bg-brand-green p-2">
-              <div
-                className="flex snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth"
-                style={{ scrollbarWidth: "thin" }}
-              >
-                {showroomImages.map((img, i) => (
-                  <div
-                    key={i}
-                    className="relative aspect-[4/3] w-[75%] shrink-0 snap-start overflow-hidden rounded-md sm:w-[45%] md:w-[32%] lg:w-[24%]"
-                  >
-                    <img
-                      src={img.src}
-                      alt={img.alt}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                    />
-                  </div>
-                ))}
+            <div className="flex items-start gap-3 sm:border-l sm:border-border sm:pl-4">
+              <Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
+              <div>
+                <p className="font-semibold text-brand-green">Contato</p>
+                <p className="mt-0.5 text-muted-foreground">
+                  WhatsApp (51) 98490-5782
+                  <br />
+                  Telefone (51) 3470-1212
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3 sm:border-l sm:border-border sm:pl-4">
+              <Clock className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
+              <div>
+                <p className="font-semibold text-brand-green">Horário</p>
+                <p className="mt-0.5 text-muted-foreground">
+                  Seg–Sex 8h–12h · 13h30–18h30
+                  <br />
+                  Sáb 8h–12h · 13h30–17h
+                </p>
               </div>
             </div>
           </div>
         </Reveal>
-      </div>
     </section>
   );
 }
