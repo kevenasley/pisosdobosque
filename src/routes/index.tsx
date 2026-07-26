@@ -175,11 +175,11 @@ const vinilicos: Product[] = [
 ];
 
 const compareRows = [
-  { bad: "Atraso na Entrega", badDesc: "Nada pior do que ter sua obra parada esperando por materiais que nunca chegam. O prazo prometido nunca é cumprido.", good: "Estoque Imediato", goodDesc: "Com o maior estoque da região, garantimos os materiais certos, na hora certa. Sua obra nunca para." },
-  { bad: "Preços Altos", badDesc: "Pagando caro por materiais básicos, você estoura o orçamento antes de terminar a obra.", good: "Preço Justo e Competitivo", goodDesc: "Produtos de alta qualidade a preços que cabem no bolso. Sua obra merece o melhor sem pesar no orçamento." },
-  { bad: "Atendimento Genérico", badDesc: "Você é tratado como apenas mais um cliente. Ninguém entende suas dúvidas ou ajuda a escolher.", good: "Atendimento Personalizado", goodDesc: "Nossa equipe ouve suas necessidades e ajuda você a encontrar a melhor solução para sua obra." },
-  { bad: "Pouca Variedade", badDesc: "A falta de opções obriga você a escolher o que tem, não o que combina com seu projeto.", good: "Maior Estoque da Região", goodDesc: "Ampla variedade de porcelanatos, vinílicos, forros e mais. Encontre exatamente o que precisa." },
-  { bad: "Dificuldade em Negociação", badDesc: "Pouca flexibilidade para negociar valores e condições de pagamento.", good: "Condições Flexíveis", goodDesc: "Cada cliente é único. Oferecemos condições flexíveis para a melhor experiência de compra." },
+  { topic: "Entrega e Prazo", bad: "Atraso na Entrega", badDesc: "Nada pior do que ter sua obra parada esperando por materiais que nunca chegam. O prazo prometido nunca é cumprido.", good: "Estoque Imediato", goodDesc: "Com o maior estoque da região, garantimos os materiais certos, na hora certa. Sua obra nunca para." },
+  { topic: "Preço", bad: "Preços Altos", badDesc: "Pagando caro por materiais básicos, você estoura o orçamento antes de terminar a obra.", good: "Preço Justo e Competitivo", goodDesc: "Produtos de alta qualidade a preços que cabem no bolso. Sua obra merece o melhor sem pesar no orçamento." },
+  { topic: "Atendimento", bad: "Atendimento Genérico", badDesc: "Você é tratado como apenas mais um cliente. Ninguém entende suas dúvidas ou ajuda a escolher.", good: "Atendimento Personalizado", goodDesc: "Nossa equipe ouve suas necessidades e ajuda você a encontrar a melhor solução para sua obra." },
+  { topic: "Variedade de Produtos", bad: "Pouca Variedade", badDesc: "A falta de opções obriga você a escolher o que tem, não o que combina com seu projeto.", good: "Maior Estoque da Região", goodDesc: "Ampla variedade de porcelanatos, vinílicos, forros e mais. Encontre exatamente o que precisa." },
+  { topic: "Condições de Pagamento", bad: "Dificuldade em Negociação", badDesc: "Pouca flexibilidade para negociar valores e condições de pagamento.", good: "Condições Flexíveis", goodDesc: "Cada cliente é único. Oferecemos condições flexíveis para a melhor experiência de compra." },
 ];
 
 const reviews = [
@@ -562,7 +562,7 @@ function ProductCard({ p }: { p: Product }) {
         />
       </div>
       <div className="flex flex-1 flex-col p-4 text-center">
-        <h4 className="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-tight [text-wrap:balance] text-foreground">
+        <h4 className="line-clamp-3 min-h-[3.75rem] text-sm font-semibold leading-tight [text-wrap:balance] text-foreground">
           {p.name}
         </h4>
         <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
@@ -814,49 +814,73 @@ function Comparison() {
             conquistas. Veja os benefícios que só a Pisos do Bosque oferece.
           </p>
         </Reveal>
-        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-          <div className="hidden text-center font-semibold uppercase tracking-wide text-white/70 md:block">
-            Outros
+        <div className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur">
+          {/* Header */}
+          <div className="grid grid-cols-2 border-b border-white/10">
+            <div className="px-4 py-4 text-center sm:px-6 sm:py-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60 sm:text-xs">
+                Tradicional
+              </p>
+              <p className="mt-1 font-display text-sm font-semibold text-white/80 sm:text-base">
+                Outras Lojas
+              </p>
+            </div>
+            <div className="border-l border-white/10 bg-brand-orange/10 px-4 py-4 text-center sm:px-6 sm:py-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-orange sm:text-xs">
+                Recomendado
+              </p>
+              <p className="mt-1 font-display text-sm font-semibold text-white sm:text-base">
+                Pisos do Bosque
+              </p>
+            </div>
           </div>
-          <div className="hidden text-center font-semibold uppercase tracking-wide text-brand-orange md:block">
-            Pisos do Bosque
-          </div>
+
+          {/* Rows */}
           {compareRows.map((r, i) => (
-            <div key={r.bad} className="contents">
+            <div
+              key={r.topic}
+              className={i < compareRows.length - 1 ? "border-b border-white/10" : ""}
+            >
+              {/* Topic bar */}
               <Reveal
                 delay={i * 60}
-                className="rounded-xl border border-white/10 bg-white/5 p-5"
+                className="px-4 py-3 text-center sm:py-4"
               >
-                <div className="flex items-start gap-3">
-                  <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
-                    <X className="h-5 w-5 text-red-300" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-white/60 md:hidden">
-                      Outros
-                    </p>
-                    <h4 className="font-semibold text-white">{r.bad}</h4>
-                    <p className="mt-1 text-sm text-white/70">{r.badDesc}</p>
-                  </div>
-                </div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-orange sm:text-xs">
+                  {r.topic}
+                </p>
               </Reveal>
-              <Reveal
-                delay={i * 60 + 30}
-                className="rounded-xl border border-brand-orange/30 bg-brand-orange/10 p-5"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-orange">
-                    <Check className="h-5 w-5 text-white" />
+
+              <div className="grid grid-cols-2">
+                <Reveal
+                  delay={i * 60 + 20}
+                  className="flex flex-col items-center gap-2 px-4 py-5 text-center sm:px-6 sm:py-6"
+                >
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10">
+                    <X className="h-4 w-4 text-white/60" />
                   </div>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-brand-orange md:hidden">
-                      Pisos do Bosque
-                    </p>
-                    <h4 className="font-semibold text-white">{r.good}</h4>
-                    <p className="mt-1 text-sm text-white/80">{r.goodDesc}</p>
+                  <h4 className="text-sm font-semibold text-white/90 [text-wrap:balance] sm:text-base">
+                    {r.bad}
+                  </h4>
+                  <p className="text-xs text-white/60 [text-wrap:balance] sm:text-sm">
+                    {r.badDesc}
+                  </p>
+                </Reveal>
+                <Reveal
+                  delay={i * 60 + 40}
+                  className="flex flex-col items-center gap-2 border-l border-white/10 bg-brand-orange/[0.06] px-4 py-5 text-center sm:px-6 sm:py-6"
+                >
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange">
+                    <Check className="h-4 w-4 text-white" />
                   </div>
-                </div>
-              </Reveal>
+                  <h4 className="text-sm font-semibold text-white [text-wrap:balance] sm:text-base">
+                    {r.good}
+                  </h4>
+                  <p className="text-xs text-white/80 [text-wrap:balance] sm:text-sm">
+                    {r.goodDesc}
+                  </p>
+                </Reveal>
+              </div>
             </div>
           ))}
         </div>
@@ -1286,7 +1310,7 @@ function BackToTop() {
       type="button"
       aria-label="Voltar ao topo"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-24 left-5 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all md:bottom-6 ${
+      className={`fixed bottom-6 right-5 z-40 hidden h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all md:flex ${
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"
