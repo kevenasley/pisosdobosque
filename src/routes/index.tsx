@@ -29,6 +29,7 @@ import {
   Shield,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { handleAnchorClick, smoothScrollTo } from "@/lib/smooth-scroll";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
 import toolHammer from "@/assets/tool-hammer.png";
@@ -266,6 +267,12 @@ function useReveal<T extends HTMLElement>() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      el.classList.add("reveal-in");
+      return;
+    }
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
