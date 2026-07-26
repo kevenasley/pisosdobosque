@@ -730,7 +730,8 @@ function MoreSolutions() {
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold text-brand-green md:text-4xl">
+          <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
+
             Mais Soluções para Sua Obra ou Reforma
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
