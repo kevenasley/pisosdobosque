@@ -545,14 +545,18 @@ function ProductCard({ p }: { p: Product }) {
           className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
         />
       </div>
-      <div className="flex flex-1 flex-col px-4 pt-4 pb-4 text-center">
-        <h3 className="text-sm font-semibold leading-snug text-foreground">
+      <div className="flex flex-1 flex-col p-4 text-center">
+        <h4 className="min-h-[2.5rem] text-sm font-semibold leading-tight text-foreground">
           {p.name}
-        </h3>
-        <p className="mt-1.5 text-xs text-muted-foreground">{p.size}</p>
+        </h4>
+        <p className="mt-1 text-[11px] uppercase tracking-wider text-muted-foreground">
+          {p.size}
+        </p>
         <div className="mt-3 flex flex-1 flex-col justify-end">
-          <p className="text-lg font-extrabold text-brand-green">{p.price}</p>
-          <p className="mt-0.5 text-[11px] text-muted-foreground">
+          <p className="font-display text-xl font-extrabold leading-none text-brand-green">
+            {p.price}
+          </p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
             em até 12x sem juros
           </p>
           <a
@@ -567,6 +571,7 @@ function ProductCard({ p }: { p: Product }) {
           </a>
         </div>
       </div>
+
     </div>
   );
 }
