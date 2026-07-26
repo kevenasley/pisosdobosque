@@ -597,7 +597,7 @@ function Hero() {
                   "radial-gradient(closest-side, rgba(255,255,255,0.35), transparent 70%)",
               }}
             />
-            <img
+            <motion.img
               src={heroVendedor}
               alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
               width={1200}
@@ -605,7 +605,9 @@ function Hero() {
               fetchPriority="high"
               loading="eager"
               decoding="async"
-              className="float-y w-full drop-shadow-2xl"
+              className="w-full drop-shadow-2xl will-change-transform"
+              animate={{ y: [0, -18, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
         </Reveal>
