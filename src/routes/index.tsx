@@ -339,7 +339,7 @@ function Header() {
           : "border-transparent bg-background/70 backdrop-blur"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
         <a href="#top" aria-label="Ir para o topo">
           <Logo />
         </a>
@@ -381,7 +381,7 @@ function Header() {
           open ? "max-h-[100vh] border-t border-border" : "max-h-0"
         }`}
       >
-        <nav className="flex flex-col px-4 py-4">
+        <nav className="flex flex-col px-5 py-4">
           {navItems.map((n) => (
             <a
               key={n.href}
@@ -411,7 +411,7 @@ function Hero() {
           backgroundSize: "24px 24px",
         }}
       />
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-4 py-10 md:grid-cols-[1.2fr_1fr] md:gap-12 md:px-8 md:py-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-5 py-10 md:grid-cols-[1.2fr_1fr] md:gap-12 md:px-8 md:py-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
         <Reveal className="text-center text-white md:text-left">
           <div className="mb-6 flex items-center justify-center gap-2 md:justify-start md:mb-7">
             <div className="flex -space-x-1.5">
@@ -512,7 +512,7 @@ function Stats() {
   ];
   return (
     <section className="border-y border-border bg-brand-cream py-8 md:py-10">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-4 md:grid-cols-4 md:gap-6 md:px-8">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-5 md:grid-cols-4 md:gap-6 md:px-8">
         {items.map((it, i) => (
           <Reveal
             key={it.label}
@@ -654,7 +654,7 @@ function Products() {
 
   return (
     <section id="produtos" className="bg-brand-cream py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold leading-tight text-brand-green md:text-4xl">
             Pisos e Revestimentos de Qualidade,
@@ -733,7 +733,7 @@ function MoreSolutions() {
 
   return (
     <section className="bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
 
@@ -796,7 +796,7 @@ function Comparison() {
       id="parceria"
       className="gradient-green py-16 text-white md:py-24"
     >
-      <div className="mx-auto max-w-6xl px-4 md:px-8">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-3xl font-bold [text-wrap:balance] md:text-4xl">
             Por Que a Pisos do Bosque é a Escolha Certa para Sua Obra?
@@ -860,7 +860,7 @@ function Comparison() {
 function Testimonials() {
   return (
     <section className="bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-6xl px-4 md:px-8">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
 
@@ -909,7 +909,7 @@ function Testimonials() {
 function About() {
   return (
     <section id="sobre" className="bg-brand-cream py-16 md:py-24">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 md:grid-cols-2 md:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-5 md:grid-cols-2 md:px-8">
         <Reveal>
           <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
 
@@ -993,7 +993,7 @@ function About() {
 function CTA() {
   return (
     <section className="relative overflow-hidden gradient-hero py-14">
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 text-center text-white md:px-8">
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-6 px-5 text-center text-white md:px-8">
         <Shield className="h-10 w-10" />
         <h2 className="font-display text-2xl font-bold [text-wrap:balance] md:text-4xl">
           Pronto para transformar sua obra com preço justo?
@@ -1016,7 +1016,7 @@ function CTA() {
 function FAQ() {
   return (
     <section className="bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-3xl px-4 md:px-8">
+      <div className="mx-auto max-w-3xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-3xl font-bold [text-wrap:balance] text-brand-green md:text-4xl">
             Perguntas Frequentes
@@ -1055,7 +1055,7 @@ function FAQ() {
 function Footer() {
   return (
     <footer className="bg-brand-green-dark py-14 text-white/90">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 md:grid-cols-3 md:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 md:grid-cols-3 md:px-8">
         <div>
           <h4 className="font-display text-lg font-bold uppercase tracking-wider text-white">
             Contato
@@ -1167,7 +1167,7 @@ function Footer() {
           </a>
         </div>
       </div>
-      <div className="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between gap-2 border-t border-white/10 px-4 pt-6 pb-20 text-xs text-white/60 md:flex-row md:px-8 md:pb-0">
+      <div className="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between gap-2 border-t border-white/10 px-5 pt-6 pb-20 text-xs text-white/60 md:flex-row md:px-8 md:pb-0">
         <span>
           Copyright © 2025 Pisos do Bosque. Todos os direitos reservados.
         </span>
