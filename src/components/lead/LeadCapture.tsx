@@ -115,13 +115,15 @@ export function LeadCapture() {
         user_agent: navigator.userAgent,
         timestamp: new Date().toISOString(),
       };
+      // fire-and-forget com keepalive para sobreviver ao redirect
       try {
-        await fetch(SHEETS_WEBHOOK_URL, {
+        fetch(SHEETS_WEBHOOK_URL, {
           method: "POST",
           mode: "no-cors",
+          keepalive: true,
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload),
-        });
+        }).catch(() => {});
       } catch {
         // não bloqueia o redirecionamento — o lead é priorizado
       }
@@ -139,7 +141,9 @@ export function LeadCapture() {
         `Olá! Sou ${parsed.data.name}. ${
           parsed.data.reason ? parsed.data.reason + " " : ""
         }Gostaria de um atendimento.`;
-      window.location.href = buildWhatsAppUrl(msg);
+      // Abre WhatsApp em nova aba e leva o usuário para a página de obrigado
+      window.open(buildWhatsAppUrl(msg), "_blank", "noopener,noreferrer");
+      window.location.href = "/obrigado?src=form";
     } finally {
       setSubmitting(false);
     }
@@ -147,7 +151,8 @@ export function LeadCapture() {
 
   function goDirect() {
     trackLeadDirect(ctaOrigin);
-    window.location.href = buildWhatsAppUrl(message);
+    window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
+    window.location.href = "/obrigado?src=direct";
   }
 
   return (
