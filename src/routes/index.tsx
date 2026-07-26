@@ -940,25 +940,16 @@ function Comparison() {
             conquistas. Veja os benefícios que só a Pisos do Bosque oferece.
           </p>
         </Reveal>
-        <div className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-2xl shadow-black/30 backdrop-blur">
+        <div className="mx-auto mt-12 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
           {/* Header */}
-          <div className="relative grid grid-cols-2 border-b border-white/10">
-            {/* Winner accent bar */}
-            <div className="pointer-events-none absolute inset-x-1/2 top-0 h-1 rounded-b-full bg-brand-orange" />
-            <div className="px-4 py-4 text-center opacity-80 sm:px-6 sm:py-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/50 sm:text-xs">
-                Tradicional
-              </p>
-              <p className="mt-1 font-display text-sm font-semibold text-white/70 sm:text-base">
+          <div className="grid grid-cols-2 border-b border-white/10">
+            <div className="px-4 py-4 text-center sm:px-6 sm:py-5">
+              <p className="font-display text-sm font-semibold text-white/70 sm:text-base">
                 Outras Lojas
               </p>
             </div>
-            <div className="relative border-l border-white/10 bg-gradient-to-b from-brand-orange/20 to-brand-orange/5 px-4 py-4 text-center sm:px-6 sm:py-5">
-              <p className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-orange sm:text-xs">
-                <Crown className="h-3 w-3" />
-                Recomendado
-              </p>
-              <p className="mt-1 font-display text-sm font-semibold text-white sm:text-base">
+            <div className="border-l border-white/10 px-4 py-4 text-center sm:px-6 sm:py-5">
+              <p className="font-display text-sm font-semibold text-white sm:text-base">
                 Pisos do Bosque
               </p>
             </div>
@@ -975,7 +966,7 @@ function Comparison() {
                 delay={i * 60}
                 className="bg-white/5 px-4 py-3 text-center sm:py-4"
               >
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-orange sm:text-xs">
+                <p className="font-display text-base font-semibold text-brand-orange sm:text-lg">
                   {r.topic}
                 </p>
               </Reveal>
@@ -983,29 +974,29 @@ function Comparison() {
               <div className="grid grid-cols-2">
                 <Reveal
                   delay={i * 60 + 20}
-                  className="flex flex-col items-center gap-2 px-4 py-5 text-center opacity-70 sm:px-6 sm:py-6"
+                  className="flex flex-col items-center gap-2 px-4 py-5 text-center sm:px-6 sm:py-6"
                 >
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10">
                     <X className="h-4 w-4 text-white/60" />
                   </div>
-                  <h4 className="text-sm font-semibold text-white/80 line-through decoration-white/30 decoration-1 [text-wrap:balance] sm:text-base">
+                  <h4 className="text-sm font-semibold text-white/90 [text-wrap:balance] sm:text-base">
                     {r.bad}
                   </h4>
-                  <p className="text-xs text-white/50 [text-wrap:balance] sm:text-sm">
+                  <p className="text-xs text-white/60 [text-wrap:balance] sm:text-sm">
                     {r.badDesc}
                   </p>
                 </Reveal>
                 <Reveal
                   delay={i * 60 + 40}
-                  className="flex flex-col items-center gap-2 border-l border-white/10 bg-gradient-to-b from-brand-orange/10 to-brand-orange/[0.03] px-4 py-5 text-center sm:px-6 sm:py-6"
+                  className="flex flex-col items-center gap-2 border-l border-white/10 px-4 py-5 text-center sm:px-6 sm:py-6"
                 >
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange shadow-lg shadow-brand-orange/40 ring-2 ring-brand-orange/30">
-                    <Check className="h-4 w-4 text-white" strokeWidth={3} />
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange">
+                    <Check className="h-4 w-4 text-white" />
                   </div>
                   <h4 className="text-sm font-semibold text-white [text-wrap:balance] sm:text-base">
                     {r.good}
                   </h4>
-                  <p className="text-xs text-white/85 [text-wrap:balance] sm:text-sm">
+                  <p className="text-xs text-white/80 [text-wrap:balance] sm:text-sm">
                     {r.goodDesc}
                   </p>
                 </Reveal>
@@ -1013,20 +1004,6 @@ function Comparison() {
             </div>
           ))}
         </div>
-
-        {/* CTA below the table */}
-        <Reveal className="mt-10 text-center">
-          <p className="text-sm text-white/80">
-            Pronto para uma obra sem dor de cabeça?
-          </p>
-          <a
-            href={WHATSAPP_URL}
-            className="mt-4 inline-flex items-center justify-center gap-2 rounded-md bg-brand-orange px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-orange/30 transition hover:bg-brand-orange/90 hover:shadow-xl hover:shadow-brand-orange/40"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            Fale com um consultor agora
-          </a>
-        </Reveal>
       </div>
     </section>
   );
