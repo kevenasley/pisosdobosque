@@ -381,7 +381,7 @@ function Header() {
           open ? "max-h-[100vh] border-t border-border" : "max-h-0"
         }`}
       >
-        <nav className="flex flex-col px-4 py-4">
+        <nav className="flex flex-col px-5 py-4">
           {navItems.map((n) => (
             <a
               key={n.href}
