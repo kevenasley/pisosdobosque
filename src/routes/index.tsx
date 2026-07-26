@@ -763,7 +763,7 @@ function MoreSolutions() {
                 <h3 className="font-display text-xl font-bold text-brand-green">
                   {it.title}
                 </h3>
-                <p className="mt-2 text-sm text-muted-foreground">{it.desc}</p>
+                <p className="mt-2 line-clamp-3 min-h-[3.75rem] text-sm [text-wrap:balance] text-muted-foreground">{it.desc}</p>
                 <div className="mt-4 rounded-lg bg-brand-cream p-4">
                   <p className="text-xs font-semibold uppercase tracking-wider text-brand-orange">
                     Promoção
