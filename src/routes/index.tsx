@@ -365,43 +365,31 @@ function TopBar() {
       className="hidden border-b border-black/[0.06] bg-[oklch(0.985_0.004_85)] text-[oklch(0.45_0.01_150)] md:block"
     >
       <div className="mx-auto flex h-10 max-w-7xl items-center justify-between gap-6 px-5 text-[12px] tracking-tight md:px-8">
-        {/* Left: localização + horário */}
+        {/* Left: endereço completo */}
+        <span className="inline-flex items-center gap-1.5">
+          <MapPin className="h-3.5 w-3.5 shrink-0 text-[oklch(0.55_0.01_150)]" aria-hidden />
+          Av. Capitão Garibaldi Pinto dos Santos, 468 — Jardim do Bosque, Cachoeirinha/RS
+        </span>
+
+        {/* Right: horário + telefone */}
         <div className="flex items-center divide-x divide-black/10">
           <span className="inline-flex items-center gap-1.5 pr-4">
-            <MapPin className="h-3.5 w-3.5 text-[oklch(0.55_0.01_150)]" aria-hidden />
-            Cachoeirinha/RS · Região Metropolitana
-          </span>
-          <span className="inline-flex items-center gap-1.5 pl-4">
             <Clock className="h-3.5 w-3.5 text-[oklch(0.55_0.01_150)]" aria-hidden />
             Seg–Sex 8h–18h30 · Sáb 8h–13h
           </span>
-        </div>
-
-        {/* Right: telefone + WhatsApp pill */}
-        <div className="flex items-center divide-x divide-black/10">
           <a
             href="tel:+555134701212"
-            className="inline-flex items-center gap-1.5 pr-4 font-medium text-[oklch(0.35_0.01_150)] transition-colors duration-200 hover:text-brand-orange"
+            className="inline-flex items-center gap-1.5 pl-4 font-medium text-[oklch(0.35_0.01_150)] transition-colors duration-200 hover:text-brand-orange"
           >
             <Phone className="h-3.5 w-3.5 text-[oklch(0.55_0.01_150)]" aria-hidden />
             (51) 3470-1212
           </a>
-          <div className="pl-4">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full bg-brand-whatsapp px-3 py-1 text-[11px] font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-px hover:shadow-md"
-            >
-              <WhatsAppIcon className="h-3 w-3" />
-              Fale no WhatsApp
-            </a>
-          </div>
         </div>
       </div>
     </div>
   );
 }
+
 
 
 function Header() {
