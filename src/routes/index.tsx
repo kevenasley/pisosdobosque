@@ -439,12 +439,11 @@ function Hero() {
               </div>
             </div>
           </div>
-          <h1 className="font-display text-3xl font-bold leading-[1.15] md:text-4xl lg:text-[2.75rem]">
-            Somos conhecidos por ter <br className="hidden md:block" />
-            os <span className="font-extrabold">pisos mais baratos</span>{" "}
-            <br className="hidden md:block" />
-            da região!
+          <h1 className="font-display text-3xl font-bold leading-[1.15] [text-wrap:balance] md:text-[2.25rem] lg:text-[2.5rem]">
+            Somos conhecidos por ter os{" "}
+            <span className="font-extrabold">pisos mais baratos</span> da região!
           </h1>
+
 
           <p className="mx-auto mt-5 max-w-xl text-base text-white/95 md:mx-0 md:mt-6 md:text-lg">
             Estamos há mais de 20 anos no mercado porque oferecemos pisos e
