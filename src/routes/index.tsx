@@ -384,6 +384,7 @@ function Header() {
     { href: "#top", label: "Início" },
     { href: "#produtos", label: "Produtos" },
     { href: "#sobre", label: "Sobre Nós" },
+    { href: "#parceria", label: "Seja nosso parceiro" },
   ];
 
 
