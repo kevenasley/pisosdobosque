@@ -1160,125 +1160,160 @@ function FAQ() {
 }
 
 function Footer() {
+  const navLinks = [
+    { href: "#sobre", label: "Sobre Nós" },
+    { href: "#produtos", label: "Produtos" },
+    { href: "#parceria", label: "Por que escolher" },
+    { href: "#depoimentos", label: "Depoimentos" },
+    { href: "#faq", label: "Dúvidas Frequentes" },
+  ];
+  const categorias = [
+    { href: "#produtos", label: "Cerâmica" },
+    { href: "#produtos", label: "Porcelanato" },
+    { href: "#produtos", label: "Vinílico" },
+    { href: "#produtos", label: "Forros de PVC" },
+    { href: "#produtos", label: "Louças & Metais" },
+  ];
+
   return (
-    <footer className="bg-brand-green-dark py-14 text-white/90">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 md:grid-cols-3 md:px-8">
-        <div>
-          <h4 className="font-display text-lg font-bold uppercase tracking-wider text-white">
-            Contato
-          </h4>
-          <div className="mt-1 h-1 w-10 bg-brand-orange" />
-          <ul className="mt-5 space-y-3 text-sm">
-            <li className="flex items-center gap-2">
-              <WhatsAppIcon className="h-4 w-4 text-brand-orange" /> (51)
-              98490-5782
-            </li>
-            <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-brand-orange" />{" "}
-              pisosdobosque2019@gmail.com
-            </li>
-            <li className="flex items-start gap-2">
-              <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
-              <span>
-                Segunda a sexta: 8h às 12h e 13h30 às 18h30
-                <br />
-                Sábado: 8h às 12h e 13h30 às 17h
-              </span>
-            </li>
-            <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
-              <span>
-                Av. Capitão Garibaldi Pinto dos Santos, 468 — Jardim do Bosque,
-                Cachoeirinha, RS
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-display text-lg font-bold uppercase tracking-wider text-white">
-            Navegação
-          </h4>
-          <div className="mt-1 h-1 w-10 bg-brand-orange" />
-          <ul className="mt-5 space-y-2 text-sm">
-            <li>
-              <a href="#sobre" className="hover:text-brand-orange">
-                Sobre Nós
-              </a>
-            </li>
-            <li>
-              <a href="#produtos" className="hover:text-brand-orange">
-                Produtos
-              </a>
-            </li>
-            <li>
-              <a href="#parceria" className="hover:text-brand-orange">
-                Parceria
-              </a>
-            </li>
-          </ul>
-          <h4 className="mt-8 font-display text-lg font-bold uppercase tracking-wider text-white">
-            Nossas Redes
-          </h4>
-          <div className="mt-1 h-1 w-10 bg-brand-orange" />
-          <div className="mt-5 flex gap-3">
+    <footer className="bg-brand-green-dark text-white/85">
+      <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
+        {/* Top: brand + tagline + social */}
+        <div className="flex flex-col items-center text-center">
+          <Logo variant="light" />
+          <p className="mt-5 max-w-md text-sm text-white/70 [text-wrap:balance] md:text-base">
+            Há mais de 20 anos oferecendo pisos e revestimentos com preço justo
+            em Cachoeirinha e região metropolitana.
+          </p>
+          <div className="mt-6 flex gap-3">
             <a
-              href="#"
+              href="https://www.instagram.com/pisosdobosque"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Instagram"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:text-brand-orange"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
             >
               <Instagram className="h-4 w-4" />
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/pisosdobosque"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Facebook"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:text-brand-orange"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
             >
               <Facebook className="h-4 w-4" />
             </a>
+            <a
+              href="https://wa.me/5551984905782"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:border-brand-orange hover:bg-brand-orange hover:text-white"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+            </a>
           </div>
         </div>
-        <div>
-          <h4 className="font-display text-lg font-bold uppercase tracking-wider text-white">
-            Políticas
-          </h4>
-          <div className="mt-1 h-1 w-10 bg-brand-orange" />
-          <ul className="mt-5 space-y-2 text-sm">
-            <li>
-              <a href="#" className="hover:text-brand-orange">
-                Política de privacidade
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-brand-orange">
-                Termos de uso
-              </a>
-            </li>
-          </ul>
-          <h4 className="mt-8 font-display text-lg font-bold uppercase tracking-wider text-white">
-            Visite nossa loja
-          </h4>
-          <div className="mt-1 h-1 w-10 bg-brand-orange" />
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 block overflow-hidden rounded-lg border border-white/20"
-          >
-            <img
-              src={storeFront}
-              alt="Mapa da loja"
-              loading="lazy"
-              decoding="async"
-              className="h-28 w-full object-cover"
-            />
-          </a>
+
+        {/* Divider */}
+        <div className="mt-12 h-px w-full bg-white/10" />
+
+        {/* Columns */}
+        <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
+          <div className="text-center md:text-left">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">
+              Navegação
+            </h4>
+            <div className="mx-auto mt-3 h-0.5 w-8 bg-brand-orange md:mx-0" />
+            <ul className="mt-5 space-y-2.5 text-sm text-white/75">
+              {navLinks.map((l) => (
+                <li key={l.label}>
+                  <a href={l.href} className="transition hover:text-brand-orange">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="text-center md:text-left">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">
+              Categorias
+            </h4>
+            <div className="mx-auto mt-3 h-0.5 w-8 bg-brand-orange md:mx-0" />
+            <ul className="mt-5 space-y-2.5 text-sm text-white/75">
+              {categorias.map((c) => (
+                <li key={c.label}>
+                  <a href={c.href} className="transition hover:text-brand-orange">
+                    {c.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="text-center md:text-left">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white">
+              Contato
+            </h4>
+            <div className="mx-auto mt-3 h-0.5 w-8 bg-brand-orange md:mx-0" />
+            <ul className="mt-5 space-y-3 text-sm text-white/75">
+              <li className="flex items-start justify-center gap-2.5 md:justify-start">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
+                <span className="[text-wrap:balance]">
+                  Av. Capitão Garibaldi Pinto dos Santos, 468
+                  <br />
+                  Jardim do Bosque — Cachoeirinha/RS
+                </span>
+              </li>
+              <li className="flex items-center justify-center gap-2.5 md:justify-start">
+                <WhatsAppIcon className="h-4 w-4 shrink-0 text-brand-orange" />
+                <a
+                  href="https://wa.me/5551984905782"
+                  className="hover:text-brand-orange"
+                >
+                  (51) 98490-5782
+                </a>
+              </li>
+              <li className="flex items-center justify-center gap-2.5 md:justify-start">
+                <Mail className="h-4 w-4 shrink-0 text-brand-orange" />
+                <a
+                  href="mailto:pisosdobosque2019@gmail.com"
+                  className="break-all hover:text-brand-orange"
+                >
+                  pisosdobosque2019@gmail.com
+                </a>
+              </li>
+              <li className="flex items-start justify-center gap-2.5 md:justify-start">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
+                <span>
+                  Seg a Sex: 8h–12h · 13h30–18h30
+                  <br />
+                  Sábado: 8h–12h · 13h30–17h
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div className="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between gap-2 border-t border-white/10 px-5 pt-6 pb-20 text-xs text-white/60 md:flex-row md:px-8 md:pb-0">
-        <span>
-          Copyright © 2025 Pisos do Bosque. Todos os direitos reservados.
-        </span>
-        <span>Recriado com Lovable</span>
+
+        {/* Bottom bar */}
+        <div className="mt-12 border-t border-white/10 pt-6">
+          <div className="flex flex-col items-center justify-between gap-4 pb-20 text-xs text-white/55 md:flex-row md:pb-0">
+            <p className="text-center md:text-left">
+              © 2025 Pisos do Bosque. Todos os direitos reservados.
+            </p>
+            <div className="flex items-center gap-5">
+              <a href="#" className="hover:text-brand-orange">
+                Política de Privacidade
+              </a>
+              <span className="h-3 w-px bg-white/15" />
+              <a href="#" className="hover:text-brand-orange">
+                Termos de Uso
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   );
