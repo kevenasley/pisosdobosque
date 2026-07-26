@@ -603,56 +603,60 @@ function Hero() {
               className="float-y w-full drop-shadow-2xl"
             />
 
-            {/* Floating info badges — desktop only */}
-            <div
-              aria-label="Endereço da loja"
-              className="hidden md:flex absolute -left-6 top-6 lg:-left-10 lg:top-10 items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 animate-[float-y_6s_ease-in-out_infinite]"
-            >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-orange/10 text-brand-orange">
-                <MapPin className="h-4 w-4" aria-hidden />
-              </div>
-              <div className="text-left leading-tight">
-                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  Nossa loja
+            {/* Floating info badges — desktop only, aligned near bottom */}
+            <div className="hidden md:flex absolute inset-x-0 bottom-4 lg:bottom-6 justify-center px-2">
+              <div className="flex flex-wrap items-stretch justify-center gap-2 lg:gap-3">
+                <div
+                  aria-label="Horário de atendimento"
+                  className="flex items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 animate-[float-y_6s_ease-in-out_infinite]"
+                >
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-orange/10 text-brand-orange">
+                    <Clock className="h-4 w-4" aria-hidden />
+                  </div>
+                  <div className="text-left leading-tight">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      Horário
+                    </div>
+                    <div className="text-[13px] font-semibold text-foreground">
+                      Seg–Sex 8h–18h30
+                    </div>
+                  </div>
                 </div>
-                <div className="text-[13px] font-semibold text-foreground">
-                  Cachoeirinha/RS
-                </div>
-              </div>
-            </div>
 
-            <a
-              href="tel:+555134701212"
-              aria-label="Ligar para (51) 3470-1212"
-              className="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 lg:-right-10 items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 transition hover:-translate-y-[calc(50%+2px)] hover:shadow-xl animate-[float-y_6s_ease-in-out_infinite_1s]"
-            >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-green/10 text-brand-green">
-                <Phone className="h-4 w-4" aria-hidden />
-              </div>
-              <div className="text-left leading-tight">
-                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  Ligue agora
+                <div
+                  aria-label="Endereço da loja"
+                  className="flex items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 animate-[float-y_6s_ease-in-out_infinite_1s]"
+                >
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-green/10 text-brand-green">
+                    <MapPin className="h-4 w-4" aria-hidden />
+                  </div>
+                  <div className="text-left leading-tight">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      Endereço
+                    </div>
+                    <div className="text-[13px] font-semibold text-foreground">
+                      Av. Cap. Garibaldi, 468 · Jardim do Bosque
+                    </div>
+                  </div>
                 </div>
-                <div className="text-[13px] font-semibold text-foreground">
-                  (51) 3470-1212
-                </div>
-              </div>
-            </a>
 
-            <div
-              aria-label="Horário de atendimento"
-              className="hidden md:flex absolute -left-4 bottom-8 lg:-left-8 lg:bottom-12 items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 animate-[float-y_6s_ease-in-out_infinite_2s]"
-            >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-orange/10 text-brand-orange">
-                <Clock className="h-4 w-4" aria-hidden />
-              </div>
-              <div className="text-left leading-tight">
-                <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  Aberto agora
-                </div>
-                <div className="text-[13px] font-semibold text-foreground">
-                  Seg–Sex 8h–18h30
-                </div>
+                <a
+                  href="tel:+555134701212"
+                  aria-label="Ligar para (51) 3470-1212"
+                  className="flex items-center gap-2.5 rounded-lg bg-white/95 backdrop-blur-sm px-3.5 py-2.5 shadow-lg ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl animate-[float-y_6s_ease-in-out_infinite_2s]"
+                >
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand-orange/10 text-brand-orange">
+                    <Phone className="h-4 w-4" aria-hidden />
+                  </div>
+                  <div className="text-left leading-tight">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      Telefone
+                    </div>
+                    <div className="text-[13px] font-semibold text-foreground">
+                      (51) 3470-1212
+                    </div>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
