@@ -30,6 +30,8 @@ import {
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
+import { AnimatePresence, motion } from "framer-motion";
+
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
 import toolHammer from "@/assets/tool-hammer.png";
