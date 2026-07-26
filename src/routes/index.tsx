@@ -1357,8 +1357,19 @@ function BackToTop() {
 }
 
 function MobileCTABar() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 shadow-lg backdrop-blur md:hidden">
+    <div
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 p-3 shadow-lg backdrop-blur transition-transform duration-300 md:hidden ${
+        visible ? "translate-y-0" : "pointer-events-none translate-y-full"
+      }`}
+    >
       <div className="flex gap-2">
         <a
           href="tel:+555134701212"
