@@ -767,7 +767,8 @@ function Products() {
     { key: "vinilicos", label: "Vinílicos" },
   ];
 
-  const totalCount = filtered.reduce<number>((sum, c) => sum + c.products.length, 0);
+  let totalCount = 0;
+  for (const c of filtered) totalCount += c.products.length;
 
   return (
     <section id="produtos" className="bg-brand-showroom py-16 md:py-24">
