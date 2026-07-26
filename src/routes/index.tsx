@@ -1338,23 +1338,19 @@ function About() {
             </div>
           </Reveal>
 
-          {/* Right: framed store image + map CTA */}
+          {/* Right: interactive Google Map */}
           <Reveal delay={150}>
-            <div className="rounded-2xl border-4 border-brand-green bg-brand-green p-2 shadow-elegant">
-              <a
-                href={mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block overflow-hidden rounded-lg"
-              >
-                <img
-                  src={storeFront}
-                  alt="Fachada da loja Pisos do Bosque"
+            <div className="overflow-hidden rounded-2xl border-4 border-brand-green bg-brand-green p-2 shadow-elegant">
+              <div className="overflow-hidden rounded-lg">
+                <iframe
+                  title="Localização Pisos do Bosque"
+                  src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS&output=embed"
                   loading="lazy"
-                  decoding="async"
-                  className="aspect-[4/3] h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-[360px] w-full border-0 md:h-[420px]"
+                  allowFullScreen
                 />
-              </a>
+              </div>
               <a
                 href={mapsUrl}
                 target="_blank"
@@ -1365,12 +1361,13 @@ function About() {
                   <MapPin className="h-6 w-6 text-brand-orange" />
                 </div>
                 <p className="text-sm text-foreground">
-                  Clique no mapa ao lado e{" "}
-                  <strong className="text-brand-green">visite nossa loja</strong>
+                  Abrir rota no Google Maps e{" "}
+                  <strong className="text-brand-green">visitar a loja</strong>
                 </p>
               </a>
             </div>
           </Reveal>
+
         </div>
 
         {/* Showroom carousel */}
