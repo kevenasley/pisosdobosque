@@ -643,11 +643,12 @@ function Products() {
     <section id="produtos" className="bg-brand-cream py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-3xl font-bold text-brand-green md:text-5xl">
+          <h2 className="font-display text-2xl font-bold leading-tight text-brand-green md:text-4xl">
             Pisos e Revestimentos de Qualidade,
             <br />
             <span className="text-brand-orange">Em um Só Lugar!</span>
           </h2>
+
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
             Transforme sua casa ou projeto com produtos de alta qualidade,
             preços competitivos e entrega garantida no prazo.
