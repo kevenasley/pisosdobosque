@@ -798,11 +798,11 @@ function Products() {
                 {isActive && (
                   <motion.span
                     layoutId="products-tab-indicator"
-                    className="absolute inset-0 -z-10 rounded-md bg-brand-orange shadow-orange"
+                    className="absolute inset-0 rounded-md bg-brand-orange shadow-orange"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-                {t.label}
+                <span className="relative z-10">{t.label}</span>
               </button>
             );
           })}
