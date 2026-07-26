@@ -951,6 +951,140 @@ function renderBold(text: string) {
   );
 }
 
+function TestimonialsCarousel() {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(0);
+  const pausedRef = useRef(false);
+  const total = reviews.length;
+
+  // Track active slide via scroll position
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const w = el.clientWidth;
+      if (!w) return;
+      const idx = Math.round(el.scrollLeft / w);
+      setActive(Math.max(0, Math.min(total - 1, idx)));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [total]);
+
+  // Pause on user interaction
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const pause = () => {
+      pausedRef.current = true;
+    };
+    const resume = () => {
+      // resume after inactivity
+      window.setTimeout(() => (pausedRef.current = false), 6000);
+    };
+    el.addEventListener("pointerdown", pause);
+    el.addEventListener("pointerup", resume);
+    el.addEventListener("pointercancel", resume);
+    el.addEventListener("touchend", resume);
+    return () => {
+      el.removeEventListener("pointerdown", pause);
+      el.removeEventListener("pointerup", resume);
+      el.removeEventListener("pointercancel", resume);
+      el.removeEventListener("touchend", resume);
+    };
+  }, []);
+
+  // Autoplay
+  useEffect(() => {
+    const reduce = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reduce) return;
+    const id = window.setInterval(() => {
+      if (pausedRef.current) return;
+      const el = scrollerRef.current;
+      if (!el) return;
+      if (document.hidden) return;
+      const w = el.clientWidth;
+      const next = (Math.round(el.scrollLeft / w) + 1) % total;
+      el.scrollTo({ left: next * w, behavior: "smooth" });
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, [total]);
+
+  const goTo = (i: number) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    pausedRef.current = true;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+    window.setTimeout(() => (pausedRef.current = false), 6000);
+  };
+
+  return (
+    <div
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Avaliações de clientes"
+    >
+      <div
+        ref={scrollerRef}
+        className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth transform-gpu [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {reviews.map((r, i) => (
+          <div
+            key={i}
+            className="w-full shrink-0 snap-center px-1"
+            aria-roledescription="slide"
+            aria-label={`${i + 1} de ${total}`}
+          >
+            <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
+              <Quote
+                className="h-7 w-7 text-brand-orange/70"
+                aria-hidden="true"
+              />
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                {renderBold(r.text)}
+              </p>
+              <div className="mt-6 flex items-center gap-3 border-t border-border pt-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-green font-semibold text-white">
+                  {r.initial}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-semibold text-foreground">
+                    {r.name}
+                  </span>
+                  <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-5 flex items-center justify-center gap-1">
+        {reviews.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => goTo(i)}
+            aria-label={`Ir para avaliação ${i + 1}`}
+            className="group p-3"
+          >
+            <span
+              className={`block h-2 rounded-full transition-all duration-300 ease-in-out ${
+                i === active
+                  ? "w-6 bg-brand-orange"
+                  : "w-2 bg-muted-foreground/40 group-hover:bg-muted-foreground/60"
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Testimonials() {
   return (
     <section className="bg-background py-16 md:py-24">
