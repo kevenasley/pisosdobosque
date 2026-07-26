@@ -380,11 +380,11 @@ function Header() {
     };
   }, [open]);
 
-  const navItems = [
+  const navItems: Array<{ href: string; label: string; disabled?: boolean }> = [
     { href: "#top", label: "Início" },
     { href: "#produtos", label: "Produtos" },
     { href: "#sobre", label: "Sobre Nós" },
-    { href: "#parceria", label: "Seja nosso parceiro" },
+    { href: "#", label: "Seja nosso parceiro", disabled: true },
   ];
 
 
