@@ -30,6 +30,9 @@ import {
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 
 import heroVendedor from "@/assets/hero-vendedor.jpg";
+import toolHammer from "@/assets/tool-hammer.png";
+import toolTape from "@/assets/tool-tape.png";
+import toolTiles from "@/assets/tool-tiles.png";
 import avatar1 from "@/assets/avatar-1.webp.asset.json";
 import avatar2 from "@/assets/avatar-2.webp.asset.json";
 import avatar3 from "@/assets/avatar-3.webp.asset.json";
