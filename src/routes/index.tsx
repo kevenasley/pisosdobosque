@@ -669,7 +669,7 @@ function ProductCard({ p }: { p: Product }) {
         />
       </div>
       <div className="flex flex-1 flex-col bg-[#F4F4F4] px-3 py-3 text-center sm:px-4">
-        <h4 className="line-clamp-2 min-h-[2.25rem] text-[12px] font-semibold leading-tight [text-wrap:balance] text-foreground sm:min-h-[2.5rem] sm:text-sm">
+        <h4 className="line-clamp-2 min-h-[2.6rem] text-[12px] font-semibold leading-snug text-foreground sm:min-h-[2.75rem] sm:text-sm">
           {p.name}
         </h4>
         <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground sm:text-xs">
