@@ -590,7 +590,7 @@ function Hero() {
             Fale Conosco no WhatsApp
           </WhatsAppButton>
         </Reveal>
-        <Reveal delay={150} className="relative flex flex-col items-center justify-center self-center gap-4">
+        <Reveal delay={150} className="relative flex items-center justify-center self-center">
           <div className="relative mx-auto w-full max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6">
             {/* Soft radial glow to anchor the image */}
             <div
@@ -612,33 +612,8 @@ function Hero() {
               className="w-full drop-shadow-2xl"
             />
           </div>
-
-          {/* Location card — below image, aligned right */}
-          <a
-            href="#localizacao"
-            aria-label="Ver localização da loja física"
-            className="group flex w-full max-w-[240px] items-center gap-4 self-center rounded-2xl border-l-4 border-brand-orange bg-white py-3 pl-4 pr-5 shadow-lg ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl sm:max-w-xs sm:gap-5 sm:py-4 sm:pl-5 sm:pr-6 md:max-w-md md:self-end"
-          >
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-orange/10 text-brand-orange transition-colors group-hover:bg-brand-orange/20 sm:h-12 sm:w-12">
-              <MapPin className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2.5} />
-            </span>
-            <span className="flex min-w-0 flex-col leading-tight">
-              <span className="text-[9px] font-bold uppercase tracking-widest text-brand-orange sm:text-[10px]">
-                Visite nossa loja
-              </span>
-              <span className="mt-0.5 truncate text-[12px] font-bold text-foreground sm:text-[15px]">
-                Loja Física em Cachoeirinha/RS
-              </span>
-              <span className="truncate text-[10px] text-muted-foreground sm:text-[12px]">
-                Av. Cap. Garibaldi Pinto dos Santos, 468
-              </span>
-            </span>
-            <ChevronRight
-              className="ml-auto h-4 w-4 -translate-x-2 text-brand-orange opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 sm:h-5 sm:w-5"
-              strokeWidth={2.5}
-            />
-          </a>
         </Reveal>
+
 
 
       </div>
