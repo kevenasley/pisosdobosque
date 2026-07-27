@@ -611,11 +611,11 @@ function Hero() {
               className="w-full drop-shadow-2xl"
             />
 
-            {/* Floating location badge */}
+            {/* Location bar overlay */}
             <a
               href="#localizacao"
               aria-label="Ver localização da loja física"
-              className="absolute -bottom-3 -left-3 z-10 flex max-w-[15rem] items-center gap-2.5 rounded-xl bg-white/95 p-2.5 shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-xl sm:-bottom-5 sm:-left-5 sm:max-w-[17rem] sm:gap-3 sm:p-3"
+              className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-3 rounded-t-2xl bg-white/95 px-4 py-2.5 shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:bg-white sm:gap-4 sm:px-6 sm:py-3"
             >
               <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-orange/10 text-brand-orange sm:h-10 sm:w-10">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2.5} />
