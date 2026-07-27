@@ -1623,21 +1623,16 @@ function Footer() {
             <p className="text-center md:text-left">
               © 2025 Pisos do Bosque. Todos os direitos reservados.
             </p>
-            <div className="flex items-center gap-5">
-              <a href="#" className="hover:text-brand-orange">
-                Política de Privacidade
-              </a>
-              <span className="h-3 w-px bg-white/15" />
-              <a href="#" className="hover:text-brand-orange">
-                Termos de Uso
-              </a>
-            </div>
+            <p className="text-center text-white/40 md:text-right">
+              CNPJ e endereço em Cachoeirinha/RS.
+            </p>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
 
 function FloatingWhatsApp() {
   return (
