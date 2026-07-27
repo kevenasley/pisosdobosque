@@ -39,9 +39,9 @@ import heroVendedor from "@/assets/hero-vendedor.webp";
 import toolHammer from "@/assets/tool-hammer.webp";
 import toolTape from "@/assets/tool-tape.webp";
 import toolTiles from "@/assets/tool-tiles.webp";
-import avatar1 from "@/assets/avatar-1.webp.asset.json";
-import avatar2 from "@/assets/avatar-2.webp.asset.json";
-import avatar3 from "@/assets/avatar-3.webp.asset.json";
+const avatar1 = { url: "/avatar-1.webp" };
+const avatar2 = { url: "/avatar-2.webp" };
+const avatar3 = { url: "/avatar-3.webp" };
 import catCeramica from "@/assets/cat-ceramica.webp";
 import catPorcelanato from "@/assets/cat-porcelanato.webp";
 import catVinilico from "@/assets/cat-vinilico.webp";
@@ -63,7 +63,7 @@ import tPor3 from "@/assets/tile-porcelanato-3.webp";
 import tVin1 from "@/assets/tile-vinilico-1.webp";
 import tVin2 from "@/assets/tile-vinilico-2.webp";
 import tVin3 from "@/assets/tile-vinilico-3.webp";
-import logoAsset from "@/assets/logo-pisos-do-bosque.png.asset.json";
+const logoAsset = { url: "/logo-pisos-do-bosque.png" };
 
 const WHATSAPP_URL =
   "https://wa.me/5551984905782?text=Ol%C3%A1!%20Vi%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20um%20atendimento.";
