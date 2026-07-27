@@ -112,9 +112,14 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Pisos do Bosque",
-          image: "/favicon.ico",
+          image: heroVendedor,
+          url: "https://pisosdobosque.lovable.app/",
           telephone: "+555134701212",
           priceRange: "$$",
+          sameAs: [
+            "https://www.instagram.com/pisosdobosque",
+            "https://www.facebook.com/pisosdobosque",
+          ],
           address: {
             "@type": "PostalAddress",
             streetAddress: "Av. Capitão Garibaldi Pinto dos Santos, 468",
@@ -139,9 +144,10 @@ export const Route = createFileRoute("/")({
           ],
           aggregateRating: {
             "@type": "AggregateRating",
-            ratingValue: "4.8",
-            reviewCount: "2171",
+            ratingValue: "4.9",
+            reviewCount: "2397",
           },
+
         }),
       },
     ],
