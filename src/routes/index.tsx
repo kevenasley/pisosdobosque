@@ -616,19 +616,26 @@ function Hero() {
             <a
               href="#localizacao"
               aria-label="Ver localização da loja física"
-              className="absolute bottom-4 left-4 z-10 flex w-auto items-center gap-3 rounded-2xl bg-white px-5 py-3 shadow-xl ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-2xl sm:bottom-6 sm:left-6"
+              className="group absolute bottom-4 left-4 z-10 flex w-auto items-center gap-4 rounded-2xl border-l-4 border-brand-orange bg-white/95 py-3 pl-4 pr-6 shadow-xl ring-1 ring-black/5 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white hover:shadow-2xl sm:bottom-6 sm:left-6 sm:gap-5 sm:py-4 sm:pl-5 sm:pr-8"
             >
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-orange/10 text-brand-orange sm:h-10 sm:w-10">
-                <MapPin className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2.5} />
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-orange/10 text-brand-orange transition-colors group-hover:bg-brand-orange/20 sm:h-12 sm:w-12">
+                <MapPin className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2.5} />
               </span>
-              <span className="leading-tight whitespace-nowrap">
-                <span className="block text-[11px] font-bold text-foreground sm:text-[13px]">
+              <span className="flex flex-col leading-tight">
+                <span className="text-[9px] font-bold uppercase tracking-widest text-brand-orange sm:text-[10px]">
+                  Visite nossa loja
+                </span>
+                <span className="mt-0.5 whitespace-nowrap text-[12px] font-bold text-foreground sm:text-[15px]">
                   Loja Física em Cachoeirinha/RS
                 </span>
-                <span className="block text-[9px] text-muted-foreground sm:text-[10px]">
+                <span className="whitespace-nowrap text-[10px] text-muted-foreground sm:text-[12px]">
                   Av. Cap. Garibaldi Pinto dos Santos, 468
                 </span>
               </span>
+              <ChevronRight
+                className="ml-1 h-4 w-4 -translate-x-2 text-brand-orange opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 sm:h-5 sm:w-5"
+                strokeWidth={2.5}
+              />
             </a>
           </div>
         </Reveal>
