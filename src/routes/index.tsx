@@ -791,7 +791,7 @@ function Products() {
         <div
           role="tablist"
           aria-label="Filtrar categorias"
-          className="mt-8 flex flex-wrap justify-center gap-2"
+          className="mx-auto mt-8 grid w-full max-w-md grid-cols-2 gap-1.5 rounded-2xl border border-border/70 bg-white p-1.5 shadow-sm sm:flex sm:max-w-none sm:w-auto sm:flex-wrap sm:justify-center sm:gap-2 sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none"
         >
           {tabs.map((t) => {
             const isActive = active === t.key;
@@ -801,16 +801,16 @@ function Products() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActive(t.key)}
-                className={`relative rounded-full px-5 py-2 text-sm font-semibold transition-colors duration-300 ease-out ${
+                className={`relative rounded-xl px-3 py-2 text-[13px] font-semibold transition-colors duration-300 ease-out sm:rounded-full sm:px-5 sm:text-sm ${
                   isActive
                     ? "text-white"
-                    : "border border-border bg-white text-muted-foreground hover:border-brand-orange/40 hover:text-brand-green"
+                    : "text-muted-foreground hover:text-brand-green sm:border sm:border-border sm:bg-white sm:hover:border-brand-orange/40"
                 }`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="products-tab-indicator"
-                    className="absolute inset-0 rounded-full bg-brand-orange shadow-orange"
+                    className="absolute inset-0 rounded-xl bg-brand-orange shadow-orange sm:rounded-full"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
