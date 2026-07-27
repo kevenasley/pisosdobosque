@@ -35,34 +35,34 @@ import { smoothScrollTo } from "@/lib/smoothScrollTo";
 import { AnimatePresence, motion } from "framer-motion";
 
 
-import heroVendedor from "@/assets/hero-vendedor.jpg";
-import toolHammer from "@/assets/tool-hammer.png";
-import toolTape from "@/assets/tool-tape.png";
-import toolTiles from "@/assets/tool-tiles.png";
+import heroVendedor from "@/assets/hero-vendedor.webp";
+import toolHammer from "@/assets/tool-hammer.webp";
+import toolTape from "@/assets/tool-tape.webp";
+import toolTiles from "@/assets/tool-tiles.webp";
 import avatar1 from "@/assets/avatar-1.webp.asset.json";
 import avatar2 from "@/assets/avatar-2.webp.asset.json";
 import avatar3 from "@/assets/avatar-3.webp.asset.json";
-import catCeramica from "@/assets/cat-ceramica.jpg";
-import catPorcelanato from "@/assets/cat-porcelanato.jpg";
-import catVinilico from "@/assets/cat-vinilico.jpg";
-import solForro from "@/assets/sol-forro.jpg";
-import solLouca from "@/assets/sol-louca.jpg";
-import solPorta from "@/assets/sol-porta.jpg";
-import storeFront from "@/assets/store-front.jpg";
-import showroom1 from "@/assets/showroom-1.jpg";
-import showroom2 from "@/assets/showroom-2.jpg";
-import showroom3 from "@/assets/showroom-3.jpg";
-import showroom4 from "@/assets/showroom-4.jpg";
-import showroom5 from "@/assets/showroom-5.jpg";
-import tCer1 from "@/assets/tile-ceramica-1.jpg";
-import tCer2 from "@/assets/tile-ceramica-2.jpg";
-import tCer3 from "@/assets/tile-ceramica-3.jpg";
-import tPor1 from "@/assets/tile-porcelanato-1.jpg";
-import tPor2 from "@/assets/tile-porcelanato-2.jpg";
-import tPor3 from "@/assets/tile-porcelanato-3.jpg";
-import tVin1 from "@/assets/tile-vinilico-1.jpg";
-import tVin2 from "@/assets/tile-vinilico-2.jpg";
-import tVin3 from "@/assets/tile-vinilico-3.jpg";
+import catCeramica from "@/assets/cat-ceramica.webp";
+import catPorcelanato from "@/assets/cat-porcelanato.webp";
+import catVinilico from "@/assets/cat-vinilico.webp";
+import solForro from "@/assets/sol-forro.webp";
+import solLouca from "@/assets/sol-louca.webp";
+import solPorta from "@/assets/sol-porta.webp";
+import storeFront from "@/assets/store-front.webp";
+import showroom1 from "@/assets/showroom-1.webp";
+import showroom2 from "@/assets/showroom-2.webp";
+import showroom3 from "@/assets/showroom-3.webp";
+import showroom4 from "@/assets/showroom-4.webp";
+import showroom5 from "@/assets/showroom-5.webp";
+import tCer1 from "@/assets/tile-ceramica-1.webp";
+import tCer2 from "@/assets/tile-ceramica-2.webp";
+import tCer3 from "@/assets/tile-ceramica-3.webp";
+import tPor1 from "@/assets/tile-porcelanato-1.webp";
+import tPor2 from "@/assets/tile-porcelanato-2.webp";
+import tPor3 from "@/assets/tile-porcelanato-3.webp";
+import tVin1 from "@/assets/tile-vinilico-1.webp";
+import tVin2 from "@/assets/tile-vinilico-2.webp";
+import tVin3 from "@/assets/tile-vinilico-3.webp";
 import logoAsset from "@/assets/logo-pisos-do-bosque.png.asset.json";
 
 const WHATSAPP_URL =
@@ -112,9 +112,14 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Pisos do Bosque",
-          image: "/favicon.ico",
+          image: heroVendedor,
+          url: "https://pisosdobosque.lovable.app/",
           telephone: "+555134701212",
           priceRange: "$$",
+          sameAs: [
+            "https://www.instagram.com/pisosdobosque",
+            "https://www.facebook.com/pisosdobosque",
+          ],
           address: {
             "@type": "PostalAddress",
             streetAddress: "Av. Capitão Garibaldi Pinto dos Santos, 468",
@@ -139,9 +144,10 @@ export const Route = createFileRoute("/")({
           ],
           aggregateRating: {
             "@type": "AggregateRating",
-            ratingValue: "4.8",
-            reviewCount: "2171",
+            ratingValue: "4.9",
+            reviewCount: "2397",
           },
+
         }),
       },
     ],
@@ -1617,21 +1623,16 @@ function Footer() {
             <p className="text-center md:text-left">
               © 2025 Pisos do Bosque. Todos os direitos reservados.
             </p>
-            <div className="flex items-center gap-5">
-              <a href="#" className="hover:text-brand-orange">
-                Política de Privacidade
-              </a>
-              <span className="h-3 w-px bg-white/15" />
-              <a href="#" className="hover:text-brand-orange">
-                Termos de Uso
-              </a>
-            </div>
+            <p className="text-center text-white/40 md:text-right">
+              CNPJ e endereço em Cachoeirinha/RS.
+            </p>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
 
 function FloatingWhatsApp() {
   return (
