@@ -610,6 +610,25 @@ function Hero() {
               decoding="async"
               className="w-full drop-shadow-2xl"
             />
+
+            {/* Floating location badge */}
+            <a
+              href="#localizacao"
+              aria-label="Ver localização da loja física"
+              className="absolute -bottom-3 -left-3 z-10 flex max-w-[15rem] items-center gap-2.5 rounded-xl bg-white/95 p-2.5 shadow-lg ring-1 ring-black/5 backdrop-blur transition hover:-translate-y-0.5 hover:shadow-xl sm:-bottom-5 sm:-left-5 sm:max-w-[17rem] sm:gap-3 sm:p-3"
+            >
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-orange/10 text-brand-orange sm:h-10 sm:w-10">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2.5} />
+              </span>
+              <span className="min-w-0 leading-tight">
+                <span className="block text-[11px] font-bold text-foreground sm:text-[13px]">
+                  Loja Física em Cachoeirinha/RS
+                </span>
+                <span className="block truncate text-[10px] text-muted-foreground sm:text-[11px]">
+                  Av. Cap. Garibaldi Pinto dos Santos, 468
+                </span>
+              </span>
+            </a>
           </div>
         </Reveal>
 
