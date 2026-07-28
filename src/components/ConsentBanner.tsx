@@ -67,14 +67,15 @@ export function ConsentBanner() {
       <button
         onClick={close}
         aria-label="Fechar"
-        className="absolute right-2 top-2 rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:right-4 md:top-4"
+        className="absolute right-4 top-4 hidden rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:block"
       >
-        <X className="h-3.5 w-3.5 md:h-4 md:w-4" />
+        <X className="h-4 w-4" />
       </button>
+
 
       {/* Mobile: compact single-row layout */}
       <div className="flex items-center gap-2 md:hidden">
-        <p className="flex-1 pr-5 text-[11px] leading-snug text-muted-foreground">
+        <p className="flex-1 text-[11px] leading-snug text-muted-foreground">
           Usamos cookies para melhorar sua experiência e medir anúncios.
         </p>
         <div className="flex shrink-0 flex-col gap-1.5">
