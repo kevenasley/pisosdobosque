@@ -177,7 +177,7 @@ const porcelanato: Product[] = [
   { img: tPor1, name: "Porcelanato Polido Onice Sea", size: "61 x 121 cm", price: "R$ 109,90 m²" },
   { img: tPor2, name: "Porcelanato Barcelona Bloc Acetinado", size: "84 x 84 cm", price: "R$ 74,90 m²" },
   { img: tPor2, name: "Porcelanato Externo Taberna Titânio", size: "81 x 81 cm", price: "R$ 74,90 m²" },
-  { img: tPor2, name: "Porcelanato Pulpis Cinza", size: "84 x 84 cm", price: "R$ 89,90 m²" },
+  
   { img: "/piso-pulpis-cinza-polido.webp", name: "Porcelanato Pulpis Cinza Polido", size: "84 x 84 cm", price: "R$ 89,90 m²" },
   { img: "/piso-thasos-acetinado.webp", name: "Porcelanato Thasos Acetinado", size: "121 x 121 cm", price: "R$ 99,90 m²" },
   { img: "/piso-calacata-acetinado.webp", name: "Porcelanato Calacata Acetinado", size: "62 x 121 cm", price: "R$ 81,90 m²" },
