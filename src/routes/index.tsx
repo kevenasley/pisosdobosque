@@ -1018,7 +1018,7 @@ function ProductCarousel({
           <div
             key={i}
             data-slide
-            className="w-[calc(50%-0.5rem)] shrink-0 sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
+            className="h-full w-[calc(50%-0.5rem)] shrink-0 sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
           >
             <ProductCard p={p} />
           </div>
