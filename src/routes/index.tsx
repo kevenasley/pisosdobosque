@@ -610,17 +610,26 @@ function Hero() {
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative flex items-center justify-center self-center">
-          <div className="relative mx-auto w-full max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6">
+          <div className="relative mx-auto w-auto max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6">
+            {/* Background blend layer to harmonize image with hero gradient */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -z-10 mix-blend-multiply opacity-40 rounded-full blur-3xl"
+              style={{
+                background: "var(--brand-orange-dark)",
+                transform: "scale(1.1)",
+              }}
+            />
             {/* Soft radial glow to anchor the image */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 -z-10 blur-2xl"
+              className="pointer-events-none absolute inset-0 -z-20 blur-2xl"
               style={{
                 background:
-                  "radial-gradient(closest-side, rgba(255,255,255,0.35), transparent 70%)",
+                  "radial-gradient(closest-side, rgba(255,255,255,0.25), transparent 80%)",
               }}
             />
-            <img
+            <motion.img
               src={heroVendedor}
               alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
               width={1200}
@@ -628,7 +637,13 @@ function Hero() {
               fetchPriority="high"
               loading="eager"
               decoding="async"
-              className="w-full drop-shadow-2xl"
+              className="relative z-10 w-full drop-shadow-2xl"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ 
+                duration: 5, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
             />
           </div>
         </Reveal>
