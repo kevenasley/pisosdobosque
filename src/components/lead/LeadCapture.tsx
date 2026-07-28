@@ -205,6 +205,7 @@ export function LeadCapture() {
               onChange={(e) => setReason(e.target.value)}
               placeholder="Ex: procuro porcelanato para sala 30m²"
               rows={3}
+              className="focus-visible:ring-brand-green focus-visible:border-brand-green"
             />
           </div>
           <div className="flex flex-col gap-2 pt-2">
