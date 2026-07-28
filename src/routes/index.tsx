@@ -58,9 +58,6 @@ import showroom5 from "@/assets/showroom-5.webp";
 
 
 
-import tPor1 from "@/assets/tile-porcelanato-1.webp";
-import tPor2 from "@/assets/tile-porcelanato-2.webp";
-import tPor3 from "@/assets/tile-porcelanato-3.webp";
 import tVin1 from "@/assets/tile-vinilico-1.webp";
 import tVin2 from "@/assets/tile-vinilico-2.webp";
 import tVin3 from "@/assets/tile-vinilico-3.webp";
