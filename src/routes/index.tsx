@@ -603,7 +603,7 @@ function Hero() {
             ariaLabel="Fale conosco no WhatsApp"
             className="mx-auto mt-8 w-full max-w-xs py-4 text-base md:mx-0 md:max-w-md"
           >
-            Não quero essa imagem flutuando, quero que vc gere uma nova imagem, entende? essa do cara segurando um piso.
+            Fale Conosco no WhatsApp
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative flex items-center justify-center self-center">
