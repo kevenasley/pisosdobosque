@@ -2033,7 +2033,20 @@ function MobileCTABar() {
       <div className="flex gap-2">
         <a
           href="tel:+5551984905782"
-          aria-label="Ligar para a loja"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ligar para a loja Pisos do Bosque"
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              const w = window as unknown as { dataLayer?: unknown[] };
+              w.dataLayer = w.dataLayer || [];
+              w.dataLayer.push({
+                event: "Ligou",
+                cta_origin: "mobile_cta_bar",
+                phone_number: "+5551984905782",
+              });
+            }
+          }}
           className="flex flex-1 items-center justify-center gap-2 rounded-md border-2 border-brand-green px-4 py-2.5 text-sm font-semibold text-brand-green"
         >
           <Phone className="h-4 w-4" /> Ligar
