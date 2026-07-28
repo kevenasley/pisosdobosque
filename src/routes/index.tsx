@@ -523,18 +523,8 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden gradient-hero">
-      {/* Decorative dots */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-20"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-          backgroundSize: "24px 24px",
-        }}
-      />
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-5 py-10 md:grid-cols-[1.2fr_1fr] md:gap-12 md:px-8 md:py-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
+    <section id="top" className="relative overflow-hidden gradient-hero texture-dots-white">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-5 py-10 md:grid-cols-[1.2fr_1fr] md:gap-12 md:px-8 md:py-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
         <Reveal className="text-center text-white md:text-left">
           <div className="mb-6 flex items-center justify-center gap-2 md:justify-start md:mb-7">
             <div className="flex -space-x-1.5">
@@ -784,7 +774,7 @@ function Products() {
   for (const c of filtered) totalCount += c.products.length;
 
   return (
-    <section id="produtos" className="bg-white py-16 md:py-24">
+    <section id="produtos" className="bg-white texture-dots-dark py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
@@ -956,11 +946,11 @@ function Comparison() {
   return (
     <section
       id="parceria"
-      className="gradient-green py-16 text-white md:py-24"
+      className="bg-brand-green texture-dots-white py-16 text-white md:py-24"
     >
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
-          <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight md:text-4xl">
+          <h2 className="font-display text-2xl font-bold text-white [text-wrap:balance] leading-tight md:text-4xl">
             Por Que a Pisos do Bosque é a Escolha Certa para Sua Obra?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-white/80">
@@ -994,7 +984,7 @@ function Comparison() {
                 delay={i * 60}
                 className="bg-white/5 px-4 py-3 text-center sm:py-4"
               >
-                <p className="font-display text-base font-semibold text-brand-orange sm:text-lg">
+                <p className="font-display text-base font-semibold text-white sm:text-lg">
                   {r.topic}
                 </p>
               </Reveal>
@@ -1282,10 +1272,10 @@ function About() {
     "https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS";
 
   return (
-    <section id="sobre" className="bg-brand-cream py-16 md:py-24">
+    <section id="sobre" className="bg-brand-cream texture-dots-dark py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
-          <h2 className="text-center font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
+          <h2 className="text-center font-display text-2xl font-bold [text-wrap:balance] leading-tight text-foreground md:text-4xl">
             Conheça Nossa História
           </h2>
         </Reveal>
@@ -1522,7 +1512,7 @@ function Footer() {
   );
 
   return (
-    <footer className="bg-brand-green-dark text-white/85">
+    <footer className="bg-brand-green-dark texture-dots-white text-white/85">
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
         {/* Mobile: centered brand block */}
         <div className="flex flex-col items-center text-center md:hidden">
