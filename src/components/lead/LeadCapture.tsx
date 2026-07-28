@@ -191,6 +191,7 @@ export function LeadCapture() {
               inputMode="tel"
               autoComplete="tel"
               aria-invalid={!!errors.phone}
+              className="focus-visible:ring-brand-green focus-visible:border-brand-green"
             />
             {errors.phone && (
               <p className="text-xs text-destructive">{errors.phone}</p>
