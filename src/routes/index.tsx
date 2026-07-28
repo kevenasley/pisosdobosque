@@ -823,33 +823,50 @@ function ProductCarousel({ products }: { products: Product[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [perView, products.length]);
 
-  // Autoplay
+  // Custom eased smooth-scroll (longer duration than the native "smooth" jump)
+  const animRef = useRef<number | null>(null);
+  const animateTo = (targetLeft: number, duration = 900) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    if (animRef.current) cancelAnimationFrame(animRef.current);
+    const start = el.scrollLeft;
+    const max = el.scrollWidth - el.clientWidth;
+    const to = Math.max(0, Math.min(max, targetLeft));
+    const diff = to - start;
+    if (Math.abs(diff) < 1) return;
+    const t0 = performance.now();
+    const ease = (t: number) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // easeInOutCubic
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / duration);
+      el.scrollLeft = start + diff * ease(p);
+      if (p < 1) animRef.current = requestAnimationFrame(tick);
+    };
+    animRef.current = requestAnimationFrame(tick);
+  };
+
+  // Autoplay — ping-pong so it never snaps back to start
+  const dirRef = useRef<1 | -1>(1);
   useEffect(() => {
     if (paused || pages <= 1) return;
     const id = window.setInterval(() => {
-      const el = scrollerRef.current;
-      if (!el) return;
-      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
-      if (atEnd) {
-        el.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        el.scrollBy({ left: el.clientWidth, behavior: "smooth" });
-      }
-    }, 5000);
+      if (current >= pages - 1) dirRef.current = -1;
+      else if (current <= 0) dirRef.current = 1;
+      goTo(current + dirRef.current);
+    }, 7000);
     return () => window.clearInterval(id);
-  }, [paused, pages]);
+  }, [paused, pages, current]);
 
   const goTo = (page: number) => {
     const el = scrollerRef.current;
     if (!el) return;
-    setVisibleCount((v) => Math.min(products.length, Math.max(v, (page + 1) * perView + perView)));
-    requestAnimationFrame(() => {
-      el.scrollTo({ left: el.clientWidth * page, behavior: "smooth" });
-    });
+    const clamped = Math.max(0, Math.min(pages - 1, page));
+    setVisibleCount((v) => Math.min(products.length, Math.max(v, (clamped + 2) * perView)));
+    requestAnimationFrame(() => animateTo(el.clientWidth * clamped, 900));
   };
 
-  const prev = () => goTo(Math.max(0, current - 1));
-  const next = () => goTo(Math.min(pages - 1, current + 1));
+  const prev = () => goTo(current - 1);
+  const next = () => goTo(current + 1);
 
   const slides = products.slice(0, Math.min(products.length, Math.max(visibleCount, perView * 2)));
 
