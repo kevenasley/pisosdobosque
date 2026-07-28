@@ -105,7 +105,7 @@
   --brand-green-light: oklch(0.78 0.15 135); /* #8FCD6D -> oklch(0.78 0.15 135) */
   --brand-green-teal: oklch(0.48 0.12 175); /* #007065 -> oklch(0.48 0.12 175) */
   --brand-green-dark: oklch(0.38 0.1 180); /* #00514B -> oklch(0.38 0.1 180) */
-  --brand-whatsapp: oklch(0.72 0.18 155);
+  --brand-whatsapp: oklch(0.76 0.19 152); /* #25D366 - verde oficial WhatsApp */
   --brand-cream: oklch(0.98 0.015 85);
   --brand-showroom: oklch(0.975 0.003 250);
 
