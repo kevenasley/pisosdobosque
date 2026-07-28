@@ -1521,8 +1521,8 @@ function Footer() {
   return (
     <footer className="bg-brand-green-dark texture-dots-white text-white/85">
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
-        {/* Mobile: left-aligned brand block */}
-        <div className="flex flex-col items-start text-left md:hidden">
+        {/* Mobile: centered brand block */}
+        <div className="flex flex-col items-center text-center md:hidden">
           <Logo variant="light" className="-ml-2" />
           <p className="mt-5 max-w-md text-sm text-white/70 [text-wrap:balance]">
             Há mais de 20 anos oferecendo pisos e revestimentos com preço justo
