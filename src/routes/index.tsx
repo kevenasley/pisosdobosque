@@ -946,7 +946,7 @@ function Comparison() {
   return (
     <section
       id="parceria"
-      className="bg-brand-green texture-dots-white py-16 text-white md:py-24"
+      className="bg-brand-green-dark texture-dots-white py-16 text-white md:py-24"
     >
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
