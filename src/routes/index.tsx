@@ -1013,6 +1013,7 @@ function Products() {
                 image={c.image}
                 products={c.products}
                 bg={c.bg}
+                carousel={c.key === "ceramica"}
               />
             ))}
           </motion.div>
