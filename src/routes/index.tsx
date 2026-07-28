@@ -170,6 +170,7 @@ const ceramica: Product[] = [
   { img: "/piso-interno-esmaltado-legno-linear.webp", name: "Piso Interno Esmaltado Legno Linear", size: "60 x 60 cm", price: "R$ 29,90 m²" },
   { img: "/piso-astano-gris-matte-retificado.webp", name: "Piso Astano Gris Matte Retificado", size: "75 x 75 cm", price: "R$ 49,90 m²" },
   { img: "/piso-blue-belle-polido.webp", name: "Piso Blue Belle Polido", size: "56 x 113 cm", price: "R$ 64,90 m²" },
+  { img: "/piso-sicilia-polido.webp", name: "Piso Sicília Polido", size: "83 x 83 cm", price: "R$ 52,90 m²" },
 ];
 
 const porcelanato: Product[] = [
@@ -695,9 +696,9 @@ function ProductCard({ p }: { p: Product }) {
           </p>
 
           <span
-            className="mx-auto mt-2.5 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-2 py-2 text-[11px] font-semibold text-white shadow-sm transition group-hover:brightness-95 sm:w-[85%] sm:px-3 sm:text-xs"
+            className="mx-auto mt-2.5 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-2 py-2 text-[11px] font-semibold text-white shadow-sm transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:bg-brand-green-dark group-hover:shadow-md group-hover:brightness-105 sm:w-[85%] sm:px-3 sm:text-xs"
           >
-            <WhatsAppIcon className="h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5" />
+            <WhatsAppIcon className="h-3 w-3 shrink-0 transition-transform duration-200 group-hover:scale-110 sm:h-3.5 sm:w-3.5" />
             Quero este
           </span>
         </div>
