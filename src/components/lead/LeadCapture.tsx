@@ -175,6 +175,7 @@ export function LeadCapture() {
               placeholder="Seu nome completo"
               autoComplete="name"
               aria-invalid={!!errors.name}
+              className="focus-visible:ring-brand-green focus-visible:border-brand-green"
             />
             {errors.name && (
               <p className="text-xs text-destructive">{errors.name}</p>
