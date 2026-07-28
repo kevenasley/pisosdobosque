@@ -354,7 +354,18 @@ function WhatsAppButton({
   );
 }
 
-function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
+function Logo({ variant = "default" }: { variant?: "default" | "light" | "footer" }) {
+  if (variant === "footer") {
+    return (
+      <img
+        src="https://res.cloudinary.com/ict8aljd/image/upload/fl_sanitize/v1785198962/Pisos-do-Bosque-RGB-v2-fundo-verde-escuro_ulc6lk.svg"
+        alt="Pisos do Bosque"
+        className="h-12 w-auto md:h-16"
+        loading="lazy"
+        decoding="async"
+      />
+    );
+  }
   return (
     <img
       src={logoAsset.url}
