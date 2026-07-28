@@ -688,6 +688,7 @@ function ProductCard({ p }: { p: Product }) {
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+          style={{ objectFit: 'cover' }}
         />
       </div>
       <div className="flex flex-1 flex-col bg-[#F4F4F4] px-3 py-3 text-center sm:px-4">
@@ -1426,7 +1427,7 @@ function FAQ() {
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
-                className="border-border"
+                className="border-border last:border-0"
               >
                 <AccordionTrigger className="px-4 text-left font-semibold text-foreground hover:text-brand-orange hover:no-underline">
                   {f.q}
@@ -1734,14 +1735,6 @@ function HomePage() {
       <main>
         <Hero />
         <Stats />
-        <div className="mx-auto max-w-7xl px-5 py-4 md:px-8">
-          <button 
-            onClick={() => console.log('Executando fila...')} 
-            className="rounded bg-brand-orange px-4 py-2 text-white font-bold hover:bg-brand-orange/90 transition-colors"
-          >
-            execute o que está na fila
-          </button>
-        </div>
         <Products />
         <MoreSolutions />
         <Comparison />
