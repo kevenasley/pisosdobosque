@@ -1279,66 +1279,111 @@ function About() {
     "https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS";
 
   return (
-    <section id="sobre" className="bg-brand-cream texture-dots-dark py-16 md:py-24">
+    <section id="sobre" className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <Reveal>
-          <h2 className="text-center font-display text-2xl font-bold [text-wrap:balance] leading-tight text-foreground md:text-4xl">
+        {/* Header */}
+        <Reveal className="text-center">
+          <span className="inline-block rounded-md bg-brand-orange/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-orange">
+            Sobre Nós
+          </span>
+          <h2 className="mt-3 font-display text-2xl font-bold leading-tight text-foreground [text-wrap:balance] md:text-4xl">
             Conheça Nossa História
           </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground [text-wrap:balance] md:text-lg">
+            Há mais de 20 anos transformando ambientes com qualidade, confiança e
+            preço justo em Cachoeirinha e região metropolitana.
+          </p>
         </Reveal>
 
-        <div className="mt-10 rounded-3xl border border-border bg-white p-5 shadow-sm md:mt-14 md:p-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-stretch">
-          {/* Left: story + bullets */}
-          <Reveal className="md:h-full md:flex md:flex-col md:justify-center">
-            <p className="italic text-muted-foreground">
-              Há mais de 20 anos, a Pisos do Bosque vem transformando ambientes
-              com qualidade e confiança. Situados em Cachoeirinha, atendemos
-              Porto Alegre e toda a região metropolitana, oferecendo um estoque
-              completo para sua obra ou reforma.
-            </p>
-            <p className="mt-6 font-semibold text-foreground">
-              Motivos pelos quais somos referência na região:
-            </p>
-            <ul className="mt-3 space-y-2 text-sm text-foreground">
-              {[
-                ["Maior estoque da região:", "sempre preparados para suprir sua obra com prontidão."],
-                ["Equipe especializada:", "profissionais prontos para auxiliar você na escolha ideal."],
-                ["Compromisso com prazos:", "entrega rápida para garantir que sua obra não pare."],
-                ["Atendimento abrangente:", "levamos nossos produtos até você em toda a região."],
-              ].map(([b, t]) => (
-                <li key={b} className="flex gap-2">
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
-                  <span>
-                    <strong>{b}</strong> {t}
-                  </span>
-                </li>
-              ))}
-            </ul>
+        {/* Main content */}
+        <div className="mt-10 grid grid-cols-1 gap-8 md:mt-14 md:grid-cols-2 md:gap-12">
+          {/* Left: story + value cards */}
+          <Reveal className="flex flex-col justify-center">
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
+              <p className="text-foreground [text-wrap:balance] md:text-lg">
+                A Pisos do Bosque nasceu com um propósito claro: oferecer
+                materiais de qualidade com atendimento próximo e preços que
+                cabem no bolso. Hoje, somos referência em pisos,
+                porcelanatos, vinílicos, forros, louças e portas na região.
+              </p>
+              <p className="mt-4 text-muted-foreground">
+                Nosso showroom em Cachoeirinha reúne o maior estoque da região,
+                pronto para atender desde pequenas reformas até grandes obras.
+              </p>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {[
+                  {
+                    icon: Package,
+                    title: "Maior estoque",
+                    desc: "Materiais prontos para sua obra sem espera.",
+                    color: "bg-brand-orange/10 text-brand-orange",
+                  },
+                  {
+                    icon: Users,
+                    title: "Equipe especializada",
+                    desc: "Auxiliamos na escolha ideal para cada ambiente.",
+                    color: "bg-brand-green/10 text-brand-green",
+                  },
+                  {
+                    icon: Truck,
+                    title: "Entrega rápida",
+                    desc: "Prazos cumpridos para sua obra não parar.",
+                    color: "bg-brand-green-teal/10 text-brand-green-teal",
+                  },
+                  {
+                    icon: Headphones,
+                    title: "Atendimento regional",
+                    desc: "Levamos nossos produtos até você em toda a região.",
+                    color: "bg-brand-orange/10 text-brand-orange",
+                  },
+                ].map(({ icon: Icon, title, desc, color }) => (
+                  <div
+                    key={title}
+                    className="rounded-xl border border-border bg-background p-4 transition hover:-translate-y-0.5 hover:shadow-md"
+                  >
+                    <div
+                      className={`flex h-10 w-10 items-center justify-center rounded-lg ${color}`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <p className="mt-3 font-semibold text-foreground">
+                      {title}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </Reveal>
 
-          {/* Right: facade + map (matches left column height on desktop) */}
-          <Reveal delay={150} className="md:h-full">
-            <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          {/* Right: facade + map */}
+          <Reveal delay={150} className="flex flex-col gap-6">
+            <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
               <img
                 src={storeFront}
                 alt="Fachada da loja Pisos do Bosque em Cachoeirinha"
                 loading="lazy"
-                className="h-40 w-full shrink-0 object-cover sm:h-48 md:h-56"
+                className="h-56 w-full object-cover sm:h-64 md:h-72"
               />
+            </div>
+
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
               <iframe
                 title="Localização Pisos do Bosque"
                 src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="block h-48 w-full flex-1 border-0 border-t border-border sm:h-56 md:h-auto md:min-h-56"
+                className="block h-48 w-full border-0 sm:h-56"
                 allowFullScreen
               />
               <a
                 href={mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex shrink-0 items-center justify-center gap-2 border-t border-border bg-white p-3 text-sm font-semibold text-brand-green transition hover:bg-brand-cream"
+                className="flex items-center justify-center gap-2 border-t border-border bg-white p-3 text-sm font-semibold text-brand-green transition hover:bg-muted"
               >
                 <MapPin className="h-5 w-5 text-brand-orange" />
                 Abrir rota no Google Maps
@@ -1346,42 +1391,65 @@ function About() {
             </div>
           </Reveal>
         </div>
-        </div>
 
-        {/* Compact info strip */}
+        {/* Info cards */}
         <Reveal delay={200}>
-          <div className="mt-10 grid grid-cols-1 gap-4 rounded-2xl border border-border bg-card p-5 text-sm shadow-sm sm:grid-cols-3 md:mt-14">
-            <div className="flex items-start gap-3">
-              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
-              <div>
-                <p className="font-semibold text-brand-green">Localização</p>
-                <p className="mt-0.5 text-muted-foreground">
-                  Av. Capitão Garibaldi Pinto dos Santos, 468 — Cachoeirinha/RS
-                </p>
+          <div className="mt-10 grid grid-cols-1 gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm sm:grid-cols-3 md:mt-14">
+            {[
+              {
+                icon: MapPin,
+                label: "Localização",
+                text: "Av. Capitão Garibaldi Pinto dos Santos, 468 — Cachoeirinha/RS",
+              },
+              {
+                icon: Phone,
+                label: "Contato",
+                text: "WhatsApp (51) 98490-5782\nTelefone (51) 3470-1212",
+              },
+              {
+                icon: Clock,
+                label: "Horário",
+                text: "Seg–Sex 8h–12h · 13h30–18h30\nSáb 8h–12h · 13h30–17h",
+              },
+            ].map(({ icon: Icon, label, text }) => (
+              <div
+                key={label}
+                className="flex items-start gap-4 rounded-xl bg-background p-4 transition hover:-translate-y-0.5 hover:shadow-sm"
+              >
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-brand-orange/10 text-brand-orange">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">{label}</p>
+                  <p className="mt-0.5 whitespace-pre-line text-sm text-muted-foreground">
+                    {text}
+                  </p>
+                </div>
               </div>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* CTA */}
+        <Reveal delay={250}>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 rounded-2xl border border-border bg-card p-6 text-center shadow-sm sm:flex-row sm:text-left md:mt-10">
+            <div className="flex-1">
+              <p className="font-display text-lg font-bold text-foreground md:text-xl">
+                Visite nossa loja ou fale com um consultor
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Tire suas dúvidas, peça um orçamento ou agende uma visita ao showroom.
+              </p>
             </div>
-            <div className="flex items-start gap-3 sm:border-l sm:border-border sm:pl-4">
-              <Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
-              <div>
-                <p className="font-semibold text-brand-green">Contato</p>
-                <p className="mt-0.5 text-muted-foreground">
-                  WhatsApp (51) 98490-5782
-                  <br />
-                  Telefone (51) 3470-1212
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 sm:border-l sm:border-border sm:pl-4">
-              <Clock className="mt-0.5 h-5 w-5 shrink-0 text-brand-orange" />
-              <div>
-                <p className="font-semibold text-brand-green">Horário</p>
-                <p className="mt-0.5 text-muted-foreground">
-                  Seg–Sex 8h–12h · 13h30–18h30
-                  <br />
-                  Sáb 8h–12h · 13h30–17h
-                </p>
-              </div>
-            </div>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand-green-teal hover:shadow-md sm:w-auto"
+            >
+              <WhatsAppIcon className="h-5 w-5" />
+              Fale Conosco no WhatsApp
+            </a>
           </div>
         </Reveal>
       </div>
