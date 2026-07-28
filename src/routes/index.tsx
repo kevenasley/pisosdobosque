@@ -354,7 +354,18 @@ function WhatsAppButton({
   );
 }
 
-function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
+function Logo({ variant = "default" }: { variant?: "default" | "light" | "footer" }) {
+  if (variant === "footer") {
+    return (
+      <img
+        src="https://res.cloudinary.com/ict8aljd/image/upload/fl_sanitize/v1785198962/Pisos-do-Bosque-RGB-v2-fundo-verde-escuro_ulc6lk.svg"
+        alt="Pisos do Bosque"
+        className="h-12 w-auto md:h-16"
+        loading="lazy"
+        decoding="async"
+      />
+    );
+  }
   return (
     <img
       src={logoAsset.url}
@@ -1526,7 +1537,7 @@ function Footer() {
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
         {/* Mobile: centered brand block */}
         <div className="flex flex-col items-center text-center md:hidden">
-          <Logo variant="light" />
+          <Logo variant="footer" />
           <p className="mt-5 max-w-md text-sm text-white/70 [text-wrap:balance]">
             Há mais de 20 anos oferecendo pisos e revestimentos com preço justo
             em Cachoeirinha e região metropolitana.
@@ -1541,7 +1552,7 @@ function Footer() {
         <div className="mt-8 md:mt-0 md:grid md:grid-cols-[1.3fr_1fr_1fr_1.2fr] md:gap-10 lg:gap-14">
           {/* Desktop brand column */}
           <div className="hidden md:flex md:flex-col">
-            <Logo variant="light" />
+            <Logo variant="footer" />
             <p className="mt-5 text-sm text-white/70 [text-wrap:balance]">
               Há mais de 20 anos oferecendo pisos e revestimentos com preço
               justo em Cachoeirinha e região metropolitana.
