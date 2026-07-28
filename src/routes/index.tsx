@@ -29,6 +29,7 @@ import {
   Users,
   Shield,
   ChevronRight,
+  ChevronLeft,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
@@ -715,6 +716,7 @@ function CategoryBlock({
   image,
   products,
   bg,
+  carousel = false,
 }: {
   eyebrow: string;
   title: string;
@@ -722,6 +724,7 @@ function CategoryBlock({
   image: string;
   products: Product[];
   bg: string;
+  carousel?: boolean;
 }) {
   return (
     <div className={`mt-12 first:mt-12 rounded-2xl ${bg} p-6 md:p-10`}>
@@ -754,11 +757,166 @@ function CategoryBlock({
           </a>
         </Reveal>
       </div>
-      <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:grid-cols-3">
-        {products.map((p, i) => (
-          <ProductCard key={i} p={p} />
+      {carousel ? (
+        <ProductCarousel products={products} />
+      ) : (
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:grid-cols-3">
+          {products.map((p, i) => (
+            <ProductCard key={i} p={p} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ProductCarousel({ products }: { products: Product[] }) {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const [pages, setPages] = useState(1);
+  const [current, setCurrent] = useState(0);
+  const [perView, setPerView] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(4);
+
+  // Compute pages based on scroll width / client width (accounts for responsive per-view).
+  const recompute = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const first = el.querySelector<HTMLElement>("[data-slide]");
+    if (!first) return;
+    const slideW = first.getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(el).columnGap || "0") || 0;
+    const step = slideW + gap;
+    const pv = Math.max(1, Math.round(el.clientWidth / step));
+    setPerView(pv);
+    const totalPages = Math.max(1, Math.ceil(products.length / pv));
+    setPages(totalPages);
+    const idx = Math.round(el.scrollLeft / (step * pv));
+    setCurrent(Math.min(totalPages - 1, Math.max(0, idx)));
+    // ensure we've mounted enough slides for the current view + one page ahead
+    setVisibleCount((v) => Math.max(v, pv * 2));
+  };
+
+  useEffect(() => {
+    recompute();
+    const el = scrollerRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const first = el.querySelector<HTMLElement>("[data-slide]");
+      if (!first) return;
+      const slideW = first.getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(el).columnGap || "0") || 0;
+      const step = (slideW + gap) * perView;
+      const idx = Math.round(el.scrollLeft / step);
+      setCurrent(idx);
+      // progressively reveal more cards as user scrolls
+      const nearEnd = el.scrollLeft + el.clientWidth * 1.5 >= el.scrollWidth;
+      if (nearEnd) setVisibleCount((v) => Math.min(products.length, v + perView));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    const ro = new ResizeObserver(recompute);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      ro.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [perView, products.length]);
+
+  // Autoplay
+  useEffect(() => {
+    if (paused || pages <= 1) return;
+    const id = window.setInterval(() => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      if (atEnd) {
+        el.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        el.scrollBy({ left: el.clientWidth, behavior: "smooth" });
+      }
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, [paused, pages]);
+
+  const goTo = (page: number) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    setVisibleCount((v) => Math.min(products.length, Math.max(v, (page + 1) * perView + perView)));
+    requestAnimationFrame(() => {
+      el.scrollTo({ left: el.clientWidth * page, behavior: "smooth" });
+    });
+  };
+
+  const prev = () => goTo(Math.max(0, current - 1));
+  const next = () => goTo(Math.min(pages - 1, current + 1));
+
+  const slides = products.slice(0, Math.min(products.length, Math.max(visibleCount, perView * 2)));
+
+  return (
+    <div
+      className="mt-8"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+    >
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <p className="text-sm font-medium text-muted-foreground">
+          <span className="md:hidden">Arraste para o lado para ver mais pisos →</span>
+          <span className="hidden md:inline">Deslize para o lado para ver mais pisos →</span>
+        </p>
+        <div className="hidden gap-2 md:flex">
+          <button
+            type="button"
+            aria-label="Anterior"
+            onClick={prev}
+            disabled={current === 0}
+            className="grid h-10 w-10 place-items-center rounded-full border border-brand-green/30 bg-white text-brand-green shadow-sm transition hover:bg-brand-green hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            aria-label="Próximo"
+            onClick={next}
+            disabled={current >= pages - 1}
+            className="grid h-10 w-10 place-items-center rounded-full border border-brand-green/30 bg-white text-brand-green shadow-sm transition hover:bg-brand-green hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+
+      <div
+        ref={scrollerRef}
+        className="-mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-2 pb-2 sm:gap-6 md:gap-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {slides.map((p, i) => (
+          <div
+            key={i}
+            data-slide
+            className="w-[calc(50%-0.5rem)] shrink-0 snap-start sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.334rem)]"
+          >
+            <ProductCard p={p} />
+          </div>
         ))}
       </div>
+
+      {pages > 1 && (
+        <div className="mt-5 flex items-center justify-center gap-2">
+          {Array.from({ length: pages }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Ir para página ${i + 1}`}
+              onClick={() => goTo(i)}
+              className={`h-2 rounded-full transition-all ${
+                i === current ? "w-6 bg-brand-green" : "w-2 bg-brand-green/25 hover:bg-brand-green/50"
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -855,6 +1013,7 @@ function Products() {
                 image={c.image}
                 products={c.products}
                 bg={c.bg}
+                carousel={c.key === "ceramica"}
               />
             ))}
           </motion.div>
