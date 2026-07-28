@@ -355,13 +355,14 @@ function WhatsAppButton({
 }
 
 function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
+  const isLight = variant === "light";
   return (
     <img
-      src={logoAsset.url}
+      src={isLight ? "/logo-footer.png" : logoAsset.url}
       alt="Pisos do Bosque"
       width={2730}
       height={655}
-      className={`w-auto ${variant === "light" ? "h-12 brightness-0 invert md:h-16" : "h-10 md:h-12"}`}
+      className={`w-auto ${isLight ? "h-14 md:h-20" : "h-10 md:h-12"}`}
       loading="eager"
       decoding="async"
     />
