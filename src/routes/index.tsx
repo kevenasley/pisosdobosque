@@ -1523,7 +1523,7 @@ function Footer() {
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
         {/* Mobile: left-aligned brand block */}
         <div className="flex flex-col items-start text-left md:hidden">
-          <Logo variant="light" />
+          <Logo variant="light" className="-ml-2" />
           <p className="mt-5 max-w-md text-sm text-white/70 [text-wrap:balance]">
             Há mais de 20 anos oferecendo pisos e revestimentos com preço justo
             em Cachoeirinha e região metropolitana.
