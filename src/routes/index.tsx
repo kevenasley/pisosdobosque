@@ -29,6 +29,7 @@ import {
   Users,
   Shield,
   ChevronRight,
+  ChevronLeft,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
