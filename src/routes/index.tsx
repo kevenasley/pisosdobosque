@@ -580,7 +580,7 @@ function Hero() {
 
 
           <p className="mx-auto mt-5 max-w-xl text-base text-white/95 md:mx-0 md:mt-6 md:text-lg">
-            Não quero essa imagem flutuando, quero que vc gere uma nova imagem, entende? essa do cara segurando um piso.
+            gere uma outra imagem para a hero
           </p>
           <div className="mx-auto mt-6 w-full max-w-xs space-y-2.5 md:mx-0 md:mt-8 md:max-w-md md:space-y-3">
             {[
