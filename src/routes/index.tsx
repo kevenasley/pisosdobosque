@@ -771,7 +771,13 @@ function CategoryBlock({
   );
 }
 
-function ProductCarousel({ products }: { products: Product[] }) {
+function ProductCarousel({
+  products,
+  hint = "Arraste para o lado para ver mais →",
+}: {
+  products: Product[];
+  hint?: string;
+}) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -970,9 +976,7 @@ function ProductCarousel({ products }: { products: Product[] }) {
   return (
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
-        <p className="text-sm font-medium text-muted-foreground">
-          Arraste para o lado para ver mais pisos →
-        </p>
+        <p className="text-sm font-medium text-muted-foreground">{hint}</p>
         <div className="flex gap-2">
           <button
             type="button"
@@ -1027,7 +1031,7 @@ function ProductCarousel({ products }: { products: Product[] }) {
             <button
               key={i}
               type="button"
-              aria-label={`Ir para piso ${i + 1}`}
+              aria-label={`Ir para item ${i + 1}`}
               onClick={() => goTo(i)}
               className={`h-2 rounded-full transition-all ${
                 i === current ? "w-6 bg-brand-green" : "w-2 bg-brand-green/25 hover:bg-brand-green/50"
