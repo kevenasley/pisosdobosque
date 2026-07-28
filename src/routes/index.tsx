@@ -771,7 +771,13 @@ function CategoryBlock({
   );
 }
 
-function ProductCarousel({ products }: { products: Product[] }) {
+function ProductCarousel({
+  products,
+  hint = "Arraste para o lado para ver mais →",
+}: {
+  products: Product[];
+  hint?: string;
+}) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -970,9 +976,7 @@ function ProductCarousel({ products }: { products: Product[] }) {
   return (
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
-        <p className="text-sm font-medium text-muted-foreground">
-          Arraste para o lado para ver mais pisos →
-        </p>
+        <p className="text-sm font-medium text-muted-foreground">{hint}</p>
         <div className="flex gap-2">
           <button
             type="button"
@@ -1027,7 +1031,7 @@ function ProductCarousel({ products }: { products: Product[] }) {
             <button
               key={i}
               type="button"
-              aria-label={`Ir para piso ${i + 1}`}
+              aria-label={`Ir para item ${i + 1}`}
               onClick={() => goTo(i)}
               className={`h-2 rounded-full transition-all ${
                 i === current ? "w-6 bg-brand-green" : "w-2 bg-brand-green/25 hover:bg-brand-green/50"
@@ -1144,26 +1148,23 @@ function Products() {
 }
 
 function MoreSolutions() {
-  const items = [
+  const solucoes: Product[] = [
     {
       img: solForro,
-      title: "Forro de PVC",
-      desc: "A solução prática e econômica para tetos impecáveis. Fácil instalação, alta durabilidade e perfeito para diversos ambientes.",
-      spec: "PVC — 4, 5, 6 e 7 m",
+      name: "Forro de PVC",
+      size: "PVC — 4, 5, 6 e 7 m",
       price: "R$ 24,90 m²",
     },
     {
       img: solLouca,
-      title: "Louças e Metais",
-      desc: "Funcionalidade e estilo para banheiros e cozinhas. Vasos sanitários, torneiras e válvulas modernas para acabamento elegante.",
-      spec: "Conjunto Acoplado Santa Clara",
+      name: "Louças e Metais",
+      size: "Conjunto Acoplado Santa Clara",
       price: "R$ 449,90",
     },
     {
       img: solPorta,
-      title: "Portas de Qualidade",
-      desc: "Portas modernas e resistentes, ideais para completar qualquer ambiente com estilo e segurança.",
-      spec: "Porta Externa Mista",
+      name: "Portas de Qualidade",
+      size: "Porta Externa Mista",
       price: "R$ 579,90",
     },
   ];
@@ -1173,54 +1174,37 @@ function MoreSolutions() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
-
             Mais Soluções para Sua Obra ou Reforma
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
             Confira também nossa linha de forros, louças, metais e muito mais!
           </p>
         </Reveal>
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {items.map((it, i) => (
-            <Reveal
-              key={it.title}
-              delay={i * 100}
-              className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-elegant"
+
+        <div className="mt-12 rounded-2xl bg-brand-teal/10 p-6 md:p-10">
+          <Reveal className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-brand-orange">
+                Complementos
+              </p>
+              <h3 className="mt-2 font-display text-2xl font-bold leading-tight text-brand-green md:text-3xl">
+                Forro, Louças, Metais e Portas
+              </h3>
+            </div>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border-2 border-brand-green px-6 py-2.5 font-semibold text-brand-green transition hover:bg-brand-green hover:text-white"
             >
-              <div className="aspect-[4/3] overflow-hidden bg-muted">
-                <img
-                  src={it.img}
-                  alt={it.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-display text-xl font-bold text-brand-green">
-                  {it.title}
-                </h3>
-                <p className="mt-2 line-clamp-3 min-h-[3.75rem] text-sm [text-wrap:balance] text-muted-foreground">{it.desc}</p>
-                <div className="mt-4 rounded-lg bg-brand-cream p-4">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-brand-orange">
-                    Promoção
-                  </p>
-                  <p className="mt-1 font-semibold text-foreground">{it.spec}</p>
-                  <p className="mt-1 text-2xl font-bold text-brand-orange">
-                    {it.price}
-                  </p>
-                </div>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-md bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
-                >
-                  Saiba Mais
-                </a>
-              </div>
-            </Reveal>
-          ))}
+              Ver Mais
+            </a>
+          </Reveal>
+
+          <ProductCarousel
+            products={solucoes}
+            hint="Arraste para o lado para ver mais produtos →"
+          />
         </div>
       </div>
     </section>
