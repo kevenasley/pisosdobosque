@@ -55,7 +55,7 @@ import showroom3 from "@/assets/showroom-3.webp";
 import showroom4 from "@/assets/showroom-4.webp";
 import showroom5 from "@/assets/showroom-5.webp";
 import tCer1 from "@/assets/tile-ceramica-1.webp";
-import tCer2 from "@/assets/tile-ceramica-2.webp";
+
 
 import tPor1 from "@/assets/tile-porcelanato-1.webp";
 import tPor2 from "@/assets/tile-porcelanato-2.webp";
@@ -163,7 +163,7 @@ type Product = { img: string; name: string; size: string; price: string };
 
 const ceramica: Product[] = [
   { img: "/piso-interno-esmaltado-angelus-gray.webp", name: "Piso Interno Esmaltado Angelus Gray", size: "60 x 60 cm", price: "R$ 23,90 m²" },
-  { img: tCer2, name: "Piso Santorini Bege Esmaltado", size: "60 x 60 cm", price: "R$ 26,90 m²" },
+  { img: "/piso-santorini-bege-esmaltado.webp", name: "Piso Santorini Bege Esmaltado", size: "60 x 60 cm", price: "R$ 26,90 m²" },
   { img: "/piso-externo-mykonos-brown.webp", name: "Piso Externo Mykonos Brown", size: "53 x 53 cm", price: "R$ 25,99 m²" },
   { img: "/piso-externo-angelus-gray.webp", name: "Piso Externo Angelus Gray", size: "60 x 60 cm", price: "R$ 25,90 m²" },
   { img: "/piso-interno-esmaltado-legno-linear.webp", name: "Piso Interno Esmaltado Legno Linear", size: "60 x 60 cm", price: "R$ 29,90 m²" },
