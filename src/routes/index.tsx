@@ -1361,12 +1361,12 @@ function About() {
 
           {/* Right: facade + map */}
           <Reveal delay={150} className="flex flex-col gap-6">
-            <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
+            <div className="flex flex-1 flex-col overflow-hidden rounded-2xl border border-border shadow-sm">
               <img
                 src={storeFront}
                 alt="Fachada da loja Pisos do Bosque em Cachoeirinha"
                 loading="lazy"
-                className="h-56 w-full object-cover sm:h-64 md:h-72"
+                className="h-full w-full flex-1 object-cover"
               />
             </div>
 
