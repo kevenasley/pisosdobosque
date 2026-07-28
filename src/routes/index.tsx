@@ -162,7 +162,7 @@ export const Route = createFileRoute("/")({
 type Product = { img: string; name: string; size: string; price: string };
 
 const ceramica: Product[] = [
-  { img: tCer1, name: "Piso Interno Esmaltado Angelus Gray", size: "60 x 60 cm", price: "R$ 23,90 m²" },
+  { img: "/piso-interno-esmaltado-angelus-gray.webp", name: "Piso Interno Esmaltado Angelus Gray", size: "60 x 60 cm", price: "R$ 23,90 m²" },
   { img: tCer2, name: "Piso Santorini Bege Esmaltado", size: "60 x 60 cm", price: "R$ 26,90 m²" },
   { img: tCer1, name: "Piso Externo Mykonos Brown", size: "53 x 53 cm", price: "R$ 25,99 m²" },
   { img: tCer2, name: "Piso Externo Angelus Gray", size: "60 x 60 cm", price: "R$ 25,90 m²" },
