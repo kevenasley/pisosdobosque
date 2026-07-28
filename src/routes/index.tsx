@@ -1735,14 +1735,6 @@ function HomePage() {
       <main>
         <Hero />
         <Stats />
-        <div className="mx-auto max-w-7xl px-5 py-4 md:px-8">
-          <button 
-            onClick={() => console.log('Executando fila...')} 
-            className="rounded bg-brand-orange px-4 py-2 text-white font-bold hover:bg-brand-orange/90 transition-colors"
-          >
-            execute o que está na fila
-          </button>
-        </div>
         <Products />
         <MoreSolutions />
         <Comparison />
