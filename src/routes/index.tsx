@@ -1412,7 +1412,7 @@ function FAQ() {
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
-                className="border-border"
+                className="border-border last:border-b-0"
               >
                 <AccordionTrigger className="px-4 text-left font-semibold text-foreground hover:text-brand-orange hover:no-underline">
                   {f.q}
