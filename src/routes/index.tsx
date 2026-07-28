@@ -116,7 +116,7 @@ export const Route = createFileRoute("/")({
           name: "Pisos do Bosque",
           image: heroVendedor,
           url: "https://pisosdobosque.lovable.app/",
-          telephone: "+555134701212",
+          telephone: "+5551984905782",
           priceRange: "$$",
           sameAs: [
             "https://www.instagram.com/pisosdobosque",
@@ -1404,7 +1404,7 @@ function About() {
               {
                 icon: Phone,
                 label: "Contato",
-                text: "WhatsApp (51) 98490-5782\nTelefone (51) 3470-1212",
+                text: "WhatsApp (51) 98490-5782",
               },
               {
                 icon: Clock,
@@ -1754,7 +1754,7 @@ function MobileCTABar() {
     >
       <div className="flex gap-2">
         <a
-          href="tel:+555134701212"
+          href="tel:+5551984905782"
           aria-label="Ligar para a loja"
           className="flex flex-1 items-center justify-center gap-2 rounded-md border-2 border-brand-green px-4 py-2.5 text-sm font-semibold text-brand-green"
         >
