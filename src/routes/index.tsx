@@ -190,6 +190,7 @@ const vinilicos: Product[] = [
   { img: tVin2, name: "Vinílico Jatobá", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
   { img: tVin3, name: "Vinílico Platina", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
   { img: tVin1, name: "Vinílico Carmel", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: "/piso-taberna-titanio.webp", name: "Taberna Titânio", size: "18,7 x 122,7 cm", price: "R$ 74,90 m²" },
 ];
 
 const compareRows = [
