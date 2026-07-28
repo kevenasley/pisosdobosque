@@ -524,17 +524,7 @@ function Header() {
 function Hero() {
   return (
     <section id="top" className="relative overflow-hidden gradient-hero texture-dots-white">
-      {/* Decorative dots */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-20"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-          backgroundSize: "24px 24px",
-        }}
-      />
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-5 py-10 md:grid-cols-[1.2fr_1fr] md:gap-12 md:px-8 md:py-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-5 py-10 md:grid-cols-[1.2fr_1fr] md:gap-12 md:px-8 md:py-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
         <Reveal className="text-center text-white md:text-left">
           <div className="mb-6 flex items-center justify-center gap-2 md:justify-start md:mb-7">
             <div className="flex -space-x-1.5">
