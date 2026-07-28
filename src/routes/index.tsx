@@ -776,10 +776,26 @@ function ProductCarousel({ products }: { products: Product[] }) {
   const [current, setCurrent] = useState(0);
   const [perView, setPerView] = useState(1);
   const [paused, setPaused] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(4);
+
+  const originalCount = products.length;
+  const loopedProducts = [...products, ...products];
+
+  // Keep mutable refs for callbacks without re-creating them every render.
+  const currentRef = useRef(current);
+  const pagesRef = useRef(pages);
+  const perViewRef = useRef(perView);
+  useEffect(() => {
+    currentRef.current = current;
+  }, [current]);
+  useEffect(() => {
+    pagesRef.current = pages;
+  }, [pages]);
+  useEffect(() => {
+    perViewRef.current = perView;
+  }, [perView]);
 
   // Compute pages based on scroll width / client width (accounts for responsive per-view).
-  const recompute = () => {
+  const recompute = useCallback(() => {
     const el = scrollerRef.current;
     if (!el) return;
     const first = el.querySelector<HTMLElement>("[data-slide]");
@@ -789,13 +805,11 @@ function ProductCarousel({ products }: { products: Product[] }) {
     const step = slideW + gap;
     const pv = Math.max(1, Math.round(el.clientWidth / step));
     setPerView(pv);
-    const totalPages = Math.max(1, Math.ceil(products.length / pv));
+    const totalPages = Math.max(1, Math.ceil(originalCount / pv));
     setPages(totalPages);
-    const idx = Math.round(el.scrollLeft / (step * pv));
-    setCurrent(Math.min(totalPages - 1, Math.max(0, idx)));
-    // ensure we've mounted enough slides for the current view + one page ahead
-    setVisibleCount((v) => Math.max(v, pv * 2));
-  };
+    const rawIdx = Math.round(el.scrollLeft / (step * pv));
+    setCurrent(rawIdx % totalPages);
+  }, [originalCount]);
 
   useEffect(() => {
     recompute();
@@ -806,12 +820,9 @@ function ProductCarousel({ products }: { products: Product[] }) {
       if (!first) return;
       const slideW = first.getBoundingClientRect().width;
       const gap = parseFloat(getComputedStyle(el).columnGap || "0") || 0;
-      const step = (slideW + gap) * perView;
-      const idx = Math.round(el.scrollLeft / step);
-      setCurrent(idx);
-      // progressively reveal more cards as user scrolls
-      const nearEnd = el.scrollLeft + el.clientWidth * 1.5 >= el.scrollWidth;
-      if (nearEnd) setVisibleCount((v) => Math.min(products.length, v + perView));
+      const step = (slideW + gap) * perViewRef.current;
+      const rawIdx = Math.round(el.scrollLeft / step);
+      setCurrent(rawIdx % pagesRef.current);
     };
     el.addEventListener("scroll", onScroll, { passive: true });
     const ro = new ResizeObserver(recompute);
@@ -820,55 +831,81 @@ function ProductCarousel({ products }: { products: Product[] }) {
       el.removeEventListener("scroll", onScroll);
       ro.disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perView, products.length]);
+  }, [recompute]);
 
   // Custom eased smooth-scroll (longer duration than the native "smooth" jump)
   const animRef = useRef<number | null>(null);
-  const animateTo = (targetLeft: number, duration = 900) => {
+  const isAnimatingRef = useRef(false);
+  const animateTo = useCallback(
+    (targetLeft: number, duration = 900, onComplete?: () => void) => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+      const start = el.scrollLeft;
+      const max = el.scrollWidth - el.clientWidth;
+      const to = Math.max(0, Math.min(max, targetLeft));
+      const diff = to - start;
+      if (Math.abs(diff) < 1) {
+        if (onComplete) onComplete();
+        return;
+      }
+      isAnimatingRef.current = true;
+      const t0 = performance.now();
+      const ease = (t: number) =>
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // easeInOutCubic
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - t0) / duration);
+        el.scrollLeft = start + diff * ease(p);
+        if (p < 1) {
+          animRef.current = requestAnimationFrame(tick);
+        } else {
+          isAnimatingRef.current = false;
+          if (onComplete) onComplete();
+        }
+      };
+      animRef.current = requestAnimationFrame(tick);
+    },
+    []
+  );
+
+  const goTo = useCallback(
+    (page: number) => {
+      if (isAnimatingRef.current) return;
+      const el = scrollerRef.current;
+      if (!el) return;
+      const clamped = Math.max(0, Math.min(pagesRef.current - 1, page));
+      requestAnimationFrame(() => animateTo(el.clientWidth * clamped, 900));
+    },
+    [animateTo]
+  );
+
+  const next = useCallback(() => {
+    if (isAnimatingRef.current) return;
     const el = scrollerRef.current;
     if (!el) return;
-    if (animRef.current) cancelAnimationFrame(animRef.current);
-    const start = el.scrollLeft;
-    const max = el.scrollWidth - el.clientWidth;
-    const to = Math.max(0, Math.min(max, targetLeft));
-    const diff = to - start;
-    if (Math.abs(diff) < 1) return;
-    const t0 = performance.now();
-    const ease = (t: number) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // easeInOutCubic
-    const tick = (now: number) => {
-      const p = Math.min(1, (now - t0) / duration);
-      el.scrollLeft = start + diff * ease(p);
-      if (p < 1) animRef.current = requestAnimationFrame(tick);
-    };
-    animRef.current = requestAnimationFrame(tick);
-  };
+    const pages = pagesRef.current;
+    const current = currentRef.current;
+    if (current >= pages - 1) {
+      // Loop forward: animate to the cloned first page, then instantly snap to the real start
+      animateTo(el.clientWidth * pages, 900, () => {
+        el.scrollLeft = 0;
+        setCurrent(0);
+      });
+    } else {
+      goTo(current + 1);
+    }
+  }, [animateTo, goTo]);
 
-  // Autoplay — ping-pong so it never snaps back to start
-  const dirRef = useRef<1 | -1>(1);
+  const prev = useCallback(() => goTo(currentRef.current - 1), [goTo]);
+
+  // Autoplay — always advances forward and loops seamlessly
   useEffect(() => {
     if (paused || pages <= 1) return;
     const id = window.setInterval(() => {
-      if (current >= pages - 1) dirRef.current = -1;
-      else if (current <= 0) dirRef.current = 1;
-      goTo(current + dirRef.current);
+      next();
     }, 7000);
     return () => window.clearInterval(id);
-  }, [paused, pages, current]);
-
-  const goTo = (page: number) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const clamped = Math.max(0, Math.min(pages - 1, page));
-    setVisibleCount((v) => Math.min(products.length, Math.max(v, (clamped + 2) * perView)));
-    requestAnimationFrame(() => animateTo(el.clientWidth * clamped, 900));
-  };
-
-  const prev = () => goTo(current - 1);
-  const next = () => goTo(current + 1);
-
-  const slides = products.slice(0, Math.min(products.length, Math.max(visibleCount, perView * 2)));
+  }, [paused, pages, next]);
 
   return (
     <div
@@ -896,7 +933,7 @@ function ProductCarousel({ products }: { products: Product[] }) {
             type="button"
             aria-label="Próximo"
             onClick={next}
-            disabled={current >= pages - 1}
+            disabled={pages <= 1}
             className="grid h-10 w-10 place-items-center rounded-full border border-brand-green/30 bg-white text-brand-green shadow-sm transition hover:bg-brand-green hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ChevronRight className="h-5 w-5" />
@@ -908,7 +945,7 @@ function ProductCarousel({ products }: { products: Product[] }) {
         ref={scrollerRef}
         className="-mx-2 flex gap-4 overflow-x-auto px-2 pb-2 sm:gap-6 md:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {slides.map((p, i) => (
+        {loopedProducts.map((p, i) => (
           <div
             key={i}
             data-slide
