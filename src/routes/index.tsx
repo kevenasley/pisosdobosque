@@ -523,7 +523,7 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden gradient-hero">
+    <section id="top" className="relative overflow-hidden gradient-hero texture-dots-white">
       {/* Decorative dots */}
       <div
         aria-hidden
@@ -784,7 +784,7 @@ function Products() {
   for (const c of filtered) totalCount += c.products.length;
 
   return (
-    <section id="produtos" className="bg-white py-16 md:py-24">
+    <section id="produtos" className="bg-white texture-dots-dark py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
@@ -1282,7 +1282,7 @@ function About() {
     "https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS";
 
   return (
-    <section id="sobre" className="bg-brand-cream py-16 md:py-24">
+    <section id="sobre" className="bg-brand-cream texture-dots-dark py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
           <h2 className="text-center font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
@@ -1522,7 +1522,7 @@ function Footer() {
   );
 
   return (
-    <footer className="bg-brand-green-dark text-white/85">
+    <footer className="bg-brand-green-dark texture-dots-white text-white/85">
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
         {/* Mobile: centered brand block */}
         <div className="flex flex-col items-center text-center md:hidden">
