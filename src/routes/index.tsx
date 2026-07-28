@@ -184,6 +184,7 @@ const porcelanato: Product[] = [
   { img: "/porcelanato-externo-broadway-dark-gray.webp", name: "Porcelanato Externo Broadway Dark Gray", size: "81 x 82 cm", price: "R$ 79,90 m²" },
   { img: "/piso-cimento-gris-acetinado.webp", name: "Porcelanato Cimento Gris Acetinado", size: "83 x 83 cm", price: "R$ 79,90 m²" },
   { img: "/piso-onix-premium-polido.webp", name: "Porcelanato Onix Premium Polido", size: "82 x 82 cm", price: "R$ 94,90 m²" },
+  { img: "/piso-ducal-polido.webp", name: "Porcelanato Ducal Polido", size: "82 x 82 cm", price: "R$ 94,90 m²" },
 ];
 
 const vinilicos: Product[] = [
