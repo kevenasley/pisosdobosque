@@ -75,7 +75,7 @@ export function ConsentBanner() {
 
       {/* Mobile: compact single-row layout */}
       <div className="flex items-center gap-2 md:hidden">
-        <p className="flex-1 pr-5 text-[11px] leading-snug text-muted-foreground">
+        <p className="flex-1 text-[11px] leading-snug text-muted-foreground">
           Usamos cookies para melhorar sua experiência e medir anúncios.
         </p>
         <div className="flex shrink-0 flex-col gap-1.5">
