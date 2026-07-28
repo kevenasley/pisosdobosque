@@ -358,7 +358,7 @@ function Logo({ variant = "default" }: { variant?: "default" | "light" | "footer
   if (variant === "footer") {
     return (
       <img
-        src="https://res.cloudinary.com/ict8aljd/image/upload/fl_sanitize/v1785198962/Pisos-do-Bosque-RGB-v2-fundo-verde-escuro_ulc6lk.svg"
+        src="https://res.cloudinary.com/ict8aljd/image/upload/f_auto,q_auto/v1785198962/Pisos-do-Bosque-RGB-v2-fundo-verde-escuro_ulc6lk.png"
         alt="Pisos do Bosque"
         className="h-12 w-auto md:h-16"
         loading="lazy"
