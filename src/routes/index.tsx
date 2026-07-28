@@ -1481,7 +1481,7 @@ function Footer() {
   ];
 
   const socials = (
-    <div className="mt-6 flex gap-3 md:justify-start justify-center">
+    <div className="mt-6 flex gap-3 justify-start">
       <a
         href="https://www.instagram.com/pisosdobosque"
         target="_blank"
@@ -1515,8 +1515,8 @@ function Footer() {
   return (
     <footer className="bg-brand-green-dark texture-dots-white text-white/85">
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
-        {/* Mobile: centered brand block */}
-        <div className="flex flex-col items-center text-center md:hidden">
+        {/* Mobile: left-aligned brand block */}
+        <div className="flex flex-col items-start text-left md:hidden">
           <Logo variant="light" />
           <p className="mt-5 max-w-md text-sm text-white/70 [text-wrap:balance]">
             Há mais de 20 anos oferecendo pisos e revestimentos com preço justo
@@ -1531,7 +1531,7 @@ function Footer() {
         {/* Content grid — accordion on mobile, balanced 4 columns on desktop */}
         <div className="mt-8 md:mt-0 md:grid md:grid-cols-[1.3fr_1fr_1fr_1.2fr] md:gap-10 lg:gap-14">
           {/* Desktop brand column */}
-          <div className="hidden md:flex md:flex-col">
+          <div className="hidden md:flex md:flex-col md:items-start">
             <Logo variant="light" />
             <p className="mt-5 text-sm text-white/70 [text-wrap:balance]">
               Há mais de 20 anos oferecendo pisos e revestimentos com preço
