@@ -635,12 +635,7 @@ function Hero() {
               loading="eager"
               decoding="async"
               className="relative z-10 w-full drop-shadow-2xl"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ 
-                duration: 5, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }}
+              // Motion animation removed as requested: "Não quero essa imagem flutuando"
             />
           </div>
         </Reveal>
