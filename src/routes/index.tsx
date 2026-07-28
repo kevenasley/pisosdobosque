@@ -56,7 +56,7 @@ import showroom4 from "@/assets/showroom-4.webp";
 import showroom5 from "@/assets/showroom-5.webp";
 import tCer1 from "@/assets/tile-ceramica-1.webp";
 import tCer2 from "@/assets/tile-ceramica-2.webp";
-import tCer3 from "@/assets/tile-ceramica-3.webp";
+
 import tPor1 from "@/assets/tile-porcelanato-1.webp";
 import tPor2 from "@/assets/tile-porcelanato-2.webp";
 import tPor3 from "@/assets/tile-porcelanato-3.webp";
