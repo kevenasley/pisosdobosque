@@ -906,11 +906,6 @@ function ProductCarousel({ products }: { products: Product[] }) {
   }>({ active: false, startX: 0, startScroll: 0, moved: false, pointerId: null });
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    // Only hijack for mouse/pen — let touch use native smooth momentum scroll.
-    if (e.pointerType === "touch") {
-      setPaused(true);
-      return;
-    }
     const el = scrollerRef.current;
     if (!el) return;
     if (animRef.current) cancelAnimationFrame(animRef.current);
@@ -922,7 +917,9 @@ function ProductCarousel({ products }: { products: Product[] }) {
       moved: false,
       pointerId: e.pointerId,
     };
-    el.setPointerCapture?.(e.pointerId);
+    try {
+      el.setPointerCapture?.(e.pointerId);
+    } catch {}
     setPaused(true);
   };
 
@@ -933,25 +930,40 @@ function ProductCarousel({ products }: { products: Product[] }) {
     if (!el) return;
     const dx = e.clientX - s.startX;
     if (Math.abs(dx) > 4) s.moved = true;
-    el.scrollLeft = s.startScroll - dx;
+    if (e.pointerType !== "touch") {
+      el.scrollLeft = s.startScroll - dx;
+    }
   };
 
   const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
     const s = dragState.current;
     if (!s.active) {
-      // Touch end: resume autoplay after a beat
       setTimeout(() => setPaused(false), 400);
       return;
     }
     const el = scrollerRef.current;
+    const wasMoved = s.moved;
     s.active = false;
-    if (s.pointerId != null) el?.releasePointerCapture?.(s.pointerId);
-    if (el && s.moved) {
+    if (s.pointerId != null) {
+      try {
+        el?.releasePointerCapture?.(s.pointerId);
+      } catch {}
+    }
+    if (el && wasMoved && e.pointerType !== "touch") {
       const step = getStep();
       if (step) {
         const idx = Math.round(el.scrollLeft / step);
         animateTo(step * idx, 400);
       }
+    }
+    // Suppress the click that fires after a drag on anchor children
+    if (wasMoved) {
+      const suppress = (ev: MouseEvent) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+      };
+      el?.addEventListener("click", suppress, { capture: true, once: true });
+      setTimeout(() => el?.removeEventListener("click", suppress, true), 50);
     }
     setTimeout(() => setPaused(false), 400);
   };
@@ -992,11 +1004,13 @@ function ProductCarousel({ products }: { products: Product[] }) {
         onPointerLeave={(e) => {
           if (dragState.current.active) endDrag(e);
         }}
+        onDragStart={(e) => e.preventDefault()}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         className="-mx-2 flex cursor-grab gap-4 overflow-x-auto px-2 pb-2 select-none active:cursor-grabbing sm:gap-6 md:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         style={{ touchAction: "pan-y" }}
       >
+
         {loopedProducts.map((p, i) => (
           <div
             key={i}
