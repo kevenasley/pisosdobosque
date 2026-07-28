@@ -580,7 +580,7 @@ function Hero() {
 
 
           <p className="mx-auto mt-5 max-w-xl text-base text-white/95 md:mx-0 md:mt-6 md:text-lg">
-            Eu estou pedindo par você gerar uma nova imagem no lugar.
+            Não quero essa imagem flutuando, quero que vc gere uma nova imagem, entende? essa do cara segurando um piso.
           </p>
           <div className="mx-auto mt-6 w-full max-w-xs space-y-2.5 md:mx-0 md:mt-8 md:max-w-md md:space-y-3">
             {[
@@ -635,12 +635,7 @@ function Hero() {
               loading="eager"
               decoding="async"
               className="relative z-10 w-full drop-shadow-2xl"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ 
-                duration: 5, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }}
+              // Motion animation removed as requested: "Não quero essa imagem flutuando"
             />
           </div>
         </Reveal>
