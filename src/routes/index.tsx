@@ -54,7 +54,7 @@ import showroom2 from "@/assets/showroom-2.webp";
 import showroom3 from "@/assets/showroom-3.webp";
 import showroom4 from "@/assets/showroom-4.webp";
 import showroom5 from "@/assets/showroom-5.webp";
-import tCer1 from "@/assets/tile-ceramica-1.webp";
+
 
 
 import tPor1 from "@/assets/tile-porcelanato-1.webp";
@@ -167,7 +167,7 @@ const ceramica: Product[] = [
   { img: "/piso-externo-mykonos-brown.webp", name: "Piso Externo Mykonos Brown", size: "53 x 53 cm", price: "R$ 25,99 m²" },
   { img: "/piso-externo-angelus-gray.webp", name: "Piso Externo Angelus Gray", size: "60 x 60 cm", price: "R$ 25,90 m²" },
   { img: "/piso-interno-esmaltado-legno-linear.webp", name: "Piso Interno Esmaltado Legno Linear", size: "60 x 60 cm", price: "R$ 29,90 m²" },
-  { img: tCer1, name: "Piso Astano Gris Matte Retificado", size: "75 x 75 cm", price: "R$ 49,90 m²" },
+  { img: "/piso-astano-gris-matte-retificado.webp", name: "Piso Astano Gris Matte Retificado", size: "75 x 75 cm", price: "R$ 49,90 m²" },
 ];
 
 const porcelanato: Product[] = [
