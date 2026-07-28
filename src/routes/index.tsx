@@ -1552,7 +1552,7 @@ function Footer() {
         <div className="mt-8 md:mt-0 md:grid md:grid-cols-[1.3fr_1fr_1fr_1.2fr] md:gap-10 lg:gap-14">
           {/* Desktop brand column */}
           <div className="hidden md:flex md:flex-col">
-            <Logo variant="light" />
+            <Logo variant="footer" />
             <p className="mt-5 text-sm text-white/70 [text-wrap:balance]">
               Há mais de 20 anos oferecendo pisos e revestimentos com preço
               justo em Cachoeirinha e região metropolitana.
