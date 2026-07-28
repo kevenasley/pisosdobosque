@@ -1275,7 +1275,7 @@ function About() {
     <section id="sobre" className="bg-brand-cream texture-dots-dark py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
-          <h2 className="text-center font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
+          <h2 className="text-center font-display text-2xl font-bold [text-wrap:balance] leading-tight text-foreground md:text-4xl">
             Conheça Nossa História
           </h2>
         </Reveal>
