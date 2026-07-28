@@ -169,6 +169,7 @@ const ceramica: Product[] = [
   { img: "/piso-externo-angelus-gray.webp", name: "Piso Externo Angelus Gray", size: "60 x 60 cm", price: "R$ 25,90 m²" },
   { img: "/piso-interno-esmaltado-legno-linear.webp", name: "Piso Interno Esmaltado Legno Linear", size: "60 x 60 cm", price: "R$ 29,90 m²" },
   { img: "/piso-astano-gris-matte-retificado.webp", name: "Piso Astano Gris Matte Retificado", size: "75 x 75 cm", price: "R$ 49,90 m²" },
+  { img: "/piso-blue-belle-polido.webp", name: "Piso Blue Belle Polido", size: "56 x 113 cm", price: "R$ 64,90 m²" },
 ];
 
 const porcelanato: Product[] = [
