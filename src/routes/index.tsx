@@ -688,6 +688,7 @@ function ProductCard({ p }: { p: Product }) {
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
+          style={{ objectFit: 'cover' }}
         />
       </div>
       <div className="flex flex-1 flex-col bg-[#F4F4F4] px-3 py-3 text-center sm:px-4">
