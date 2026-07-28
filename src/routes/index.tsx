@@ -1487,7 +1487,7 @@ function Footer() {
   ];
 
   const socials = (
-    <div className="mt-6 flex gap-3 justify-start">
+    <div className="mt-6 flex gap-3 justify-center md:justify-start">
       <a
         href="https://www.instagram.com/pisosdobosque"
         target="_blank"
