@@ -580,10 +580,7 @@ function Hero() {
 
 
           <p className="mx-auto mt-5 max-w-xl text-base text-white/95 md:mx-0 md:mt-6 md:text-lg">
-            Estamos há mais de 20 anos no mercado porque oferecemos pisos e
-            revestimentos com <strong>preço justo</strong>,{" "}
-            <strong>entrega rápida</strong> e{" "}
-            <strong>atendimento diferenciado.</strong>
+            Eu estou pedindo par você gerar uma nova imagem no lugar.
           </p>
           <div className="mx-auto mt-6 w-full max-w-xs space-y-2.5 md:mx-0 md:mt-8 md:max-w-md md:space-y-3">
             {[
