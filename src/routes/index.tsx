@@ -906,13 +906,13 @@ function ProductCarousel({ products }: { products: Product[] }) {
 
       <div
         ref={scrollerRef}
-        className="-mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-2 pb-2 sm:gap-6 md:gap-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="-mx-2 flex gap-4 overflow-x-auto px-2 pb-2 sm:gap-6 md:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {slides.map((p, i) => (
           <div
             key={i}
             data-slide
-            className="w-[calc(50%-0.5rem)] shrink-0 snap-start sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.334rem)]"
+            className="w-[calc(50%-0.5rem)] shrink-0 sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
           >
             <ProductCard p={p} />
           </div>
