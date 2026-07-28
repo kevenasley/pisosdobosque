@@ -346,7 +346,7 @@ function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
-      className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-orange px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 ease-out hover:brightness-105 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 ease-out hover:brightness-95 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] ${className}`}
     >
       <WhatsAppIcon className="h-5 w-5" />
       {children}
@@ -473,7 +473,7 @@ function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Fale conosco no WhatsApp"
-            className="inline-flex items-center justify-center gap-2 rounded-md border border-brand-orange bg-transparent px-5 py-2.5 text-sm font-semibold text-brand-orange transition-all duration-300 ease-out hover:bg-brand-orange hover:text-white hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+            className="inline-flex items-center justify-center gap-2 rounded-md border border-brand-green bg-transparent px-5 py-2.5 text-sm font-semibold text-brand-green transition-all duration-300 ease-out hover:bg-brand-green hover:text-white hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
           >
             <WhatsAppIcon className="h-4 w-4" />
             Fale Conosco no WhatsApp
@@ -485,7 +485,7 @@ function Header() {
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-11 items-center justify-center rounded-lg text-brand-orange transition hover:bg-brand-cream md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-lg text-brand-green transition hover:bg-brand-cream md:hidden"
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>

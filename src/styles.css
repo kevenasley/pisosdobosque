@@ -109,7 +109,7 @@
   --brand-cream: oklch(0.98 0.015 85);
   --brand-showroom: oklch(0.975 0.003 250);
 
-  --gradient-hero: linear-gradient(135deg, var(--brand-orange) 0%, oklch(0.48 0.12 175) 100%);
+  --gradient-hero: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-orange-dark) 100%);
   --gradient-green: linear-gradient(160deg, var(--brand-green-teal) 0%, var(--brand-green-dark) 100%);
   --shadow-elegant: 0 20px 40px -20px color-mix(in oklab, var(--brand-green) 30%, transparent);
   --shadow-orange: 0 15px 35px -12px color-mix(in oklab, var(--brand-orange) 45%, transparent);
