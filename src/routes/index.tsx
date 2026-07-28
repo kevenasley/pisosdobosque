@@ -80,7 +80,7 @@ export const Route = createFileRoute("/")({
         content:
           "Há mais de 20 anos oferecendo os pisos mais baratos da região. Cerâmica, porcelanato, vinílicos, forro, louças e portas com preço justo, estoque imediato e atendimento personalizado em Cachoeirinha/RS.",
       },
-      { name: "theme-color", content: "#F58220" },
+      { name: "theme-color", content: "#FF6400" },
       {
         property: "og:title",
         content: "Pisos do Bosque — Pisos e Revestimentos com Preço Justo em Cachoeirinha/RS",

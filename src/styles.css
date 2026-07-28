@@ -47,8 +47,11 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --color-brand-orange: var(--brand-orange);
+  --color-brand-orange-light: var(--brand-orange-light);
   --color-brand-orange-dark: var(--brand-orange-dark);
   --color-brand-green: var(--brand-green);
+  --color-brand-green-light: var(--brand-green-light);
+  --color-brand-green-teal: var(--brand-green-teal);
   --color-brand-green-dark: var(--brand-green-dark);
   --color-brand-whatsapp: var(--brand-whatsapp);
   --color-brand-cream: var(--brand-cream);
@@ -66,7 +69,7 @@
   --card-foreground: oklch(0.28 0.005 85);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.28 0.005 85);
-  --primary: oklch(0.42 0.11 155);
+  --primary: var(--brand-orange);
   --primary-foreground: oklch(0.99 0 0);
   --secondary: oklch(0.96 0.02 85);
   --secondary-foreground: oklch(0.32 0.005 85);
@@ -79,7 +82,7 @@
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.9 0.01 85);
   --input: oklch(0.9 0.01 85);
-  --ring: oklch(0.42 0.11 155);
+  --ring: var(--brand-orange);
   --chart-1: oklch(0.72 0.19 55);
   --chart-2: oklch(0.42 0.11 155);
   --chart-3: oklch(0.6 0.15 155);
@@ -95,10 +98,13 @@
   --sidebar-ring: oklch(0.42 0.11 155);
 
   /* Pisos do Bosque brand palette */
-  --brand-orange: oklch(0.72 0.19 55);
-  --brand-orange-dark: oklch(0.62 0.19 45);
-  --brand-green: oklch(0.42 0.11 155);
-  --brand-green-dark: oklch(0.28 0.08 155);
+  --brand-orange: oklch(0.68 0.22 45); /* #FF6400 -> oklch(0.68 0.22 45) */
+  --brand-orange-light: oklch(0.72 0.2 50); /* #FF8815 -> oklch(0.72 0.2 50) */
+  --brand-orange-dark: oklch(0.58 0.2 40);
+  --brand-green: oklch(0.72 0.18 140); /* #6EC046 -> oklch(0.72 0.18 140) */
+  --brand-green-light: oklch(0.78 0.15 135); /* #8FCD6D -> oklch(0.78 0.15 135) */
+  --brand-green-teal: oklch(0.48 0.12 175); /* #007065 -> oklch(0.48 0.12 175) */
+  --brand-green-dark: oklch(0.38 0.1 180); /* #00514B -> oklch(0.38 0.1 180) */
   --brand-whatsapp: oklch(0.72 0.18 155);
   --brand-cream: oklch(0.98 0.015 85);
   --brand-showroom: oklch(0.975 0.003 250);
