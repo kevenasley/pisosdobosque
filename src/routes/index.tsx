@@ -611,13 +611,13 @@ function Hero() {
         </Reveal>
         <Reveal delay={150} className="relative flex items-center justify-center self-center">
           <div className="relative mx-auto w-auto max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6">
-            {/* Stronger background blend to mask the original light background */}
+            {/* Heavy color-burn overlay to force-match the image background to the theme */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-[5%] -z-10 mix-blend-multiply opacity-80 rounded-full blur-3xl"
+              className="pointer-events-none absolute inset-0 -z-10 mix-blend-color-burn opacity-100 rounded-2xl blur-xl"
               style={{
                 background: "var(--brand-orange-dark)",
-                transform: "scale(1.2)",
+                transform: "scale(1.1)",
               }}
             />
             {/* Soft radial glow to anchor the image */}
