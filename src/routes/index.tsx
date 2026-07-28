@@ -772,72 +772,52 @@ function CategoryBlock({
 
 function ProductCarousel({ products }: { products: Product[] }) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const [pages, setPages] = useState(1);
   const [current, setCurrent] = useState(0);
-  const [perView, setPerView] = useState(1);
   const [paused, setPaused] = useState(false);
 
   const originalCount = products.length;
+  // Duplicate slides once to enable seamless forward-only looping.
   const loopedProducts = [...products, ...products];
 
-  // Keep mutable refs for callbacks without re-creating them every render.
   const currentRef = useRef(current);
-  const pagesRef = useRef(pages);
-  const perViewRef = useRef(perView);
   useEffect(() => {
     currentRef.current = current;
   }, [current]);
-  useEffect(() => {
-    pagesRef.current = pages;
-  }, [pages]);
-  useEffect(() => {
-    perViewRef.current = perView;
-  }, [perView]);
 
-  // Compute pages based on scroll width / client width (accounts for responsive per-view).
-  const recompute = useCallback(() => {
+  const getStep = useCallback(() => {
     const el = scrollerRef.current;
-    if (!el) return;
+    if (!el) return 0;
     const first = el.querySelector<HTMLElement>("[data-slide]");
-    if (!first) return;
+    if (!first) return 0;
     const slideW = first.getBoundingClientRect().width;
     const gap = parseFloat(getComputedStyle(el).columnGap || "0") || 0;
-    const step = slideW + gap;
-    const pv = Math.max(1, Math.round(el.clientWidth / step));
-    setPerView(pv);
-    const totalPages = Math.max(1, Math.ceil(originalCount / pv));
-    setPages(totalPages);
-    const rawIdx = Math.round(el.scrollLeft / (step * pv));
-    setCurrent(rawIdx % totalPages);
-  }, [originalCount]);
+    return slideW + gap;
+  }, []);
 
+  // Track current slide index from scrollLeft
   useEffect(() => {
-    recompute();
     const el = scrollerRef.current;
     if (!el) return;
     const onScroll = () => {
-      const first = el.querySelector<HTMLElement>("[data-slide]");
-      if (!first) return;
-      const slideW = first.getBoundingClientRect().width;
-      const gap = parseFloat(getComputedStyle(el).columnGap || "0") || 0;
-      const step = (slideW + gap) * perViewRef.current;
-      const rawIdx = Math.round(el.scrollLeft / step);
-      setCurrent(rawIdx % pagesRef.current);
+      const step = getStep();
+      if (!step) return;
+      const idx = Math.round(el.scrollLeft / step);
+      setCurrent(idx % originalCount);
     };
     el.addEventListener("scroll", onScroll, { passive: true });
-    const ro = new ResizeObserver(recompute);
+    const ro = new ResizeObserver(onScroll);
     ro.observe(el);
     return () => {
       el.removeEventListener("scroll", onScroll);
       ro.disconnect();
     };
-  }, [recompute]);
+  }, [getStep, originalCount]);
 
-  // Custom eased smooth-scroll (longer duration than the native "smooth" jump)
+  // Custom eased smooth-scroll
   const animRef = useRef<number | null>(null);
   const isAnimatingRef = useRef(false);
   const animateTo = useCallback(
-    (targetLeft: number, duration = 900, onComplete?: () => void) => {
+    (targetLeft: number, duration = 650, onComplete?: () => void) => {
       const el = scrollerRef.current;
       if (!el) return;
       if (animRef.current) cancelAnimationFrame(animRef.current);
@@ -852,7 +832,7 @@ function ProductCarousel({ products }: { products: Product[] }) {
       isAnimatingRef.current = true;
       const t0 = performance.now();
       const ease = (t: number) =>
-        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // easeInOutCubic
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       const tick = (now: number) => {
         const p = Math.min(1, (now - t0) / duration);
         el.scrollLeft = start + diff * ease(p);
@@ -868,64 +848,125 @@ function ProductCarousel({ products }: { products: Product[] }) {
     []
   );
 
-  const goTo = useCallback(
-    (page: number) => {
-      if (isAnimatingRef.current) return;
-      const el = scrollerRef.current;
-      if (!el) return;
-      const clamped = Math.max(0, Math.min(pagesRef.current - 1, page));
-      requestAnimationFrame(() => animateTo(el.clientWidth * clamped, 900));
-    },
-    [animateTo]
-  );
-
   const next = useCallback(() => {
     if (isAnimatingRef.current) return;
     const el = scrollerRef.current;
     if (!el) return;
-    const pages = pagesRef.current;
-    const current = currentRef.current;
-    if (current >= pages - 1) {
-      // Loop forward: animate to the cloned first page, then instantly snap to the real start
-      animateTo(el.clientWidth * pages, 900, () => {
+    const step = getStep();
+    if (!step) return;
+    const cur = currentRef.current;
+    if (cur >= originalCount - 1) {
+      // Animate into the cloned slot, then snap silently back to real start
+      animateTo(step * originalCount, 650, () => {
         el.scrollLeft = 0;
         setCurrent(0);
       });
     } else {
-      goTo(current + 1);
+      animateTo(step * (cur + 1), 650);
     }
-  }, [animateTo, goTo]);
+  }, [animateTo, getStep, originalCount]);
 
-  const prev = useCallback(() => goTo(currentRef.current - 1), [goTo]);
+  const prev = useCallback(() => {
+    if (isAnimatingRef.current) return;
+    const step = getStep();
+    if (!step) return;
+    const cur = currentRef.current;
+    if (cur <= 0) return;
+    animateTo(step * (cur - 1), 650);
+  }, [animateTo, getStep]);
 
-  // Autoplay — always advances forward and loops seamlessly
+  const goTo = useCallback(
+    (idx: number) => {
+      if (isAnimatingRef.current) return;
+      const step = getStep();
+      if (!step) return;
+      animateTo(step * idx, 650);
+    },
+    [animateTo, getStep]
+  );
+
+  // Autoplay
   useEffect(() => {
-    if (paused || pages <= 1) return;
+    if (paused || originalCount <= 1) return;
     const id = window.setInterval(() => {
       next();
-    }, 7000);
+    }, 5000);
     return () => window.clearInterval(id);
-  }, [paused, pages, next]);
+  }, [paused, originalCount, next]);
+
+  // Pointer drag (mouse + touch fallback). Native touch scroll still works too.
+  const dragState = useRef<{
+    active: boolean;
+    startX: number;
+    startScroll: number;
+    moved: boolean;
+    pointerId: number | null;
+  }>({ active: false, startX: 0, startScroll: 0, moved: false, pointerId: null });
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Only hijack for mouse/pen — let touch use native smooth momentum scroll.
+    if (e.pointerType === "touch") {
+      setPaused(true);
+      return;
+    }
+    const el = scrollerRef.current;
+    if (!el) return;
+    if (animRef.current) cancelAnimationFrame(animRef.current);
+    isAnimatingRef.current = false;
+    dragState.current = {
+      active: true,
+      startX: e.clientX,
+      startScroll: el.scrollLeft,
+      moved: false,
+      pointerId: e.pointerId,
+    };
+    el.setPointerCapture?.(e.pointerId);
+    setPaused(true);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const s = dragState.current;
+    if (!s.active) return;
+    const el = scrollerRef.current;
+    if (!el) return;
+    const dx = e.clientX - s.startX;
+    if (Math.abs(dx) > 4) s.moved = true;
+    el.scrollLeft = s.startScroll - dx;
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const s = dragState.current;
+    if (!s.active) {
+      // Touch end: resume autoplay after a beat
+      setTimeout(() => setPaused(false), 400);
+      return;
+    }
+    const el = scrollerRef.current;
+    s.active = false;
+    if (s.pointerId != null) el?.releasePointerCapture?.(s.pointerId);
+    if (el && s.moved) {
+      const step = getStep();
+      if (step) {
+        const idx = Math.round(el.scrollLeft / step);
+        animateTo(step * idx, 400);
+      }
+    }
+    setTimeout(() => setPaused(false), 400);
+  };
 
   return (
-    <div
-      className="mt-8"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onTouchStart={() => setPaused(true)}
-    >
+    <div className="mt-8">
       <div className="mb-4 flex items-center justify-between gap-4">
         <p className="text-sm font-medium text-muted-foreground">
-          <span className="md:hidden">Arraste para o lado para ver mais pisos →</span>
-          <span className="hidden md:inline">Deslize para o lado para ver mais pisos →</span>
+          Arraste para o lado para ver mais pisos →
         </p>
-        <div className="hidden gap-2 md:flex">
+        <div className="flex gap-2">
           <button
             type="button"
             aria-label="Anterior"
             onClick={prev}
             disabled={current === 0}
-            className="grid h-10 w-10 place-items-center rounded-full border border-brand-green/30 bg-white text-brand-green shadow-sm transition hover:bg-brand-green hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+            className="grid h-9 w-9 place-items-center rounded-full border border-brand-green/30 bg-white text-brand-green shadow-sm transition hover:bg-brand-green hover:text-white disabled:cursor-not-allowed disabled:opacity-40 md:h-10 md:w-10"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -933,8 +974,7 @@ function ProductCarousel({ products }: { products: Product[] }) {
             type="button"
             aria-label="Próximo"
             onClick={next}
-            disabled={pages <= 1}
-            className="grid h-10 w-10 place-items-center rounded-full border border-brand-green/30 bg-white text-brand-green shadow-sm transition hover:bg-brand-green hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+            className="grid h-9 w-9 place-items-center rounded-full border border-brand-green/30 bg-white text-brand-green shadow-sm transition hover:bg-brand-green hover:text-white md:h-10 md:w-10"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
@@ -943,7 +983,17 @@ function ProductCarousel({ products }: { products: Product[] }) {
 
       <div
         ref={scrollerRef}
-        className="-mx-2 flex gap-4 overflow-x-auto px-2 pb-2 sm:gap-6 md:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onPointerLeave={(e) => {
+          if (dragState.current.active) endDrag(e);
+        }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        className="-mx-2 flex cursor-grab gap-4 overflow-x-auto px-2 pb-2 select-none active:cursor-grabbing sm:gap-6 md:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ touchAction: "pan-y" }}
       >
         {loopedProducts.map((p, i) => (
           <div
@@ -956,13 +1006,13 @@ function ProductCarousel({ products }: { products: Product[] }) {
         ))}
       </div>
 
-      {pages > 1 && (
+      {originalCount > 1 && (
         <div className="mt-5 flex items-center justify-center gap-2">
-          {Array.from({ length: pages }).map((_, i) => (
+          {Array.from({ length: originalCount }).map((_, i) => (
             <button
               key={i}
               type="button"
-              aria-label={`Ir para página ${i + 1}`}
+              aria-label={`Ir para piso ${i + 1}`}
               onClick={() => goTo(i)}
               className={`h-2 rounded-full transition-all ${
                 i === current ? "w-6 bg-brand-green" : "w-2 bg-brand-green/25 hover:bg-brand-green/50"
