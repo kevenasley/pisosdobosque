@@ -956,7 +956,7 @@ function Comparison() {
   return (
     <section
       id="parceria"
-      className="gradient-green py-16 text-white md:py-24"
+      className="bg-brand-green texture-dots-white py-16 text-white md:py-24"
     >
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal className="text-center">
@@ -994,7 +994,7 @@ function Comparison() {
                 delay={i * 60}
                 className="bg-white/5 px-4 py-3 text-center sm:py-4"
               >
-                <p className="font-display text-base font-semibold text-brand-orange sm:text-lg">
+                <p className="font-display text-base font-semibold text-white sm:text-lg">
                   {r.topic}
                 </p>
               </Reveal>
