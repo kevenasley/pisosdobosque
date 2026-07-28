@@ -354,18 +354,7 @@ function WhatsAppButton({
   );
 }
 
-function Logo({ variant = "default" }: { variant?: "default" | "light" | "footer" }) {
-  if (variant === "footer") {
-    return (
-      <img
-        src="https://res.cloudinary.com/ict8aljd/image/upload/f_auto,q_auto/v1785198962/Pisos-do-Bosque-RGB-v2-fundo-verde-escuro_ulc6lk.png"
-        alt="Pisos do Bosque"
-        className="h-12 w-auto md:h-16"
-        loading="lazy"
-        decoding="async"
-      />
-    );
-  }
+function Logo({ variant = "default" }: { variant?: "default" | "light" }) {
   return (
     <img
       src={logoAsset.url}
@@ -580,7 +569,10 @@ function Hero() {
 
 
           <p className="mx-auto mt-5 max-w-xl text-base text-white/95 md:mx-0 md:mt-6 md:text-lg">
-            gere uma outra imagem para a hero
+            Estamos há mais de 20 anos no mercado porque oferecemos pisos e
+            revestimentos com <strong>preço justo</strong>,{" "}
+            <strong>entrega rápida</strong> e{" "}
+            <strong>atendimento diferenciado.</strong>
           </p>
           <div className="mx-auto mt-6 w-full max-w-xs space-y-2.5 md:mx-0 md:mt-8 md:max-w-md md:space-y-3">
             {[
@@ -607,26 +599,17 @@ function Hero() {
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative flex items-center justify-center self-center">
-          <div className="relative mx-auto w-auto max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6">
-            {/* Heavy color-burn overlay to force-match the image background to the theme */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -z-10 mix-blend-color-burn opacity-100 rounded-2xl blur-xl"
-              style={{
-                background: "var(--brand-orange-dark)",
-                transform: "scale(1.1)",
-              }}
-            />
+          <div className="relative mx-auto w-full max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6">
             {/* Soft radial glow to anchor the image */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 -z-20 blur-2xl"
+              className="pointer-events-none absolute inset-0 -z-10 blur-2xl"
               style={{
                 background:
-                  "radial-gradient(closest-side, rgba(255,255,255,0.25), transparent 80%)",
+                  "radial-gradient(closest-side, rgba(255,255,255,0.35), transparent 70%)",
               }}
             />
-            <motion.img
+            <img
               src={heroVendedor}
               alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
               width={1200}
@@ -634,8 +617,7 @@ function Hero() {
               fetchPriority="high"
               loading="eager"
               decoding="async"
-              className="relative z-10 w-full drop-shadow-2xl"
-              // Motion animation removed as requested: "Não quero essa imagem flutuando"
+              className="w-full drop-shadow-2xl"
             />
           </div>
         </Reveal>
@@ -695,7 +677,6 @@ function ProductCard({ p }: { p: Product }) {
           loading="lazy"
           decoding="async"
           className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.05]"
-          style={{ objectFit: 'cover' }}
         />
       </div>
       <div className="flex flex-1 flex-col bg-[#F4F4F4] px-3 py-3 text-center sm:px-4">
@@ -1013,7 +994,7 @@ function Comparison() {
                 delay={i * 60}
                 className="bg-white/5 px-4 py-3 text-center sm:py-4"
               >
-                <p className="font-display text-base font-semibold text-white sm:text-lg">
+                <p className="font-display text-base font-semibold text-brand-orange sm:text-lg">
                   {r.topic}
                 </p>
               </Reveal>
@@ -1434,7 +1415,7 @@ function FAQ() {
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
-                className="border-border last:border-0"
+                className="border-border"
               >
                 <AccordionTrigger className="px-4 text-left font-semibold text-foreground hover:text-brand-orange hover:no-underline">
                   {f.q}
@@ -1545,7 +1526,7 @@ function Footer() {
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-8 md:px-8">
         {/* Mobile: centered brand block */}
         <div className="flex flex-col items-center text-center md:hidden">
-          <Logo variant="footer" />
+          <Logo variant="light" />
           <p className="mt-5 max-w-md text-sm text-white/70 [text-wrap:balance]">
             Há mais de 20 anos oferecendo pisos e revestimentos com preço justo
             em Cachoeirinha e região metropolitana.
@@ -1560,7 +1541,7 @@ function Footer() {
         <div className="mt-8 md:mt-0 md:grid md:grid-cols-[1.3fr_1fr_1fr_1.2fr] md:gap-10 lg:gap-14">
           {/* Desktop brand column */}
           <div className="hidden md:flex md:flex-col">
-            <Logo variant="footer" />
+            <Logo variant="light" />
             <p className="mt-5 text-sm text-white/70 [text-wrap:balance]">
               Há mais de 20 anos oferecendo pisos e revestimentos com preço
               justo em Cachoeirinha e região metropolitana.
