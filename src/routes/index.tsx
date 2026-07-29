@@ -2104,11 +2104,16 @@ function Footer() {
             <ul className="space-y-3 text-sm text-white/75">
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
-                <span className="[text-wrap:balance]">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Pisos+do+Bosque&query_place_id=ChIJTyoE7NlzGZURHlAt9IQVcGE"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="[text-wrap:balance] transition hover:text-brand-orange"
+                >
                   Av. Capitão Garibaldi Pinto dos Santos, 488
                   <br />
                   Jardim do Bosque — Cachoeirinha/RS
-                </span>
+                </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <WhatsAppIcon className="h-4 w-4 shrink-0 text-brand-orange" />
