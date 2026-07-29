@@ -121,6 +121,7 @@ export function LeadCapture() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const firstFieldRef = useRef<HTMLInputElement>(null);
+  const geoRef = useRef<GeoResult | null>(null);
 
   useEffect(() => {
     function handler(ev: Event) {
@@ -136,14 +137,32 @@ export function LeadCapture() {
       window.removeEventListener(LEAD_OPEN_EVENT, handler as EventListener);
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     if (open) {
       const t = setTimeout(() => firstFieldRef.current?.focus(), 50);
-      // Pré-carrega o reCAPTCHA quando o modal abre para não atrasar o submit
       void loadRecaptcha();
+      // Pré-carrega geo (fail-open — não bloqueia envio)
+      if (!geoRef.current) {
+        getGeoFromIP()
+          .then((g) => {
+            geoRef.current = g;
+          })
+          .catch(() => {
+            geoRef.current = { ip: "", city: "", region: "", country: "" };
+          });
+      }
+      // Sinaliza abertura do formulário no dataLayer
+      const w = window as unknown as { dataLayer?: unknown[] };
+      w.dataLayer = w.dataLayer || [];
+      w.dataLayer.push({
+        event: "formulario_aberto",
+        cta_origem: ctaOrigin,
+        cta_origin: ctaOrigin,
+        pagina_origem: window.location.pathname,
+      });
       return () => clearTimeout(t);
     }
-  }, [open]);
+  }, [open, ctaOrigin]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -159,10 +178,10 @@ export function LeadCapture() {
     setErrors({});
     setSubmitting(true);
     try {
-      // reCAPTCHA v3 — coleta token client-side; verificação ocorre no server
       const token = await getRecaptchaToken("lead_submit");
-      const attribution = readAttribution() || {};
+      const attribution = readAttribution() || ({} as Record<string, string>);
       const hashed_phone = await sha256Hex(parsed.data.phone);
+      const geo = geoRef.current || { ip: "", city: "", region: "", country: "" };
 
       try {
         const result = await submitLead({
@@ -175,7 +194,11 @@ export function LeadCapture() {
             page_url: typeof window !== "undefined" ? window.location.href : "",
             user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
             recaptcha_token: token || undefined,
-            attribution: attribution as Record<string, string>,
+            city: geo.city,
+            region: geo.region,
+            country: geo.country,
+            ip: geo.ip,
+            attribution: attribution as unknown as Record<string, string>,
           },
         });
         if (!result.success && result.reason?.includes("recaptcha")) {
@@ -190,21 +213,28 @@ export function LeadCapture() {
         // fail-open — prioriza a conversão via WhatsApp
       }
 
-      trackLeadSubmit({
-        cta_origin: ctaOrigin,
-        hashed_phone,
-        utm_source: attribution && "utm_source" in attribution ? attribution.utm_source : undefined,
-        utm_medium: attribution && "utm_medium" in attribution ? attribution.utm_medium : undefined,
-        utm_campaign: attribution && "utm_campaign" in attribution ? attribution.utm_campaign : undefined,
-        gclid: attribution && "gclid" in attribution ? attribution.gclid : undefined,
-        fbclid: attribution && "fbclid" in attribution ? attribution.fbclid : undefined,
+      // Evento principal de conversão — com user_data normalizado para
+      // Enhanced Conversions (Google Ads) e CAPI (Meta).
+      trackGenerateLead({
+        input: {
+          name: parsed.data.name,
+          phone: parsed.data.phone,
+          city: geo.city,
+          region: geo.region,
+          country: geo.country || "br",
+          ip: geo.ip,
+        },
+        ctaOrigin,
+        status: "qualificado",
+        eventName: "generate_lead",
+        extra: { hashed_phone },
       });
+
       const msg =
         message ||
         `Olá! Sou ${parsed.data.name}. ${
           parsed.data.reason ? parsed.data.reason + " " : ""
         }Gostaria de um atendimento.`;
-      // Abre WhatsApp em nova aba e leva o usuário para a página de obrigado
       window.open(buildWhatsAppUrl(msg), "_blank", "noopener,noreferrer");
       window.location.href = "/obrigado?src=form";
     } finally {
@@ -212,9 +242,21 @@ export function LeadCapture() {
     }
   }
 
-
   function goDirect() {
-    trackLeadDirect(ctaOrigin);
+    const geo = geoRef.current || { ip: "", city: "", region: "", country: "" };
+    trackGenerateLead({
+      input: {
+        name: name || "",
+        phone: phone || "",
+        city: geo.city,
+        region: geo.region,
+        country: geo.country || "br",
+        ip: geo.ip,
+      },
+      ctaOrigin,
+      status: "sem_dados",
+      eventName: "lead_direct",
+    });
     window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
     window.location.href = "/obrigado?src=direct";
   }
