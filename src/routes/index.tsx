@@ -1466,38 +1466,37 @@ function ReviewCard({ r }: { r: DisplayReview }) {
 }
 
 function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
-  const [perView, setPerView] = useState(1);
+  const [isMobile, setIsMobile] = useState(true);
   const [index, setIndex] = useState(0);
   const pausedRef = useRef(false);
 
   useEffect(() => {
     const compute = () => {
-      const w = window.innerWidth;
-      setPerView(w >= 1024 ? 5 : 2);
+      setIsMobile(window.innerWidth < 1024);
     };
     compute();
     window.addEventListener("resize", compute);
     return () => window.removeEventListener("resize", compute);
   }, []);
 
-  const total = items.length;
-  const maxIndex = Math.max(0, total - perView);
+  const perSlide = isMobile ? 2 : 5;
+  const totalSlides = Math.ceil(items.length / perSlide);
 
   useEffect(() => {
-    if (index > maxIndex) setIndex(0);
-  }, [index, maxIndex]);
+    if (index >= totalSlides) setIndex(0);
+  }, [index, totalSlides]);
 
   useEffect(() => {
     const reduce = window.matchMedia?.(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (reduce || total <= perView) return;
+    if (reduce || totalSlides <= 1) return;
     const id = window.setInterval(() => {
       if (pausedRef.current || document.hidden) return;
-      setIndex((i) => (i >= maxIndex ? 0 : i + 1));
+      setIndex((i) => (i >= totalSlides - 1 ? 0 : i + 1));
     }, 5000);
     return () => window.clearInterval(id);
-  }, [maxIndex, perView, total]);
+  }, [totalSlides]);
 
   const pause = () => {
     pausedRef.current = true;
@@ -1506,10 +1505,12 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
 
   const goTo = (i: number) => {
     pause();
-    setIndex(Math.max(0, Math.min(maxIndex, i)));
+    setIndex(Math.max(0, Math.min(totalSlides - 1, i)));
   };
 
-  const slotWidth = 100 / perView;
+  const slides = Array.from({ length: totalSlides }, (_, i) =>
+    items.slice(i * perSlide, (i + 1) * perSlide),
+  );
 
   return (
     <div
@@ -1521,24 +1522,36 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
       <div className="overflow-hidden">
         <div
           className="flex transition-transform duration-700 ease-out"
-          style={{ transform: `translateX(-${index * slotWidth}%)` }}
+          style={{ transform: `translateX(-${index * 100}%)` }}
         >
-          {items.map((r, i) => (
+          {slides.map((slide, slideIdx) => (
             <div
-              key={i}
+              key={slideIdx}
               className="shrink-0 px-2"
-              style={{ width: `${slotWidth}%` }}
+              style={{ width: "100%" }}
               aria-roledescription="slide"
-              aria-label={`${i + 1} de ${total}`}
+              aria-label={`${slideIdx + 1} de ${totalSlides}`}
             >
-              <ReviewCard r={r} />
+              <div
+                className={`grid h-full ${
+                  isMobile
+                    ? "min-h-[520px] grid-cols-1 grid-rows-2 gap-4"
+                    : "grid-cols-5 grid-rows-1 gap-3"
+                }`}
+              >
+                {slide.map((r, i) => (
+                  <div key={i} className="min-h-0">
+                    <ReviewCard r={r} />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
       </div>
-      {maxIndex > 0 && (
+      {totalSlides > 1 && (
         <div className="mt-6 flex items-center justify-center gap-1">
-          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+          {Array.from({ length: totalSlides }).map((_, i) => (
             <button
               key={i}
               type="button"
