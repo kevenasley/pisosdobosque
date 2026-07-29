@@ -1525,8 +1525,12 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
     >
       <div className="overflow-hidden">
         <div
-          className="flex transition-transform duration-700 ease-out"
-          style={{ transform: `translateX(-${index * 100}%)` }}
+          className="flex"
+          style={{
+            transform: `translateX(-${index * 100}%)`,
+            transition: "transform 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+            willChange: "transform",
+          }}
         >
           {slides.map((slide, slideIdx) => (
             <div
