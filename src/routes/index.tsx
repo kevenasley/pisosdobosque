@@ -108,7 +108,7 @@ export const Route = createFileRoute("/")({
           "Há mais de 20 anos com os pisos mais baratos da região: cerâmica, porcelanato, vinílicos, forro, louças e portas em Cachoeirinha/RS.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://pisosdobosque.lovable.app/" },
+      { property: "og:url", content: "https://pisosdobosque.com/" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Pisos do Bosque — Pisos com Preço Justo em Cachoeirinha/RS" },
@@ -117,11 +117,11 @@ export const Route = createFileRoute("/")({
         content:
           "Há mais de 20 anos com os pisos mais baratos da região: cerâmica, porcelanato, vinílicos, forro, louças e portas em Cachoeirinha/RS.",
       },
-      { property: "og:image", content: "https://pisosdobosque.lovable.app/og-image.jpg" },
-      { name: "twitter:image", content: "https://pisosdobosque.lovable.app/og-image.jpg" },
+      { property: "og:image", content: "https://pisosdobosque.com/og-image.jpg" },
+      { name: "twitter:image", content: "https://pisosdobosque.com/og-image.jpg" },
     ],
     links: [
-      { rel: "canonical", href: "https://pisosdobosque.lovable.app/" },
+      { rel: "canonical", href: "https://pisosdobosque.com/" },
       {
         rel: "preload",
         as: "image",
@@ -145,7 +145,7 @@ export const Route = createFileRoute("/")({
           "@type": "LocalBusiness",
           name: "Pisos do Bosque",
           image: heroVendedor,
-          url: "https://pisosdobosque.lovable.app/",
+          url: "https://pisosdobosque.com/",
           telephone: "+5551984905782",
           priceRange: "$$",
           sameAs: [
