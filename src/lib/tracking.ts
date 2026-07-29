@@ -72,7 +72,7 @@ export function splitName(full: string): { first_name: string; last_name: string
   const parts = stripAccents(full.trim().toLowerCase()).split(/\s+/).filter(Boolean);
   if (parts.length === 0) return { first_name: "", last_name: "" };
   if (parts.length === 1) return { first_name: parts[0], last_name: "" };
-  return { first_name: parts[0], last_name: parts.slice(1).join(" ") };
+  return { first_name: parts[0], last_name: parts[parts.length - 1] };
 }
 
 export function normalizePhoneBR(phone: string): string {
