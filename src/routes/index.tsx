@@ -1044,9 +1044,9 @@ function ProductCarousel({
       moved: false,
       pointerId: e.pointerId,
     };
-    try {
-      el.setPointerCapture?.(e.pointerId);
-    } catch {}
+    // Do NOT setPointerCapture here — it would redirect the subsequent
+    // "click" event to the scroller and swallow clicks on inner buttons.
+    // We capture only after the user actually drags beyond a threshold.
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -1056,8 +1056,16 @@ function ProductCarousel({
     const el = scrollerRef.current;
     if (!el) return;
     const dx = e.clientX - s.startX;
-    if (Math.abs(dx) > 4) s.moved = true;
-    el.scrollLeft = s.startScroll - dx;
+    if (Math.abs(dx) > 4 && !s.moved) {
+      s.moved = true;
+      // Now that this is a real drag, capture the pointer so the
+      // ensuing click gets suppressed on the scroller instead of firing
+      // on the child button.
+      try {
+        el.setPointerCapture?.(e.pointerId);
+      } catch {}
+    }
+    if (s.moved) el.scrollLeft = s.startScroll - dx;
   };
 
   const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
