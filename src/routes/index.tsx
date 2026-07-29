@@ -724,13 +724,20 @@ function Stats() {
 }
 
 function ProductCard({ p }: { p: Product }) {
+  const productMessage = `Olá! Tenho interesse no ${p.name} (${p.size} — ${p.price}). Gostaria de mais informações.`;
+  const handleOpen = () => {
+    openLeadCapture({
+      ctaOrigin: `produto:${p.name}`,
+      message: productMessage,
+      reason: `Tenho interesse no ${p.name}`,
+    });
+  };
   return (
-    <a
-      href={WHATSAPP_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Consultar ${p.name} no WhatsApp`}
-      className="group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md active:translate-y-0 active:scale-[0.99]"
+    <button
+      type="button"
+      onClick={handleOpen}
+      aria-label={`Quero o ${p.name}`}
+      className="group flex h-full w-full flex-col overflow-hidden rounded-lg bg-white text-left shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md active:translate-y-0 active:scale-[0.99]"
     >
       <div className="relative aspect-square overflow-hidden border-b border-border/60 bg-muted">
         <img
@@ -765,11 +772,7 @@ function ProductCard({ p }: { p: Product }) {
           </span>
         </div>
       </div>
-
-
-
-
-    </a>
+    </button>
   );
 }
 
