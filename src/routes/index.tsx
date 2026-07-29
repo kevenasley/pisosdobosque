@@ -218,6 +218,7 @@ const porcelanato: Product[] = [
   { img: "/piso-cimento-gris-acetinado.webp", name: "Porcelanato Cimento Gris Acetinado", size: "83 x 83 cm", price: "R$ 79,90 m²" },
   { img: "/piso-onix-premium-polido.webp", name: "Porcelanato Onix Premium Polido", size: "82 x 82 cm", price: "R$ 94,90 m²" },
   { img: "/piso-ducal-polido.webp", name: "Porcelanato Ducal Polido", size: "82 x 82 cm", price: "R$ 94,90 m²" },
+  { img: "/piso-taberna-titanio.webp", name: "Porcelanato Externo Taberna Titânio", size: "81 x 81 cm", price: "R$ 74,90 m²" },
 ];
 
 const vinilicos: Product[] = [
@@ -227,7 +228,6 @@ const vinilicos: Product[] = [
   { img: vin04.url, name: "Vinílico Jatobá", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
   { img: vin05.url, name: "Vinílico Platina", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
   { img: vin06.url, name: "Vinílico Carmel", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: "/piso-taberna-titanio.webp", name: "Taberna Titânio", size: "18,7 x 122,7 cm", price: "R$ 74,90 m²" },
 ];
 
 const compareRows = [
