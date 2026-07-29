@@ -32,6 +32,7 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { openLeadCapture } from "@/components/lead/LeadCapture";
 import { InteractiveMap } from "@/components/InteractiveMap";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
 import { AnimatePresence, motion } from "framer-motion";
