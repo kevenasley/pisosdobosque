@@ -56,6 +56,9 @@ import showroom2 from "@/assets/showroom-2.webp";
 import showroom3 from "@/assets/showroom-3.webp";
 import showroom4 from "@/assets/showroom-4.webp";
 import showroom5 from "@/assets/showroom-5.webp";
+import showroom6 from "@/assets/showroom-6.webp";
+import showroom7 from "@/assets/showroom-7.webp";
+import showroom8 from "@/assets/showroom-8.webp";
 
 
 
@@ -1657,12 +1660,15 @@ function AboutGallery({ images }: { images: { src: string; alt: string }[] }) {
 
 function About() {
   const showroomImages = [
+    { src: storeFront, alt: "Fachada da loja Pisos do Bosque em Cachoeirinha" },
     { src: showroom1, alt: "Showroom com painéis de amostras de pisos" },
     { src: showroom2, alt: "Corredor principal do showroom Pisos do Bosque" },
     { src: showroom3, alt: "Área de louças sanitárias e boxes de banheiro" },
     { src: showroom4, alt: "Atendimento consultivo dentro da loja" },
     { src: showroom5, alt: "Ambiente de bancada e revestimentos premium" },
-    { src: storeFront, alt: "Fachada da loja Pisos do Bosque em Cachoeirinha" },
+    { src: showroom6, alt: "Ambiente de exposição com pisos e revestimentos" },
+    { src: showroom7, alt: "Vitrine de produtos e amostras da loja" },
+    { src: showroom8, alt: "Área interna da loja Pisos do Bosque" },
   ];
   const mapsUrl =
     "https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS";
