@@ -144,6 +144,7 @@ export function LeadCapture() {
       setMessage(detail.message);
       setReason(typeof detail.reason === "string" ? detail.reason : "");
       setErrors({});
+      setSent(false);
       setOpen(true);
     }
     window.addEventListener(LEAD_OPEN_EVENT, handler as EventListener);
