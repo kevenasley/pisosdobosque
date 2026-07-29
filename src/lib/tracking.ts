@@ -207,3 +207,6 @@ export function trackLeadSubmit(payload: Record<string, unknown>) {
 export function trackLeadDirect(ctaOrigin: string) {
   push({ event: "lead_direct", cta_origem: ctaOrigin, cta_origin: ctaOrigin });
 }
+
+/** Alias explícito para pushes genéricos ao dataLayer (inclui geo). */
+export const pushDataLayer = push;
