@@ -157,50 +157,37 @@ export function LeadCapture() {
     setErrors({});
     setSubmitting(true);
     try {
-      // reCAPTCHA v3 — verifica antes de gravar o lead
+      // reCAPTCHA v3 — coleta token client-side; verificação ocorre no server
       const token = await getRecaptchaToken("lead_submit");
-      if (token) {
-        try {
-          const result = await verifyRecaptcha({
-            data: { token, action: "lead_submit" },
-          });
-          if (!result.success) {
-            setErrors({
-              phone:
-                "Não conseguimos validar sua sessão. Recarregue a página e tente novamente.",
-            });
-            setSubmitting(false);
-            return;
-          }
-        } catch {
-          // fail-open em caso de falha de rede na verificação
-        }
-      }
       const attribution = readAttribution() || {};
       const hashed_phone = await sha256Hex(parsed.data.phone);
-      const payload = {
-        name: parsed.data.name,
-        phone: parsed.data.phone,
-        hashed_phone,
-        reason: parsed.data.reason || "",
-        ...attribution,
-        cta_origin: ctaOrigin,
-        page_url: window.location.href,
-        user_agent: navigator.userAgent,
-        timestamp: new Date().toISOString(),
-      };
-      // fire-and-forget com keepalive para sobreviver ao redirect
+
       try {
-        fetch(SHEETS_WEBHOOK_URL, {
-          method: "POST",
-          mode: "no-cors",
-          keepalive: true,
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload),
-        }).catch(() => {});
+        const result = await submitLead({
+          data: {
+            name: parsed.data.name,
+            phone: parsed.data.phone,
+            reason: parsed.data.reason || "",
+            hashed_phone,
+            cta_origin: ctaOrigin,
+            page_url: typeof window !== "undefined" ? window.location.href : "",
+            user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
+            recaptcha_token: token || undefined,
+            attribution: attribution as Record<string, string>,
+          },
+        });
+        if (!result.success && result.reason?.includes("recaptcha")) {
+          setErrors({
+            phone:
+              "Não conseguimos validar sua sessão. Recarregue a página e tente novamente.",
+          });
+          setSubmitting(false);
+          return;
+        }
       } catch {
-        // não bloqueia o redirecionamento — o lead é priorizado
+        // fail-open — prioriza a conversão via WhatsApp
       }
+
       trackLeadSubmit({
         cta_origin: ctaOrigin,
         hashed_phone,
@@ -222,6 +209,7 @@ export function LeadCapture() {
       setSubmitting(false);
     }
   }
+
 
   function goDirect() {
     trackLeadDirect(ctaOrigin);
