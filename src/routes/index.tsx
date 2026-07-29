@@ -1525,7 +1525,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
     >
       <div className="overflow-hidden">
         <div
-          className="flex"
+          className="carousel-smooth flex"
           style={{
             transform: `translateX(-${index * 100}%)`,
             transition: "transform 700ms cubic-bezier(0.22, 1, 0.36, 1)",
