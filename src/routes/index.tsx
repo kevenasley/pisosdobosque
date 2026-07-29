@@ -37,6 +37,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 
 import heroVendedor from "@/assets/hero-vendedor.webp";
+import heroVendedorMobile from "@/assets/hero-vendedor-mobile.webp";
 import toolHammer from "@/assets/tool-hammer.webp";
 import toolTape from "@/assets/tool-tape.webp";
 import toolTiles from "@/assets/tool-tiles.webp";
@@ -102,7 +103,14 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://pisosdobosque.lovable.app/" },
-      { rel: "preload", as: "image", href: heroVendedor },
+      {
+        rel: "preload",
+        as: "image",
+        href: heroVendedor,
+        imagesrcset: `${heroVendedorMobile} 600w, ${heroVendedor} 900w`,
+        imagesizes: "(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px",
+        fetchpriority: "high",
+      },
     ],
     scripts: [
       {
@@ -620,9 +628,11 @@ function Hero() {
             />
             <img
               src={heroVendedor}
+              srcSet={`${heroVendedorMobile} 600w, ${heroVendedor} 900w`}
+              sizes="(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px"
               alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
-              width={1200}
-              height={1200}
+              width={900}
+              height={900}
               fetchPriority="high"
               loading="eager"
               decoding="async"
