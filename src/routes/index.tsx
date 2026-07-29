@@ -143,7 +143,7 @@ export const Route = createFileRoute("/")({
           ],
           address: {
             "@type": "PostalAddress",
-            streetAddress: "Av. Capitão Garibaldi Pinto dos Santos, 468",
+            streetAddress: "Av. Capitão Garibaldi Pinto dos Santos, 488",
             addressLocality: "Cachoeirinha",
             addressRegion: "RS",
             postalCode: "94940-030",
@@ -1718,7 +1718,7 @@ function About() {
     { src: showroom8, alt: "Área interna da loja Pisos do Bosque" },
   ];
   const mapsUrl =
-    "https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS";
+    "https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+488+Cachoeirinha+RS";
 
   return (
     <section id="sobre" className="bg-background py-16 md:py-24">
@@ -1830,7 +1830,7 @@ function About() {
               {
                 icon: MapPin,
                 label: "Localização",
-                text: "Av. Capitão Garibaldi Pinto dos Santos, 468 — Cachoeirinha/RS",
+                text: "Av. Capitão Garibaldi Pinto dos Santos, 488 — Cachoeirinha/RS",
               },
               {
                 icon: Phone,
@@ -2081,7 +2081,7 @@ function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-orange" />
                 <span className="[text-wrap:balance]">
-                  Av. Capitão Garibaldi Pinto dos Santos, 468
+                  Av. Capitão Garibaldi Pinto dos Santos, 488
                   <br />
                   Jardim do Bosque — Cachoeirinha/RS
                 </span>

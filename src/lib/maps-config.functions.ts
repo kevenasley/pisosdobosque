@@ -8,7 +8,7 @@ export type MapsConfig = {
 };
 
 const PLACE_ID = "ChIJTyoE7NlzGZURHlAt9IQVcGE";
-// Fallback coords: Av. Capitão Garibaldi Pinto dos Santos, 468 - Cachoeirinha/RS
+// Fallback coords: Av. Capitão Garibaldi Pinto dos Santos, 488 - Cachoeirinha/RS
 const FALLBACK_LAT = -29.9481;
 const FALLBACK_LNG = -51.094;
 
