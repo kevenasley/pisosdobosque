@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { captureAttribution } from "../lib/attribution";
+import { initClientGeo } from "../lib/geo-client";
 import { LeadCapture, openLeadCapture } from "../components/lead/LeadCapture";
 import { ConsentBanner } from "../components/ConsentBanner";
 import { GTM_ID } from "../lib/config";
@@ -155,6 +156,8 @@ function RootComponent() {
 
   useEffect(() => {
     captureAttribution();
+    // Geo do usuário (ipapi.co) — 1x por sessão, cacheada em sessionStorage.
+    void initClientGeo();
   }, []);
 
   useEffect(() => {

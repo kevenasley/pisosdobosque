@@ -1,12 +1,24 @@
 import { getAttribution, trafficType, type Attribution } from "@/lib/attribution";
+import { getClientGeo } from "@/lib/geo-client";
 
 type DL = { dataLayer?: unknown[]; fbq?: (...args: unknown[]) => void };
 
-function push(payload: Record<string, unknown>) {
+/**
+ * Envia um evento ao dataLayer sempre acrescentando a localização do usuário
+ * (user_city / user_state / user_country). Se a geo não estiver disponível,
+ * os campos vão vazios — nunca bloqueia o evento.
+ */
+export function push(payload: Record<string, unknown>) {
   if (typeof window === "undefined") return;
+  const geo = getClientGeo();
   const w = window as unknown as DL;
   w.dataLayer = w.dataLayer || [];
-  w.dataLayer.push(payload);
+  w.dataLayer.push({
+    user_city: geo.user_city || "",
+    user_state: geo.user_state || "",
+    user_country: geo.user_country || "",
+    ...payload,
+  });
 }
 
 function attrPayload(attr: Attribution) {
@@ -195,3 +207,6 @@ export function trackLeadSubmit(payload: Record<string, unknown>) {
 export function trackLeadDirect(ctaOrigin: string) {
   push({ event: "lead_direct", cta_origem: ctaOrigin, cta_origin: ctaOrigin });
 }
+
+/** Alias explícito para pushes genéricos ao dataLayer (inclui geo). */
+export const pushDataLayer = push;

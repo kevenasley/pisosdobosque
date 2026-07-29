@@ -13,7 +13,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { readAttribution } from "@/lib/attribution";
-import { trackGenerateLead } from "@/lib/tracking";
+import { trackGenerateLead, pushDataLayer } from "@/lib/tracking";
+import { initClientGeo, getClientGeo } from "@/lib/geo-client";
 import {
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
@@ -111,6 +112,18 @@ export function openLeadCapture(detail: OpenDetail = {}) {
   window.dispatchEvent(new CustomEvent(LEAD_OPEN_EVENT, { detail }));
 }
 
+/** Combina a geo do servidor com a geo do cliente (ipapi.co), sem quebrar o envio. */
+function resolveGeo(server: GeoResult | null): GeoResult {
+  const c = getClientGeo();
+  return {
+    ip: server?.ip || "",
+    city: server?.city || c.user_city || "",
+    region: server?.region || c.user_state || "",
+    country: server?.country || c.country_code || "",
+  };
+}
+
+
 export function LeadCapture() {
   const [open, setOpen] = useState(false);
   const [ctaOrigin, setCtaOrigin] = useState("unknown");
@@ -151,10 +164,9 @@ export function LeadCapture() {
             geoRef.current = { ip: "", city: "", region: "", country: "" };
           });
       }
+      void initClientGeo();
       // Sinaliza abertura do formulário no dataLayer
-      const w = window as unknown as { dataLayer?: unknown[] };
-      w.dataLayer = w.dataLayer || [];
-      w.dataLayer.push({
+      pushDataLayer({
         event: "formulario_aberto",
         cta_origem: ctaOrigin,
         cta_origin: ctaOrigin,
@@ -181,7 +193,7 @@ export function LeadCapture() {
       const token = await getRecaptchaToken("lead_submit");
       const attribution = readAttribution() || ({} as Record<string, string>);
       const hashed_phone = await sha256Hex(parsed.data.phone);
-      const geo = geoRef.current || { ip: "", city: "", region: "", country: "" };
+      const geo = resolveGeo(geoRef.current);
 
       try {
         const result = await submitLead({
@@ -243,7 +255,7 @@ export function LeadCapture() {
   }
 
   function goDirect() {
-    const geo = geoRef.current || { ip: "", city: "", region: "", country: "" };
+    const geo = resolveGeo(geoRef.current);
     trackGenerateLead({
       input: {
         name: name || "",
