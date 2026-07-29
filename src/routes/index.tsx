@@ -106,6 +106,12 @@ export const Route = createFileRoute("/")({
       {
         rel: "preload",
         as: "image",
+        href: "/logo-pisos-do-bosque.webp",
+        fetchpriority: "high",
+      },
+      {
+        rel: "preload",
+        as: "image",
         href: heroVendedor,
         imagesrcset: `${heroVendedorMobile} 600w, ${heroVendedor} 900w`,
         imagesizes: "(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px",
