@@ -563,6 +563,7 @@ function Header() {
 }
 
 function Hero() {
+  const stats = usePlaceStats();
   return (
     <section id="top" className="relative overflow-hidden gradient-hero texture-dots-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-5 py-10 md:grid-cols-[1.2fr_1fr] md:gap-12 md:px-8 md:py-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
