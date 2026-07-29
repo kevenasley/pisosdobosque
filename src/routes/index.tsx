@@ -1272,6 +1272,18 @@ function Products() {
 function MoreSolutions() {
   const solucoes: Product[] = [
     {
+      img: solLouca,
+      name: "Louças e Metais",
+      size: "Conjunto Acoplado Santa Clara",
+      price: "R$ 449,90",
+    },
+    {
+      img: solPorta,
+      name: "Portas de Qualidade",
+      size: "Porta Externa Mista",
+      price: "R$ 579,90",
+    },
+    {
       img: forro01.url,
       name: "Forro PVC Frisado (7mm)",
       size: "PVC — 4, 5, 6 e 7 m",
@@ -1300,18 +1312,6 @@ function MoreSolutions() {
       name: "Forro PVC Junta Seca - Branco",
       size: "6x20",
       price: "R$ 52,90 m²",
-    },
-    {
-      img: solLouca,
-      name: "Louças e Metais",
-      size: "Conjunto Acoplado Santa Clara",
-      price: "R$ 449,90",
-    },
-    {
-      img: solPorta,
-      name: "Portas de Qualidade",
-      size: "Porta Externa Mista",
-      price: "R$ 579,90",
     },
   ];
 
@@ -1347,12 +1347,7 @@ function MoreSolutions() {
             </a>
           </Reveal>
 
-          <div className="mt-8 grid grid-cols-2 items-start gap-4 sm:gap-6 md:grid-cols-4">
-            {solucoes.map((p, i) => (
-              <ProductCard key={i} p={p} />
-            ))}
-            <PlaceholderCard />
-          </div>
+          <ProductCarousel products={solucoes} />
         </div>
       </div>
     </section>
