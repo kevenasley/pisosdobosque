@@ -1885,11 +1885,6 @@ function About() {
                 label: "Contato",
                 text: "WhatsApp (51) 98490-5782",
               },
-              {
-                icon: Clock,
-                label: "Horário",
-                text: "Seg–Sex 8h–12h · 13h30–18h30\nSáb 8h–12h · 13h30–17h",
-              },
             ].map(({ icon: Icon, label, text }) => (
               <div
                 key={label}
@@ -1906,6 +1901,49 @@ function About() {
                 </div>
               </div>
             ))}
+
+            {/* Horário dinâmico via Places API */}
+            <div className="flex items-start gap-4 rounded-xl bg-background p-4 transition hover:-translate-y-0.5 hover:shadow-sm">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-brand-orange/10 text-brand-orange">
+                <Clock className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="font-semibold text-foreground">Horário</p>
+                  {opening.openNow !== null && (
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                        opening.openNow
+                          ? "bg-brand-green/10 text-brand-green"
+                          : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      <span
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          opening.openNow
+                            ? "bg-brand-green animate-pulse"
+                            : "bg-muted-foreground"
+                        }`}
+                      />
+                      {opening.openNow ? "Aberto" : "Fechado"}
+                    </span>
+                  )}
+                </div>
+                <p className="mt-0.5 text-sm text-muted-foreground">
+                  {opening.statusText}
+                </p>
+                <details className="mt-2 text-xs text-muted-foreground [&_summary::-webkit-details-marker]:hidden">
+                  <summary className="cursor-pointer select-none text-brand-green hover:underline">
+                    Ver horário completo
+                  </summary>
+                  <ul className="mt-2 space-y-0.5">
+                    {opening.weekdayDescriptions.map((d) => (
+                      <li key={d}>{d}</li>
+                    ))}
+                  </ul>
+                </details>
+              </div>
+            </div>
           </div>
         </Reveal>
 
