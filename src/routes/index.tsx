@@ -62,7 +62,7 @@ import showroom5 from "@/assets/showroom-5.webp";
 import tVin1 from "@/assets/tile-vinilico-1.webp";
 import tVin2 from "@/assets/tile-vinilico-2.webp";
 import tVin3 from "@/assets/tile-vinilico-3.webp";
-const logoAsset = { url: "/logo-pisos-do-bosque.png" };
+const logoAsset = { url: "/logo-pisos-do-bosque.webp" };
 
 const WHATSAPP_URL =
   "https://wa.me/5551984905782?text=Ol%C3%A1!%20Vi%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20um%20atendimento.";
