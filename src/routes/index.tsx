@@ -72,9 +72,12 @@ import showroom8 from "@/assets/showroom-8.webp";
 
 
 
-import tVin1 from "@/assets/tile-vinilico-1.webp";
-import tVin2 from "@/assets/tile-vinilico-2.webp";
-import tVin3 from "@/assets/tile-vinilico-3.webp";
+import vin01 from "@/assets/vinilico-01.webp.asset.json";
+import vin02 from "@/assets/vinilico-02.webp.asset.json";
+import vin03 from "@/assets/vinilico-03.webp.asset.json";
+import vin04 from "@/assets/vinilico-04.webp.asset.json";
+import vin05 from "@/assets/vinilico-05.webp.asset.json";
+import vin06 from "@/assets/vinilico-06.webp.asset.json";
 const logoAsset = { url: "/logo-pisos-do-bosque.webp" };
 
 const WHATSAPP_URL =
@@ -218,12 +221,12 @@ const porcelanato: Product[] = [
 ];
 
 const vinilicos: Product[] = [
-  { img: tVin1, name: "Vinílico Atacama", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: tVin1, name: "Vinílico Avelã", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: tVin2, name: "Vinílico Cartagena", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: tVin2, name: "Vinílico Jatobá", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: tVin3, name: "Vinílico Platina", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: tVin1, name: "Vinílico Carmel", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin01.url, name: "Vinílico Atacama", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin02.url, name: "Vinílico Avelã", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin03.url, name: "Vinílico Cartagena", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin04.url, name: "Vinílico Jatobá", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin05.url, name: "Vinílico Platina", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin06.url, name: "Vinílico Carmel", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
   { img: "/piso-taberna-titanio.webp", name: "Taberna Titânio", size: "18,7 x 122,7 cm", price: "R$ 74,90 m²" },
 ];
 
@@ -1269,6 +1272,18 @@ function Products() {
 function MoreSolutions() {
   const solucoes: Product[] = [
     {
+      img: solLouca,
+      name: "Louças e Metais",
+      size: "Conjunto Acoplado Santa Clara",
+      price: "R$ 449,90",
+    },
+    {
+      img: solPorta,
+      name: "Portas de Qualidade",
+      size: "Porta Externa Mista",
+      price: "R$ 579,90",
+    },
+    {
       img: forro01.url,
       name: "Forro PVC Frisado (7mm)",
       size: "PVC — 4, 5, 6 e 7 m",
@@ -1297,18 +1312,6 @@ function MoreSolutions() {
       name: "Forro PVC Junta Seca - Branco",
       size: "6x20",
       price: "R$ 52,90 m²",
-    },
-    {
-      img: solLouca,
-      name: "Louças e Metais",
-      size: "Conjunto Acoplado Santa Clara",
-      price: "R$ 449,90",
-    },
-    {
-      img: solPorta,
-      name: "Portas de Qualidade",
-      size: "Porta Externa Mista",
-      price: "R$ 579,90",
     },
   ];
 
@@ -1344,12 +1347,7 @@ function MoreSolutions() {
             </a>
           </Reveal>
 
-          <div className="mt-8 grid grid-cols-2 items-start gap-4 sm:gap-6 md:grid-cols-4">
-            {solucoes.map((p, i) => (
-              <ProductCard key={i} p={p} />
-            ))}
-            <PlaceholderCard />
-          </div>
+          <ProductCarousel products={solucoes} />
         </div>
       </div>
     </section>
