@@ -126,6 +126,7 @@ export function LeadCapture() {
       const detail = (ev as CustomEvent<OpenDetail>).detail || {};
       setCtaOrigin(detail.ctaOrigin || "unknown");
       setMessage(detail.message);
+      if (typeof detail.reason === "string") setReason(detail.reason);
       setErrors({});
       setOpen(true);
     }
