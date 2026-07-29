@@ -19,6 +19,49 @@ import {
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
 } from "@/lib/config";
+import { verifyRecaptcha, RECAPTCHA_SITE_KEY } from "@/lib/recaptcha.functions";
+
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, opts: { action: string }) => Promise<string>;
+    };
+  }
+}
+
+let recaptchaScriptPromise: Promise<void> | null = null;
+function loadRecaptcha(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (window.grecaptcha) return Promise.resolve();
+  if (recaptchaScriptPromise) return recaptchaScriptPromise;
+  recaptchaScriptPromise = new Promise((resolve) => {
+    const s = document.createElement("script");
+    s.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    s.async = true;
+    s.defer = true;
+    s.onload = () => resolve();
+    s.onerror = () => resolve(); // fail-open
+    document.head.appendChild(s);
+  });
+  return recaptchaScriptPromise;
+}
+
+async function getRecaptchaToken(action: string): Promise<string | null> {
+  try {
+    await loadRecaptcha();
+    if (!window.grecaptcha) return null;
+    return await new Promise<string>((resolve, reject) => {
+      window.grecaptcha!.ready(() => {
+        window
+          .grecaptcha!.execute(RECAPTCHA_SITE_KEY, { action })
+          .then(resolve, reject);
+      });
+    });
+  } catch {
+    return null;
+  }
+}
 
 export const LEAD_OPEN_EVENT = "pisosdobosque:lead-open";
 
@@ -81,9 +124,11 @@ export function LeadCapture() {
       window.removeEventListener(LEAD_OPEN_EVENT, handler as EventListener);
   }, []);
 
-  useEffect(() => {
+    useEffect(() => {
     if (open) {
       const t = setTimeout(() => firstFieldRef.current?.focus(), 50);
+      // Pré-carrega o reCAPTCHA quando o modal abre para não atrasar o submit
+      void loadRecaptcha();
       return () => clearTimeout(t);
     }
   }, [open]);
@@ -102,6 +147,25 @@ export function LeadCapture() {
     setErrors({});
     setSubmitting(true);
     try {
+      // reCAPTCHA v3 — verifica antes de gravar o lead
+      const token = await getRecaptchaToken("lead_submit");
+      if (token) {
+        try {
+          const result = await verifyRecaptcha({
+            data: { token, action: "lead_submit" },
+          });
+          if (!result.success) {
+            setErrors({
+              phone:
+                "Não conseguimos validar sua sessão. Recarregue a página e tente novamente.",
+            });
+            setSubmitting(false);
+            return;
+          }
+        } catch {
+          // fail-open em caso de falha de rede na verificação
+        }
+      }
       const attribution = readAttribution() || {};
       const hashed_phone = await sha256Hex(parsed.data.phone);
       const payload = {
@@ -228,7 +292,26 @@ export function LeadCapture() {
           </div>
           <p className="text-[11px] leading-snug text-muted-foreground">
             Ao enviar você concorda em receber contato via WhatsApp. Seus dados
-            são usados apenas para atendimento.
+            são usados apenas para atendimento. Este site é protegido pelo
+            reCAPTCHA e se aplicam a{" "}
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-brand-green"
+            >
+              Política de Privacidade
+            </a>{" "}
+            e os{" "}
+            <a
+              href="https://policies.google.com/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-brand-green"
+            >
+              Termos de Serviço
+            </a>{" "}
+            do Google.
           </p>
         </form>
       </DialogContent>
