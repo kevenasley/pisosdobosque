@@ -1479,7 +1479,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
     return () => window.removeEventListener("resize", compute);
   }, []);
 
-  const perSlide = isMobile ? 2 : 5;
+  const perSlide = isMobile ? 2 : 4;
   const totalSlides = Math.ceil(items.length / perSlide);
 
   useEffect(() => {
@@ -1536,7 +1536,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
                 className={`grid h-full ${
                   isMobile
                     ? "min-h-[520px] grid-cols-1 grid-rows-2 gap-4"
-                    : "grid-cols-5 grid-rows-1 gap-3"
+                    : "grid-cols-4 grid-rows-1 gap-3"
                 }`}
               >
                 {slide.map((r, i) => (
@@ -1576,16 +1576,25 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
 
 function Testimonials() {
   const stats = usePlaceStats();
-  const displayReviews: DisplayReview[] =
-    stats.reviews.length > 0
-      ? stats.reviews.map((r) => ({
-          name: r.author,
-          initial: r.initial,
-          text: r.text,
-          relativeTime: r.relativeTime,
-          photoUrl: r.photoUrl,
-        }))
-      : reviews.map((r) => ({ name: r.name, initial: r.initial, text: r.text }));
+  const googleReviews: DisplayReview[] = stats.reviews.map((r) => ({
+    name: r.author,
+    initial: r.initial,
+    text: r.text,
+    relativeTime: r.relativeTime,
+    photoUrl: r.photoUrl,
+  }));
+  const fallbackReviews: DisplayReview[] = reviews.map((r) => ({
+    name: r.name,
+    initial: r.initial,
+    text: r.text,
+  }));
+  // Combine Google reviews (up to 5 from Places API) with curated fallbacks
+  // so the carousel always has enough items to rotate beyond the visible slide.
+  const seen = new Set(googleReviews.map((r) => r.name.toLowerCase()));
+  const displayReviews: DisplayReview[] = [
+    ...googleReviews,
+    ...fallbackReviews.filter((r) => !seen.has(r.name.toLowerCase())),
+  ].slice(0, 12);
   return (
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
