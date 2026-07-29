@@ -260,7 +260,7 @@ export function LeadCapture() {
             <Input
               id="lead-phone"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => setPhone(maskPhone(e.target.value))}
               placeholder="(51) 99999-9999"
               inputMode="tel"
               autoComplete="tel"
