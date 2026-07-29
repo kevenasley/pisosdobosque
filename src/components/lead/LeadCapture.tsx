@@ -294,6 +294,15 @@ export function LeadCapture() {
           </DialogDescription>
         </DialogHeader>
         <form noValidate onSubmit={onSubmit} className="space-y-4">
+          {sent && (
+            <div
+              role="status"
+              aria-live="polite"
+              className="rounded-md border border-brand-green/30 bg-brand-green/10 px-3 py-2 text-sm text-brand-green"
+            >
+              Dados enviados! Abrindo o WhatsApp...
+            </div>
+          )}
           <div className="space-y-1.5">
             <Label htmlFor="lead-name">Nome</Label>
             <Input
