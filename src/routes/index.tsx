@@ -34,6 +34,10 @@ import {
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  PlaceStatsProvider,
+  usePlaceStats,
+} from "@/components/PlaceStatsProvider";
 
 
 import heroVendedor from "@/assets/hero-vendedor.webp";
@@ -559,6 +563,7 @@ function Header() {
 }
 
 function Hero() {
+  const stats = usePlaceStats();
   return (
     <section id="top" className="relative overflow-hidden gradient-hero texture-dots-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-5 py-10 md:grid-cols-[1.2fr_1fr] md:gap-12 md:px-8 md:py-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
@@ -585,7 +590,7 @@ function Hero() {
                     <Star key={i} className="h-2.5 w-2.5 fill-current md:h-3 md:w-3" />
                   ))}
                 </div>
-                <span>4.9 · 2.397 avaliações</span>
+                <span>{stats.ratingFormatted} · {stats.userRatingCountFormatted} avaliações</span>
               </div>
             </div>
           </div>
@@ -659,9 +664,10 @@ function Hero() {
 }
 
 function Stats() {
+  const stats = usePlaceStats();
   const items = [
     { icon: Award, value: "20+", label: "Anos de mercado" },
-    { icon: Users, value: "2.397", label: "Avaliações no Google" },
+    { icon: Users, value: stats.userRatingCountFormatted, label: "Avaliações no Google" },
     { icon: Package, value: "1000+", label: "Itens em estoque" },
     { icon: Truck, value: "Toda RS", label: "Entregamos na região" },
   ];
@@ -1393,11 +1399,13 @@ function renderBold(text: string) {
   );
 }
 
-function TestimonialsCarousel() {
+type DisplayReview = { name: string; initial: string; text: string; relativeTime?: string };
+
+function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(0);
   const pausedRef = useRef(false);
-  const total = reviews.length;
+  const total = items.length;
 
   // Track active slide via scroll position
   useEffect(() => {
@@ -1472,7 +1480,7 @@ function TestimonialsCarousel() {
         ref={scrollerRef}
         className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth transform-gpu [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {reviews.map((r, i) => (
+        {items.map((r, i) => (
           <div
             key={i}
             className="w-full shrink-0 snap-center px-1"
@@ -1496,7 +1504,7 @@ function TestimonialsCarousel() {
                     {r.name}
                   </span>
                   <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada
+                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada{r.relativeTime ? ` · ${r.relativeTime}` : ""}
                   </span>
                 </div>
               </div>
@@ -1505,7 +1513,7 @@ function TestimonialsCarousel() {
         ))}
       </div>
       <div className="mt-5 flex items-center justify-center gap-1">
-        {reviews.map((_, i) => (
+        {items.map((_, i) => (
           <button
             key={i}
             type="button"
@@ -1528,6 +1536,16 @@ function TestimonialsCarousel() {
 }
 
 function Testimonials() {
+  const stats = usePlaceStats();
+  const displayReviews: DisplayReview[] =
+    stats.reviews.length > 0
+      ? stats.reviews.map((r) => ({
+          name: r.author,
+          initial: r.initial,
+          text: r.text,
+          relativeTime: r.relativeTime,
+        }))
+      : reviews.map((r) => ({ name: r.name, initial: r.initial, text: r.text }));
   return (
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
@@ -1536,7 +1554,7 @@ function Testimonials() {
             O Que Nossos Clientes Dizem Sobre Nós
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground [text-wrap:balance]">
-            Mais de <strong>2.397 clientes</strong> avaliaram nossa loja no Google. Veja o que dizem sobre atendimento, preço e qualidade.
+            Mais de <strong>{stats.userRatingCountFormatted} clientes</strong> avaliaram nossa loja no Google. Veja o que dizem sobre atendimento, preço e qualidade.
           </p>
           <div className="mt-6 flex flex-col items-center gap-2">
             <div className="flex items-center gap-1.5 text-yellow-500">
@@ -1546,20 +1564,20 @@ function Testimonials() {
             </div>
             <div className="flex items-center gap-2 text-sm font-medium text-foreground">
               <span>
-                <strong className="text-base">4.9</strong> de 5
+                <strong className="text-base">{stats.ratingFormatted}</strong> de 5
               </span>
               <GoogleG className="h-4 w-4" />
-              <span className="text-muted-foreground">· 2.397 avaliações</span>
+              <span className="text-muted-foreground">· {stats.userRatingCountFormatted} avaliações</span>
             </div>
           </div>
         </Reveal>
         {/* Mobile: auto-playing carousel */}
         <div className="mt-10 md:hidden">
-          <TestimonialsCarousel />
+          <TestimonialsCarousel items={displayReviews} />
         </div>
         {/* Desktop/Tablet: grid */}
         <div className="mt-10 hidden gap-5 md:mt-14 md:grid md:grid-cols-3 md:gap-6">
-          {reviews.map((r, i) => (
+          {displayReviews.map((r, i) => (
             <Reveal
               key={i}
               delay={i * 80}
@@ -1578,13 +1596,14 @@ function Testimonials() {
                     {r.name}
                   </span>
                   <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada
+                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada{r.relativeTime ? ` · ${r.relativeTime}` : ""}
                   </span>
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
+
         <Reveal className="mt-10 text-center" delay={200}>
           <a
             href="https://www.google.com/maps/search/?api=1&query=Pisos+do+Bosque+Cachoeirinha"
@@ -1927,6 +1946,7 @@ function FooterColumn({
 }
 
 function Footer() {
+  const stats = usePlaceStats();
   const navLinks = [
     { href: "#sobre", label: "Sobre Nós" },
     { href: "#produtos", label: "Produtos" },
@@ -2001,9 +2021,9 @@ function Footer() {
             </p>
             <div className="mt-5 inline-flex w-fit items-center gap-2 rounded-md border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/80">
               <span className="text-brand-orange">★★★★★</span>
-              <span className="font-semibold text-white">4.9</span>
+              <span className="font-semibold text-white">{stats.ratingFormatted}</span>
               <span className="text-white/50">·</span>
-              <span>2.397 avaliações no Google</span>
+              <span>{stats.userRatingCountFormatted} avaliações no Google</span>
             </div>
             <div className="mt-auto pt-6">{socials}</div>
           </div>
@@ -2176,31 +2196,33 @@ function MobileCTABar() {
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-background font-sans">
-      <a
-        href="#top"
-        onClick={(e) => { e.preventDefault(); smoothScrollTo("top"); }}
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand-green focus:px-4 focus:py-2 focus:text-white"
-      >
-        Pular para o conteúdo
-      </a>
-      
-      <Header />
-      <main>
-        <Hero />
-        <Stats />
-        <Products />
-        <MoreSolutions />
-        <Comparison />
-        <Testimonials />
-        <About />
-        
-        <FAQ />
-      </main>
-      <Footer />
-      
-      <BackToTop />
-      <MobileCTABar />
-    </div>
+    <PlaceStatsProvider>
+      <div className="min-h-screen bg-background font-sans">
+        <a
+          href="#top"
+          onClick={(e) => { e.preventDefault(); smoothScrollTo("top"); }}
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand-green focus:px-4 focus:py-2 focus:text-white"
+        >
+          Pular para o conteúdo
+        </a>
+
+        <Header />
+        <main>
+          <Hero />
+          <Stats />
+          <Products />
+          <MoreSolutions />
+          <Comparison />
+          <Testimonials />
+          <About />
+
+          <FAQ />
+        </main>
+        <Footer />
+
+        <BackToTop />
+        <MobileCTABar />
+      </div>
+    </PlaceStatsProvider>
   );
 }
