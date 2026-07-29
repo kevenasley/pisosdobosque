@@ -92,6 +92,7 @@ function ObrigadoPage() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
+          data-lead-bypass="true"
           className="mt-6 inline-flex items-center justify-center gap-2 rounded-md bg-brand-green px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-green/90"
         >
           <WhatsAppIcon className="h-4 w-4" />
