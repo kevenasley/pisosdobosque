@@ -35,26 +35,50 @@ type Props = {
 };
 
 export function InteractiveMap({ mapsUrl, className }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  // Só começa qualquer trabalho de Maps quando o container se aproxima da viewport.
+  useEffect(() => {
+    if (inView || !containerRef.current) return;
+    const el = containerRef.current;
+    if (typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "400px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [inView]);
+
   const fetchConfig = useServerFn(getMapsConfig);
   const { data } = useQuery({
     queryKey: ["maps-config"],
     queryFn: () => fetchConfig(),
     staleTime: 24 * 60 * 60 * 1000,
+    enabled: inView,
   });
 
-  const ref = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
-  const [failed, setFailed] = useState(false);
-
   useEffect(() => {
-    if (!data?.apiKey || !ref.current) return;
+    if (!data?.apiKey || !mapRef.current) return;
     let cancelled = false;
 
     loadMapsScript(data.apiKey)
       .then(() => {
-        if (cancelled || !ref.current || !window.google?.maps) return;
+        if (cancelled || !mapRef.current || !window.google?.maps) return;
         const center = { lat: data.lat, lng: data.lng };
-        const map = new window.google.maps.Map(ref.current, {
+        const map = new window.google.maps.Map(mapRef.current, {
           center,
           zoom: 16,
           disableDefaultUI: true,
@@ -84,8 +108,8 @@ export function InteractiveMap({ mapsUrl, className }: Props) {
     };
   }, [data]);
 
-  // Fallback: iframe estático se não temos chave ou falhou
-  if (!data?.apiKey || failed) {
+  // Fallback: iframe estático se está in-view mas não temos chave ou falhou
+  if (inView && (!data?.apiKey || failed)) {
     return (
       <iframe
         title="Localização Pisos do Bosque"
@@ -99,22 +123,24 @@ export function InteractiveMap({ mapsUrl, className }: Props) {
   }
 
   return (
-    <div className={`relative ${className ?? ""}`}>
-      <div ref={ref} className="h-full w-full" />
+    <div ref={containerRef} className={`relative ${className ?? ""}`}>
+      <div ref={mapRef} className="h-full w-full" />
       {!ready && (
         <div className="absolute inset-0 flex items-center justify-center bg-muted text-sm text-muted-foreground">
-          Carregando mapa…
+          {inView ? "Carregando mapa…" : "Mapa"}
         </div>
       )}
-      <a
-        href={mapsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Abrir no Google Maps"
-        className="absolute right-2 top-2 rounded-md bg-white/95 px-2 py-1 text-xs font-semibold text-brand-green shadow-md hover:bg-white"
-      >
-        Ampliar
-      </a>
+      {ready && (
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Abrir no Google Maps"
+          className="absolute right-2 top-2 rounded-md bg-white/95 px-2 py-1 text-xs font-semibold text-brand-green shadow-md hover:bg-white"
+        >
+          Ampliar
+        </a>
+      )}
     </div>
   );
 }
