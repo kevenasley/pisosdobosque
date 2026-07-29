@@ -1,7 +1,7 @@
 // Central configuration constants for tracking, lead capture and integrations.
 // Substitua os placeholders quando os IDs reais estiverem disponíveis.
 
-export const GTM_ID = "GTM-XXXXXXX";
+export const GTM_ID = "GTM-K9QMMX9N";
 export const WHATSAPP_NUMBER = "5551984905782";
 export const WHATSAPP_DEFAULT_MESSAGE =
   "Olá! Vi o site de vocês e gostaria de um atendimento.";
