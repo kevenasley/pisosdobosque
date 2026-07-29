@@ -1269,10 +1269,34 @@ function Products() {
 function MoreSolutions() {
   const solucoes: Product[] = [
     {
-      img: solForro,
-      name: "Forro branco frisado",
+      img: forro01.url,
+      name: "Forro PVC Frisado (7mm)",
       size: "PVC — 4, 5, 6 e 7 m",
       price: "R$ 24,49 m²",
+    },
+    {
+      img: forro02.url,
+      name: "Forro PVC Duplo - Carvalho",
+      size: "6x20",
+      price: "R$ 59,90 m²",
+    },
+    {
+      img: forro03.url,
+      name: "Forro PVC Junta Seca - Plátano",
+      size: "6x20",
+      price: "R$ 59,90 m²",
+    },
+    {
+      img: forro04.url,
+      name: "Forro PVC Junta Seca - Angelim",
+      size: "6x20",
+      price: "R$ 59,90 m²",
+    },
+    {
+      img: forro05.url,
+      name: "Forro PVC Junta Seca - Branco",
+      size: "6x20",
+      price: "R$ 52,90 m²",
     },
     {
       img: solLouca,
