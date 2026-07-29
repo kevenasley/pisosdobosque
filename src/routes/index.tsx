@@ -39,6 +39,7 @@ import {
   PlaceStatsProvider,
   usePlaceStats,
 } from "@/components/PlaceStatsProvider";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 
 import heroVendedor from "@/assets/hero-vendedor.webp";
@@ -864,6 +865,14 @@ function CategoryBlock({
   );
 }
 
+function chunkArray<T>(arr: T[], size: number): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    chunks.push(arr.slice(i, i + size));
+  }
+  return chunks;
+}
+
 function ProductCarousel({
   products,
   hint = "Arraste para o lado para ver mais →",
@@ -871,13 +880,18 @@ function ProductCarousel({
   products: Product[];
   hint?: string;
 }) {
+  const isMobile = useIsMobile();
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  const originalCount = products.length;
+  const slidesPerPage = isMobile ? 4 : 1;
+  const chunks = chunkArray(products, slidesPerPage);
+  const originalCount = chunks.length;
   // Duplicate slides once to enable seamless forward-only looping.
-  const loopedProducts = [...products, ...products];
+  const loopedChunks = [...chunks, ...chunks];
+
+  const slideDuration = isMobile ? 900 : 650;
 
   const currentRef = useRef(current);
   useEffect(() => {
@@ -917,7 +931,7 @@ function ProductCarousel({
   const animRef = useRef<number | null>(null);
   const isAnimatingRef = useRef(false);
   const animateTo = useCallback(
-    (targetLeft: number, duration = 650, onComplete?: () => void) => {
+    (targetLeft: number, duration = slideDuration, onComplete?: () => void) => {
       const el = scrollerRef.current;
       if (!el) return;
       if (animRef.current) cancelAnimationFrame(animRef.current);
@@ -945,7 +959,7 @@ function ProductCarousel({
       };
       animRef.current = requestAnimationFrame(tick);
     },
-    []
+    [slideDuration]
   );
 
   const next = useCallback(() => {
@@ -957,14 +971,14 @@ function ProductCarousel({
     const cur = currentRef.current;
     if (cur >= originalCount - 1) {
       // Animate into the cloned slot, then snap silently back to real start
-      animateTo(step * originalCount, 650, () => {
+      animateTo(step * originalCount, slideDuration, () => {
         el.scrollLeft = 0;
         setCurrent(0);
       });
     } else {
-      animateTo(step * (cur + 1), 650);
+      animateTo(step * (cur + 1), slideDuration);
     }
-  }, [animateTo, getStep, originalCount]);
+  }, [animateTo, getStep, originalCount, slideDuration]);
 
   const prev = useCallback(() => {
     if (isAnimatingRef.current) return;
@@ -972,17 +986,17 @@ function ProductCarousel({
     if (!step) return;
     const cur = currentRef.current;
     if (cur <= 0) return;
-    animateTo(step * (cur - 1), 650);
-  }, [animateTo, getStep]);
+    animateTo(step * (cur - 1), slideDuration);
+  }, [animateTo, getStep, slideDuration]);
 
   const goTo = useCallback(
     (idx: number) => {
       if (isAnimatingRef.current) return;
       const step = getStep();
       if (!step) return;
-      animateTo(step * idx, 650);
+      animateTo(step * idx, slideDuration);
     },
-    [animateTo, getStep]
+    [animateTo, getStep, slideDuration]
   );
 
   // Autoplay
@@ -994,7 +1008,7 @@ function ProductCarousel({
     return () => window.clearInterval(id);
   }, [paused, originalCount, next]);
 
-  // Pointer drag (mouse + touch fallback). Native touch scroll still works too.
+  // Pointer drag for mouse; touch uses native horizontal scroll.
   const dragState = useRef<{
     active: boolean;
     startX: number;
@@ -1006,6 +1020,8 @@ function ProductCarousel({
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     const el = scrollerRef.current;
     if (!el) return;
+    setPaused(true);
+    if (e.pointerType === "touch") return; // let the browser handle touch scrolling
     if (animRef.current) cancelAnimationFrame(animRef.current);
     isAnimatingRef.current = false;
     dragState.current = {
@@ -1018,19 +1034,17 @@ function ProductCarousel({
     try {
       el.setPointerCapture?.(e.pointerId);
     } catch {}
-    setPaused(true);
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const s = dragState.current;
     if (!s.active) return;
+    if (e.pointerType === "touch") return;
     const el = scrollerRef.current;
     if (!el) return;
     const dx = e.clientX - s.startX;
     if (Math.abs(dx) > 4) s.moved = true;
-    if (e.pointerType !== "touch") {
-      el.scrollLeft = s.startScroll - dx;
-    }
+    el.scrollLeft = s.startScroll - dx;
   };
 
   const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -1047,11 +1061,11 @@ function ProductCarousel({
         el?.releasePointerCapture?.(s.pointerId);
       } catch {}
     }
-    if (el && wasMoved && e.pointerType !== "touch") {
+    if (el && wasMoved) {
       const step = getStep();
       if (step) {
         const idx = Math.round(el.scrollLeft / step);
-        animateTo(step * idx, 400);
+        animateTo(step * idx, slideDuration);
       }
     }
     // Suppress the click that fires after a drag on anchor children
@@ -1104,16 +1118,24 @@ function ProductCarousel({
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         className="-mx-2 flex cursor-grab gap-4 overflow-x-auto px-2 pb-2 select-none active:cursor-grabbing sm:gap-6 md:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{ touchAction: "pan-y" }}
+        style={{ touchAction: "pan-x pan-y" }}
       >
 
-        {loopedProducts.map((p, i) => (
+        {loopedChunks.map((chunk, i) => (
           <div
             key={i}
             data-slide
-            className="h-full w-[calc(50%-0.5rem)] shrink-0 sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
+            className="h-full w-full shrink-0 md:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
           >
-            <ProductCard p={p} />
+            {chunk.length === 1 ? (
+              <ProductCard p={chunk[0]} />
+            ) : (
+              <div className="grid h-full grid-cols-2 grid-rows-2 gap-4">
+                {chunk.map((p, j) => (
+                  <ProductCard key={j} p={p} />
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>
