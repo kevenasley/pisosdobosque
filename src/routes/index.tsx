@@ -1752,6 +1752,8 @@ function AboutGallery({ images }: { images: { src: string; alt: string }[] }) {
 }
 
 function About() {
+  const stats = usePlaceStats();
+  const opening = stats.opening;
   const showroomImages = [
     { src: storeFront, alt: "Fachada da loja Pisos do Bosque em Cachoeirinha" },
     { src: showroom1, alt: "Showroom com painéis de amostras de pisos" },
