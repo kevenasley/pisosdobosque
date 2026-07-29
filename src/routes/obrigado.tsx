@@ -20,10 +20,10 @@ export const Route = createFileRoute("/obrigado")({
         property: "og:description",
         content: "Recebemos seu contato. Em breve nosso time responderá no WhatsApp.",
       },
-      { property: "og:url", content: "https://pisosdobosque.lovable.app/obrigado" },
+      { property: "og:url", content: "https://pisosdobosque.com/obrigado" },
     ],
     links: [
-      { rel: "canonical", href: "https://pisosdobosque.lovable.app/obrigado" },
+      { rel: "canonical", href: "https://pisosdobosque.com/obrigado" },
     ],
   }),
   component: ObrigadoPage,
