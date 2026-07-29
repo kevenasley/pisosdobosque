@@ -1473,7 +1473,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
   useEffect(() => {
     const compute = () => {
       const w = window.innerWidth;
-      setPerView(w >= 1024 ? 3 : w >= 640 ? 2 : 1);
+      setPerView(w >= 1024 ? 5 : 2);
     };
     compute();
     window.addEventListener("resize", compute);
