@@ -999,14 +999,14 @@ function ProductCarousel({
     [animateTo, getStep, slideDuration]
   );
 
-  // Autoplay
+  // Autoplay (desktop only — mobile users control the carousel manually)
   useEffect(() => {
-    if (paused || originalCount <= 1) return;
+    if (isMobile || paused || originalCount <= 1) return;
     const id = window.setInterval(() => {
       next();
     }, 5000);
     return () => window.clearInterval(id);
-  }, [paused, originalCount, next]);
+  }, [isMobile, paused, originalCount, next]);
 
   // Pointer drag for mouse; touch uses native horizontal scroll.
   const dragState = useRef<{
