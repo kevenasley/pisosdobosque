@@ -2021,9 +2021,9 @@ function Footer() {
             </p>
             <div className="mt-5 inline-flex w-fit items-center gap-2 rounded-md border border-white/15 bg-white/5 px-3 py-2 text-xs text-white/80">
               <span className="text-brand-orange">★★★★★</span>
-              <span className="font-semibold text-white">4.9</span>
+              <span className="font-semibold text-white">{stats.ratingFormatted}</span>
               <span className="text-white/50">·</span>
-              <span>2.397 avaliações no Google</span>
+              <span>{stats.userRatingCountFormatted} avaliações no Google</span>
             </div>
             <div className="mt-auto pt-6">{socials}</div>
           </div>
