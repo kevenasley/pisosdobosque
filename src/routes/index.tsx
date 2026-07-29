@@ -1480,7 +1480,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
         ref={scrollerRef}
         className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth transform-gpu [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {reviews.map((r, i) => (
+        {items.map((r, i) => (
           <div
             key={i}
             className="w-full shrink-0 snap-center px-1"
@@ -1504,7 +1504,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
                     {r.name}
                   </span>
                   <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada
+                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada{r.relativeTime ? ` · ${r.relativeTime}` : ""}
                   </span>
                 </div>
               </div>
@@ -1513,7 +1513,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
         ))}
       </div>
       <div className="mt-5 flex items-center justify-center gap-1">
-        {reviews.map((_, i) => (
+        {items.map((_, i) => (
           <button
             key={i}
             type="button"
