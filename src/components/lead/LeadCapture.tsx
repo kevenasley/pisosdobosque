@@ -112,13 +112,13 @@ export function openLeadCapture(detail: OpenDetail = {}) {
   window.dispatchEvent(new CustomEvent(LEAD_OPEN_EVENT, { detail }));
 }
 
-/** Combina a geo do servidor com a geo do cliente (ipapi.co), sem quebrar o envio. */
-function resolveGeo(server: GeoResult | null): GeoResult {
-  const c = getClientGeo();
+/** Combina a geo do servidor com a geo do cliente (ipwho.is), sem quebrar o envio. */
+async function resolveGeo(server: GeoResult | null): Promise<GeoResult> {
+  const c = await ensureClientGeo();
   return {
     ip: server?.ip || "",
     city: server?.city || c.user_city || "",
-    region: server?.region || c.user_state || "",
+    region: server?.region || c.user_state_code || c.user_state || "",
     country: server?.country || c.country_code || "",
   };
 }
