@@ -14,6 +14,16 @@ export const Route = createFileRoute("/obrigado")({
         content:
           "Recebemos seu contato. Em breve nosso time responderá no WhatsApp.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:title", content: "Obrigado — Pisos do Bosque" },
+      {
+        property: "og:description",
+        content: "Recebemos seu contato. Em breve nosso time responderá no WhatsApp.",
+      },
+      { property: "og:url", content: "https://pisosdobosque.lovable.app/obrigado" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://pisosdobosque.lovable.app/obrigado" },
     ],
   }),
   component: ObrigadoPage,

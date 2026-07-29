@@ -70,39 +70,38 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title:
-          "Pisos do Bosque — Pisos e Revestimentos com Preço Justo em Cachoeirinha/RS",
+        title: "Pisos do Bosque — Pisos com Preço Justo em Cachoeirinha/RS",
       },
       {
         name: "description",
         content:
-          "Há mais de 20 anos oferecendo os pisos mais baratos da região. Cerâmica, porcelanato, vinílicos, forro, louças e portas com preço justo, estoque imediato e atendimento personalizado em Cachoeirinha/RS.",
+          "Há mais de 20 anos com os pisos mais baratos da região: cerâmica, porcelanato, vinílicos, forro, louças e portas em Cachoeirinha/RS.",
       },
       { name: "theme-color", content: "#FF6400" },
       {
         property: "og:title",
-        content: "Pisos do Bosque — Pisos e Revestimentos com Preço Justo em Cachoeirinha/RS",
+        content: "Pisos do Bosque — Pisos com Preço Justo em Cachoeirinha/RS",
       },
       {
         property: "og:description",
         content:
-          "Há mais de 20 anos oferecendo os pisos mais baratos da região. Cerâmica, porcelanato, vinílicos, forro, louças e portas com preço justo, estoque imediato e atendimento personalizado em Cachoeirinha/RS.",
+          "Há mais de 20 anos com os pisos mais baratos da região: cerâmica, porcelanato, vinílicos, forro, louças e portas em Cachoeirinha/RS.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://pisosdobosque.lovable.app/" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Pisos do Bosque — Pisos e Revestimentos com Preço Justo em Cachoeirinha/RS" },
+      { name: "twitter:title", content: "Pisos do Bosque — Pisos com Preço Justo em Cachoeirinha/RS" },
       {
         name: "twitter:description",
         content:
-          "Há mais de 20 anos oferecendo os pisos mais baratos da região. Cerâmica, porcelanato, vinílicos, forro, louças e portas com preço justo, estoque imediato e atendimento personalizado em Cachoeirinha/RS.",
+          "Há mais de 20 anos com os pisos mais baratos da região: cerâmica, porcelanato, vinílicos, forro, louças e portas em Cachoeirinha/RS.",
       },
       { property: "og:image", content: "https://pisosdobosque.lovable.app/og-image.jpg" },
       { name: "twitter:image", content: "https://pisosdobosque.lovable.app/og-image.jpg" },
     ],
     links: [
-      { rel: "canonical", href: "/" },
+      { rel: "canonical", href: "https://pisosdobosque.lovable.app/" },
       { rel: "preload", as: "image", href: heroVendedor },
     ],
     scripts: [
@@ -147,7 +146,18 @@ export const Route = createFileRoute("/")({
             ratingValue: "4.9",
             reviewCount: "2397",
           },
-
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
         }),
       },
     ],
