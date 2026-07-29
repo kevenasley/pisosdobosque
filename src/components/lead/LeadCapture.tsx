@@ -349,11 +349,11 @@ export function LeadCapture() {
           <div className="flex flex-col gap-2 pt-2">
             <Button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || sent}
               className="w-full gap-2 bg-brand-green text-white hover:bg-brand-green/90 focus-visible:ring-brand-green"
             >
               <WhatsAppIcon className="h-4 w-4" />
-              {submitting ? "Enviando..." : "Falar no WhatsApp"}
+              {sent ? "Enviado!" : submitting ? "Enviando..." : "Falar no WhatsApp"}
             </Button>
             <Button
               type="button"
