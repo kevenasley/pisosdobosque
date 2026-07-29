@@ -306,20 +306,20 @@ html.lenis body {
   animation: float-y 4s ease-in-out infinite;
 }
 
-/* Global microinteraction defaults — smooth hover/press on interactive elements */
-a,
-button,
-[role="button"],
-[role="tab"],
-summary {
-  transition:
-    color 300ms ease-out,
-    background-color 300ms ease-out,
-    border-color 300ms ease-out,
-    box-shadow 300ms ease-out,
-    transform 300ms ease-out,
-    filter 300ms ease-out,
-    opacity 300ms ease-out;
+/* Global microinteraction defaults — smooth bidirectional hover/press on interactive elements.
+   Use a single `all` transition with an ease-out curve so leaving the element animates back
+   with the same easing, eliminating the flicker caused by mixing `transition-colors` with
+   hover-only `transition-all` overrides. */
+@layer base {
+  button,
+  a,
+  a[role="button"],
+  [role="button"],
+  [role="tab"],
+  summary,
+  .btn {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 }
 
 /* Desktop-only: pointer cursor on all interactive elements (Tailwind v4 preflight
