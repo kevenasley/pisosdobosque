@@ -116,15 +116,15 @@ export const Route = createFileRoute("/")({
         rel: "preload",
         as: "image",
         href: "/logo-pisos-do-bosque.webp",
-        fetchpriority: "high",
+        fetchPriority: "high",
       },
       {
         rel: "preload",
         as: "image",
         href: heroVendedor,
-        imagesrcset: `${heroVendedorMobile} 600w, ${heroVendedor} 900w`,
-        imagesizes: "(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px",
-        fetchpriority: "high",
+        imageSrcSet: `${heroVendedorMobile} 600w, ${heroVendedor} 900w`,
+        imageSizes: "(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px",
+        fetchPriority: "high",
       },
     ],
     scripts: [
@@ -1316,7 +1316,7 @@ function MoreSolutions() {
             </a>
           </Reveal>
 
-          <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 items-start gap-4 sm:gap-6 md:grid-cols-4">
             {solucoes.map((p, i) => (
               <ProductCard key={i} p={p} />
             ))}
@@ -1565,7 +1565,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
               <div
                 className={`grid h-full ${
                   isMobile
-                    ? "min-h-[520px] grid-cols-1 grid-rows-2 gap-4"
+                    ? "grid-cols-1 grid-rows-2 gap-4"
                     : "grid-cols-3 grid-rows-2 gap-4"
                 }`}
               >

@@ -76,7 +76,8 @@ const schema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^\+?\d[\d\s()-]{8,20}$/u, "Telefone inválido"),
+    .min(1, "Informe seu WhatsApp")
+    .regex(/^\(\d{2}\) \d{5}-\d{4}$/, "Informe um celular válido com DDD"),
   reason: z.string().trim().max(500).optional(),
 });
 
@@ -88,6 +89,15 @@ async function sha256Hex(input: string) {
   return Array.from(new Uint8Array(digest))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
+}
+
+function maskPhone(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 2) return digits.length ? `(${digits}` : "";
+  if (digits.length <= 7) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  }
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
 }
 
 function buildWhatsAppUrl(message?: string) {
@@ -250,7 +260,7 @@ export function LeadCapture() {
             <Input
               id="lead-phone"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => setPhone(maskPhone(e.target.value))}
               placeholder="(51) 99999-9999"
               inputMode="tel"
               autoComplete="tel"
