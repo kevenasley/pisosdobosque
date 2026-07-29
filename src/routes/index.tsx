@@ -590,7 +590,7 @@ function Hero() {
                     <Star key={i} className="h-2.5 w-2.5 fill-current md:h-3 md:w-3" />
                   ))}
                 </div>
-                <span>4.9 · 2.397 avaliações</span>
+                <span>{stats.ratingFormatted} · {stats.userRatingCountFormatted} avaliações</span>
               </div>
             </div>
           </div>
