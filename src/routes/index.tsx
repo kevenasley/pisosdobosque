@@ -2376,7 +2376,7 @@ function MobileCTABar() {
 function HomePage() {
   return (
     <PlaceStatsProvider>
-      <div className="min-h-screen bg-background font-sans pb-24 md:pb-0">
+      <div className="min-h-screen bg-background font-sans">
         <a
           href="#top"
           onClick={(e) => { e.preventDefault(); smoothScrollTo("top"); }}
