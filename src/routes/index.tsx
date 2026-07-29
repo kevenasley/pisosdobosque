@@ -1125,7 +1125,7 @@ function ProductCarousel({
           <div
             key={i}
             data-slide
-            className="h-full w-full shrink-0 md:w-[calc(50%-0.5rem)] lg:w-[calc(25%-1.125rem)]"
+            className="h-full w-full shrink-0 md:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
           >
             {chunk.length === 1 ? (
               <ProductCard p={chunk[0]} />
