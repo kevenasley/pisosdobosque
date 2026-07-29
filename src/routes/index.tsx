@@ -1678,24 +1678,41 @@ function Testimonials() {
 
 function AboutGallery({ images }: { images: { src: string; alt: string }[] }) {
   const [active, setActive] = useState(0);
+  // Só monta <img> das imagens que já foram visitadas — evita baixar as 9
+  // de uma vez quando a seção entra em viewport.
+  const [visited, setVisited] = useState<Set<number>>(() => new Set([0]));
   const current = images[active];
+
+  const goTo = (i: number) => {
+    setActive(i);
+    setVisited((prev) => {
+      if (prev.has(i)) return prev;
+      const next = new Set(prev);
+      next.add(i);
+      return next;
+    });
+  };
+
   return (
     <div className="flex flex-1 flex-col gap-3">
       <div className="relative flex flex-1 overflow-hidden rounded-2xl border border-border shadow-sm">
         <div className="aspect-[4/3] w-full bg-muted md:aspect-auto md:h-full md:min-h-0">
-          {images.map((img, i) => (
-            <img
-              key={img.src}
-              src={img.src}
-              alt={img.alt}
-              loading="lazy"
-              decoding="async"
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
-                i === active ? "opacity-100" : "opacity-0"
-              }`}
-              aria-hidden={i === active ? undefined : true}
-            />
-          ))}
+          {images.map((img, i) =>
+            visited.has(i) ? (
+              <img
+                key={img.src}
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                decoding="async"
+                sizes="(max-width: 767px) 100vw, 50vw"
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                  i === active ? "opacity-100" : "opacity-0"
+                }`}
+                aria-hidden={i === active ? undefined : true}
+              />
+            ) : null,
+          )}
         </div>
         <div className="pointer-events-none absolute bottom-3 left-3 rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
           {active + 1} / {images.length}
@@ -1707,7 +1724,7 @@ function AboutGallery({ images }: { images: { src: string; alt: string }[] }) {
           <button
             key={img.src}
             type="button"
-            onClick={() => setActive(i)}
+            onClick={() => goTo(i)}
             aria-label={`Ver imagem ${i + 1}: ${img.alt}`}
             aria-pressed={i === active}
             className={`relative aspect-[4/3] w-24 flex-shrink-0 overflow-hidden rounded-lg border-2 transition sm:w-28 ${
@@ -1721,6 +1738,7 @@ function AboutGallery({ images }: { images: { src: string; alt: string }[] }) {
               alt=""
               loading="lazy"
               decoding="async"
+              sizes="112px"
               className="h-full w-full object-cover"
             />
           </button>
