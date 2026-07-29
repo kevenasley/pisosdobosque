@@ -1322,7 +1322,7 @@ function Comparison() {
                   <h4 className="text-sm font-semibold text-white/90 [text-wrap:balance] sm:text-base">
                     {r.bad}
                   </h4>
-                  <p className="text-xs text-white/60 [text-wrap:balance] sm:text-sm">
+                  <p className="text-xs text-white/80 [text-wrap:balance] sm:text-sm">
                     {r.badDesc}
                   </p>
                 </Reveal>
@@ -2001,11 +2001,11 @@ function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 border-t border-white/10 pt-6">
-          <div className="flex flex-col items-center justify-between gap-4 pb-20 text-xs text-white/55 md:flex-row md:pb-0">
+          <div className="flex flex-col items-center justify-between gap-4 pb-20 text-xs text-white/75 md:flex-row md:pb-0">
             <p className="text-center md:text-left">
               © 2025 Pisos do Bosque. Todos os direitos reservados.
             </p>
-            <p className="text-center text-white/40 md:text-right">
+            <p className="text-center text-white/70 md:text-right">
               CNPJ e endereço em Cachoeirinha/RS.
             </p>
           </div>
