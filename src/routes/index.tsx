@@ -710,6 +710,47 @@ function ProductCard({ p }: { p: Product }) {
   );
 }
 
+function PlaceholderCard() {
+  return (
+    <a
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Consultar outros produtos no WhatsApp"
+      className="group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md active:translate-y-0 active:scale-[0.99]"
+    >
+      <div className="relative grid aspect-square place-items-center overflow-hidden border-b border-border/60 bg-brand-teal/10">
+        <div className="flex flex-col items-center gap-2 text-brand-teal">
+          <Plus className="h-10 w-10 transition-transform duration-300 group-hover:scale-110" />
+          <span className="text-sm font-semibold">E muito mais</span>
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col bg-[#F4F4F4] px-3 py-3 text-center sm:px-4">
+        <h4 className="line-clamp-2 h-[2.4rem] overflow-hidden text-[13px] font-semibold leading-[1.2rem] text-foreground [text-wrap:balance] sm:h-[2.8rem] sm:text-[15px] sm:leading-[1.4rem]">
+          Consulte outras opções
+        </h4>
+        <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground sm:text-xs">
+          Diversos modelos
+        </p>
+
+        <div className="mt-auto pt-2">
+          <p className="whitespace-nowrap font-display text-[15px] font-bold leading-none text-brand-green sm:text-xl">
+            Sob consulta
+          </p>
+          <p className="mt-0.5 text-[10px] text-muted-foreground sm:text-[11px]">
+            fale com nosso time
+          </p>
+
+          <span className="mx-auto mt-2.5 inline-flex w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-brand-whatsapp px-2 py-2 text-[11px] font-semibold text-white shadow-sm transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:bg-brand-green-dark group-hover:shadow-md group-hover:brightness-105 sm:w-[85%] sm:px-3 sm:text-xs">
+            <WhatsAppIcon className="h-3 w-3 shrink-0 transition-transform duration-200 group-hover:scale-110 sm:h-3.5 sm:w-3.5" />
+            Quero este
+          </span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
 function CategoryBlock({
   eyebrow,
   title,
