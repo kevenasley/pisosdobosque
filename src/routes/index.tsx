@@ -2147,7 +2147,7 @@ function Footer() {
               © 2027 Pisos do Bosque. Todos os direitos reservados.
             </p>
             <p className="text-center text-white/70 md:text-right">
-              CNPJ e endereço em Cachoeirinha/RS.
+              Comercio de Pisos do Bosque LTDA - 24.933.391/0001-65
             </p>
           </div>
         </div>
