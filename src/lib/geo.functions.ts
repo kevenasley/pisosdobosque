@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
+import { getRequest } from "@tanstack/react-start/server";
 
 export type GeoResult = {
   ip: string;
@@ -18,7 +18,7 @@ const EMPTY: GeoResult = { ip: "", city: "", region: "", country: "" };
 export const getGeoFromIP = createServerFn({ method: "GET" }).handler(
   async (): Promise<GeoResult> => {
     try {
-      const req = getWebRequest();
+      const req = getRequest();
       const h = req?.headers;
       const ip =
         (h?.get("cf-connecting-ip") ||
