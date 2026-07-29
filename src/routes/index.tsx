@@ -1266,9 +1266,9 @@ function MoreSolutions() {
   const solucoes: Product[] = [
     {
       img: solForro,
-      name: "Forro de PVC",
+      name: "Forro branco frisado",
       size: "PVC — 4, 5, 6 e 7 m",
-      price: "R$ 24,90 m²",
+      price: "R$ 24,49 m²",
     },
     {
       img: solLouca,
