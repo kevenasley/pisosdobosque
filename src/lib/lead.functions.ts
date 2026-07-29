@@ -59,7 +59,7 @@ export const submitLead = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => leadSchema.parse(input))
   .handler(async ({ data }): Promise<LeadResult> => {
     const rc = await verifyRecaptchaToken(data.recaptcha_token);
-    if (!rc.ok) return { success: false, reason: rc.reason || "recaptcha" };
+    if (!rc.ok) return { success: false, reason: rc.reason || "recaptcha_failed" };
 
     const webhook = process.env.SHEETS_WEBHOOK_URL;
     if (!webhook) {
@@ -95,14 +95,20 @@ export const submitLead = createServerFn({ method: "POST" })
     };
 
     try {
-      await fetch(webhook, {
+      const res = await fetch(webhook, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
       });
+      if (!res.ok) {
+        console.error("Sheets webhook failed:", res.status);
+        // fail-open — o lead ainda segue para o WhatsApp
+        return { success: true, reason: "webhook_failed" };
+      }
     } catch (err) {
       console.error("Sheets webhook error:", err);
       // fail-open — não bloqueia o redirecionamento pro WhatsApp
+      return { success: true, reason: "network_error" };
     }
     return { success: true };
   });
