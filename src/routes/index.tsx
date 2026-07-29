@@ -1316,7 +1316,7 @@ function MoreSolutions() {
             </a>
           </Reveal>
 
-          <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 items-start gap-4 sm:gap-6 md:grid-cols-4">
             {solucoes.map((p, i) => (
               <ProductCard key={i} p={p} />
             ))}
