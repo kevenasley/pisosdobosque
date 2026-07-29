@@ -54,15 +54,6 @@ const avatar3 = { url: "/avatar-3.webp" };
 import catCeramica from "@/assets/cat-ceramica.webp";
 import catPorcelanato from "@/assets/cat-porcelanato.webp";
 import catVinilico from "@/assets/cat-vinilico.webp";
-import forro01 from "@/assets/forro-01.webp.asset.json";
-import forro02 from "@/assets/forro-02.webp.asset.json";
-import forro03 from "@/assets/forro-03.webp.asset.json";
-import forro04 from "@/assets/forro-04.webp.asset.json";
-import forro05 from "@/assets/forro-05.webp.asset.json";
-import solLoucaAsset from "@/assets/sol-louca.webp.asset.json";
-import solPortaAsset from "@/assets/sol-porta.webp.asset.json";
-const solLouca = solLoucaAsset.url;
-const solPorta = solPortaAsset.url;
 import storeFront from "@/assets/store-front.webp";
 import showroom1 from "@/assets/showroom-1.webp";
 import showroom2 from "@/assets/showroom-2.webp";
@@ -72,16 +63,20 @@ import showroom5 from "@/assets/showroom-5.webp";
 import showroom6 from "@/assets/showroom-6.webp";
 import showroom7 from "@/assets/showroom-7.webp";
 import showroom8 from "@/assets/showroom-8.webp";
-
-
-
-import vin01 from "@/assets/vinilico-01.webp.asset.json";
-import vin02 from "@/assets/vinilico-02.webp.asset.json";
-import vin03 from "@/assets/vinilico-03.webp.asset.json";
-import vin04 from "@/assets/vinilico-04.webp.asset.json";
-import vin05 from "@/assets/vinilico-05.webp.asset.json";
-import vin06 from "@/assets/vinilico-06.webp.asset.json";
 const logoAsset = { url: "/logo-pisos-do-bosque.webp" };
+const solLouca = "/products/sol-louca.webp";
+const solPorta = "/products/sol-porta.webp";
+const forro01 = "/products/forro-01.webp";
+const forro02 = "/products/forro-02.webp";
+const forro03 = "/products/forro-03.webp";
+const forro04 = "/products/forro-04.webp";
+const forro05 = "/products/forro-05.webp";
+const vin01 = "/products/vinilico-01.webp";
+const vin02 = "/products/vinilico-02.webp";
+const vin03 = "/products/vinilico-03.webp";
+const vin04 = "/products/vinilico-04.webp";
+const vin05 = "/products/vinilico-05.webp";
+const vin06 = "/products/vinilico-06.webp";
 
 const WHATSAPP_URL =
   "https://wa.me/5551984905782?text=Ol%C3%A1!%20Vi%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20um%20atendimento.";
@@ -225,12 +220,12 @@ const porcelanato: Product[] = [
 ];
 
 const vinilicos: Product[] = [
-  { img: vin01.url, name: "Vinílico Atacama", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: vin02.url, name: "Vinílico Avelã", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: vin03.url, name: "Vinílico Cartagena", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: vin04.url, name: "Vinílico Jatobá", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: vin05.url, name: "Vinílico Platina", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
-  { img: vin06.url, name: "Vinílico Carmel", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin01, name: "Vinílico Atacama", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin02, name: "Vinílico Avelã", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin03, name: "Vinílico Cartagena", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin04, name: "Vinílico Jatobá", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin05, name: "Vinílico Platina", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
+  { img: vin06, name: "Vinílico Carmel", size: "18,7 x 122,7 cm", price: "R$ 79,90 m²" },
 ];
 
 const compareRows = [
@@ -1300,31 +1295,31 @@ function MoreSolutions() {
       price: "R$ 579,90",
     },
     {
-      img: forro01.url,
+      img: forro01,
       name: "Forro PVC Frisado (7mm)",
       size: "PVC — 4, 5, 6 e 7 m",
       price: "R$ 24,49 m²",
     },
     {
-      img: forro02.url,
+      img: forro02,
       name: "Forro PVC Duplo - Carvalho",
       size: "6x20",
       price: "R$ 59,90 m²",
     },
     {
-      img: forro03.url,
+      img: forro03,
       name: "Forro PVC Junta Seca - Plátano",
       size: "6x20",
       price: "R$ 59,90 m²",
     },
     {
-      img: forro04.url,
+      img: forro04,
       name: "Forro PVC Junta Seca - Angelim",
       size: "6x20",
       price: "R$ 59,90 m²",
     },
     {
-      img: forro05.url,
+      img: forro05,
       name: "Forro PVC Junta Seca - Branco",
       size: "6x20",
       price: "R$ 52,90 m²",
