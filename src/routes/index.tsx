@@ -1333,9 +1333,9 @@ function Comparison() {
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange">
                     <Check className="h-4 w-4 text-white" />
                   </div>
-                  <h4 className="text-sm font-semibold text-white [text-wrap:balance] sm:text-base">
+                  <h3 className="text-sm font-semibold text-white [text-wrap:balance] sm:text-base">
                     {r.good}
-                  </h4>
+                  </h3>
                   <p className="text-xs text-white/80 [text-wrap:balance] sm:text-sm">
                     {r.goodDesc}
                   </p>
