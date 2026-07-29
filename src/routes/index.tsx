@@ -1399,138 +1399,149 @@ function renderBold(text: string) {
   );
 }
 
-type DisplayReview = { name: string; initial: string; text: string; relativeTime?: string };
+type DisplayReview = {
+  name: string;
+  initial: string;
+  text: string;
+  relativeTime?: string;
+  photoUrl?: string;
+};
+
+function ReviewAvatar({ review }: { review: DisplayReview }) {
+  const [failed, setFailed] = useState(false);
+  if (review.photoUrl && !failed) {
+    return (
+      <img
+        src={review.photoUrl}
+        alt={review.name}
+        loading="lazy"
+        decoding="async"
+        referrerPolicy="no-referrer"
+        onError={() => setFailed(true)}
+        className="h-9 w-9 shrink-0 rounded-full object-cover"
+      />
+    );
+  }
+  return (
+    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-green text-sm font-semibold text-white">
+      {review.initial}
+    </div>
+  );
+}
+
+function ReviewCard({ r }: { r: DisplayReview }) {
+  return (
+    <div className="h-full rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-elegant">
+      <Quote className="h-6 w-6 text-brand-orange/70" aria-hidden="true" />
+      <p className="mt-3 line-clamp-5 text-sm leading-relaxed text-muted-foreground md:line-clamp-4">
+        {renderBold(r.text)}
+      </p>
+      <div className="mt-4 flex items-center gap-3 border-t border-border pt-3">
+        <ReviewAvatar review={r} />
+        <div className="flex flex-col">
+          <span className="text-sm font-semibold text-foreground">{r.name}</span>
+          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada
+            {r.relativeTime ? ` · ${r.relativeTime}` : ""}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
-  const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState(0);
+  const [perView, setPerView] = useState(1);
+  const [index, setIndex] = useState(0);
   const pausedRef = useRef(false);
-  const total = items.length;
 
-  // Track active slide via scroll position
   useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const w = el.clientWidth;
-      if (!w) return;
-      const idx = Math.round(el.scrollLeft / w);
-      setActive(Math.max(0, Math.min(total - 1, idx)));
+    const compute = () => {
+      const w = window.innerWidth;
+      setPerView(w >= 1024 ? 3 : w >= 640 ? 2 : 1);
     };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [total]);
-
-  // Pause on user interaction
-  useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const pause = () => {
-      pausedRef.current = true;
-    };
-    const resume = () => {
-      // resume after inactivity
-      window.setTimeout(() => (pausedRef.current = false), 6000);
-    };
-    el.addEventListener("pointerdown", pause);
-    el.addEventListener("pointerup", resume);
-    el.addEventListener("pointercancel", resume);
-    el.addEventListener("touchend", resume);
-    return () => {
-      el.removeEventListener("pointerdown", pause);
-      el.removeEventListener("pointerup", resume);
-      el.removeEventListener("pointercancel", resume);
-      el.removeEventListener("touchend", resume);
-    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
   }, []);
 
-  // Autoplay
+  const total = items.length;
+  const maxIndex = Math.max(0, total - perView);
+
+  useEffect(() => {
+    if (index > maxIndex) setIndex(0);
+  }, [index, maxIndex]);
+
   useEffect(() => {
     const reduce = window.matchMedia?.(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    if (reduce) return;
+    if (reduce || total <= perView) return;
     const id = window.setInterval(() => {
-      if (pausedRef.current) return;
-      const el = scrollerRef.current;
-      if (!el) return;
-      if (document.hidden) return;
-      const w = el.clientWidth;
-      const next = (Math.round(el.scrollLeft / w) + 1) % total;
-      el.scrollTo({ left: next * w, behavior: "smooth" });
+      if (pausedRef.current || document.hidden) return;
+      setIndex((i) => (i >= maxIndex ? 0 : i + 1));
     }, 5000);
     return () => window.clearInterval(id);
-  }, [total]);
+  }, [maxIndex, perView, total]);
+
+  const pause = () => {
+    pausedRef.current = true;
+    window.setTimeout(() => (pausedRef.current = false), 8000);
+  };
 
   const goTo = (i: number) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    pausedRef.current = true;
-    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
-    window.setTimeout(() => (pausedRef.current = false), 6000);
+    pause();
+    setIndex(Math.max(0, Math.min(maxIndex, i)));
   };
+
+  const slotWidth = 100 / perView;
 
   return (
     <div
       role="region"
       aria-roledescription="carousel"
       aria-label="Avaliações de clientes"
+      onPointerDown={pause}
     >
-      <div
-        ref={scrollerRef}
-        className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth transform-gpu [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {items.map((r, i) => (
-          <div
-            key={i}
-            className="w-full shrink-0 snap-center px-1"
-            aria-roledescription="slide"
-            aria-label={`${i + 1} de ${total}`}
-          >
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <Quote
-                className="h-6 w-6 text-brand-orange/70"
-                aria-hidden="true"
-              />
-              <p className="mt-3 line-clamp-5 text-sm leading-relaxed text-muted-foreground">
-                {renderBold(r.text)}
-              </p>
-              <div className="mt-4 flex items-center gap-3 border-t border-border pt-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-green text-sm font-semibold text-white">
-                  {r.initial}
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold text-foreground">
-                    {r.name}
-                  </span>
-                  <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada{r.relativeTime ? ` · ${r.relativeTime}` : ""}
-                  </span>
-                </div>
-              </div>
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-700 ease-out"
+          style={{ transform: `translateX(-${index * slotWidth}%)` }}
+        >
+          {items.map((r, i) => (
+            <div
+              key={i}
+              className="shrink-0 px-2"
+              style={{ width: `${slotWidth}%` }}
+              aria-roledescription="slide"
+              aria-label={`${i + 1} de ${total}`}
+            >
+              <ReviewCard r={r} />
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-      <div className="mt-5 flex items-center justify-center gap-1">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => goTo(i)}
-            aria-label={`Ir para avaliação ${i + 1}`}
-            className="group p-3"
-          >
-            <span
-              className={`block h-2 rounded-full transition-all duration-300 ease-in-out ${
-                i === active
-                  ? "w-6 bg-brand-orange"
-                  : "w-2 bg-muted-foreground/40 group-hover:bg-muted-foreground/60"
-              }`}
-            />
-          </button>
-        ))}
-      </div>
+      {maxIndex > 0 && (
+        <div className="mt-6 flex items-center justify-center gap-1">
+          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => goTo(i)}
+              aria-label={`Ir para grupo ${i + 1}`}
+              className="group p-3"
+            >
+              <span
+                className={`block h-2 rounded-full transition-all duration-300 ease-in-out ${
+                  i === index
+                    ? "w-6 bg-brand-orange"
+                    : "w-2 bg-muted-foreground/40 group-hover:bg-muted-foreground/60"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
