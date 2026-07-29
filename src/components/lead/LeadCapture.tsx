@@ -91,6 +91,15 @@ async function sha256Hex(input: string) {
     .join("");
 }
 
+function maskPhone(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 2) return digits.length ? `(${digits}` : "";
+  if (digits.length <= 7) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  }
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
 function buildWhatsAppUrl(message?: string) {
   const text = encodeURIComponent(message || WHATSAPP_DEFAULT_MESSAGE);
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
