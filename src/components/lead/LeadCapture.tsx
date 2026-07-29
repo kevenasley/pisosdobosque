@@ -133,6 +133,7 @@ export function LeadCapture() {
   const [reason, setReason] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const geoRef = useRef<GeoResult | null>(null);
 
@@ -143,6 +144,7 @@ export function LeadCapture() {
       setMessage(detail.message);
       setReason(typeof detail.reason === "string" ? detail.reason : "");
       setErrors({});
+      setSent(false);
       setOpen(true);
     }
     window.addEventListener(LEAD_OPEN_EVENT, handler as EventListener);
@@ -247,8 +249,17 @@ export function LeadCapture() {
         `Olá! Sou ${parsed.data.name}. ${
           parsed.data.reason ? parsed.data.reason + " " : ""
         }Gostaria de um atendimento.`;
+
+      // Feedback de sucesso + limpeza dos campos antes do redirecionamento
+      setSent(true);
+      setName("");
+      setPhone("");
+      setReason("");
+
       window.open(buildWhatsAppUrl(msg), "_blank", "noopener,noreferrer");
-      window.location.href = "/obrigado?src=form";
+      window.setTimeout(() => {
+        window.location.href = "/obrigado?src=form";
+      }, 900);
     } finally {
       setSubmitting(false);
     }
@@ -283,6 +294,15 @@ export function LeadCapture() {
           </DialogDescription>
         </DialogHeader>
         <form noValidate onSubmit={onSubmit} className="space-y-4">
+          {sent && (
+            <div
+              role="status"
+              aria-live="polite"
+              className="rounded-md border border-brand-green/30 bg-brand-green/10 px-3 py-2 text-sm text-brand-green"
+            >
+              Dados enviados! Abrindo o WhatsApp...
+            </div>
+          )}
           <div className="space-y-1.5">
             <Label htmlFor="lead-name">Nome</Label>
             <Input
@@ -329,11 +349,11 @@ export function LeadCapture() {
           <div className="flex flex-col gap-2 pt-2">
             <Button
               type="submit"
-              disabled={submitting}
+              disabled={submitting || sent}
               className="w-full gap-2 bg-brand-green text-white hover:bg-brand-green/90 focus-visible:ring-brand-green"
             >
               <WhatsAppIcon className="h-4 w-4" />
-              {submitting ? "Enviando..." : "Falar no WhatsApp"}
+              {sent ? "Enviado!" : submitting ? "Enviando..." : "Falar no WhatsApp"}
             </Button>
             <Button
               type="button"
