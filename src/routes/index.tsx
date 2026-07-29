@@ -37,6 +37,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 
 import heroVendedor from "@/assets/hero-vendedor.webp";
+import heroVendedorMobile from "@/assets/hero-vendedor-mobile.webp";
 import toolHammer from "@/assets/tool-hammer.webp";
 import toolTape from "@/assets/tool-tape.webp";
 import toolTiles from "@/assets/tool-tiles.webp";
