@@ -318,7 +318,52 @@ summary {
     border-color 300ms ease-out,
     box-shadow 300ms ease-out,
     transform 300ms ease-out,
+    filter 300ms ease-out,
     opacity 300ms ease-out;
+}
+
+/* Desktop-only: pointer cursor on all interactive elements (Tailwind v4 preflight
+   no longer forces cursor: pointer on <button>). */
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href],
+  summary,
+  label[for],
+  select,
+  [type="submit"],
+  [type="button"],
+  [type="reset"],
+  [type="checkbox"],
+  [type="radio"] {
+    cursor: pointer;
+  }
+
+  /* Promote hover-transformed elements to their own compositor layer to avoid
+     subpixel repaint flicker when translating on hover. */
+  a:hover,
+  button:hover,
+  [role="button"]:hover,
+  .group:hover {
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Touch devices: neutralize hover-only visual effects to avoid "sticky hover"
+   after taps. Tailwind v4 already gates hover: variants behind (hover: hover),
+   but we defensively suppress residual :hover transforms and elevation on
+   coarse pointers so only :active (tap) feedback remains. */
+@media (hover: none), (pointer: coarse) {
+  a:hover,
+  button:hover,
+  [role="button"]:hover,
+  [role="tab"]:hover,
+  summary:hover,
+  .group:hover,
+  .group:hover * {
+    transform: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
