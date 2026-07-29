@@ -621,9 +621,11 @@ function Hero() {
             />
             <img
               src={heroVendedor}
+              srcSet={`${heroVendedorMobile} 600w, ${heroVendedor} 900w`}
+              sizes="(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px"
               alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
-              width={1200}
-              height={1200}
+              width={900}
+              height={900}
               fetchPriority="high"
               loading="eager"
               decoding="async"
