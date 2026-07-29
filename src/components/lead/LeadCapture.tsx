@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { readAttribution } from "@/lib/attribution";
 import { trackGenerateLead, pushDataLayer } from "@/lib/tracking";
-import { initClientGeo, getClientGeo } from "@/lib/geo-client";
+import { initClientGeo, ensureClientGeo } from "@/lib/geo-client";
 import {
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
@@ -112,13 +112,13 @@ export function openLeadCapture(detail: OpenDetail = {}) {
   window.dispatchEvent(new CustomEvent(LEAD_OPEN_EVENT, { detail }));
 }
 
-/** Combina a geo do servidor com a geo do cliente (ipapi.co), sem quebrar o envio. */
-function resolveGeo(server: GeoResult | null): GeoResult {
-  const c = getClientGeo();
+/** Combina a geo do servidor com a geo do cliente (ipwho.is), sem quebrar o envio. */
+async function resolveGeo(server: GeoResult | null): Promise<GeoResult> {
+  const c = await ensureClientGeo();
   return {
     ip: server?.ip || "",
     city: server?.city || c.user_city || "",
-    region: server?.region || c.user_state || "",
+    region: server?.region || c.user_state_code || c.user_state || "",
     country: server?.country || c.country_code || "",
   };
 }
@@ -193,7 +193,7 @@ export function LeadCapture() {
       const token = await getRecaptchaToken("lead_submit");
       const attribution = readAttribution() || ({} as Record<string, string>);
       const hashed_phone = await sha256Hex(parsed.data.phone);
-      const geo = resolveGeo(geoRef.current);
+      const geo = await resolveGeo(geoRef.current);
 
       try {
         const result = await submitLead({
@@ -254,8 +254,8 @@ export function LeadCapture() {
     }
   }
 
-  function goDirect() {
-    const geo = resolveGeo(geoRef.current);
+  async function goDirect() {
+    const geo = await resolveGeo(geoRef.current);
     trackGenerateLead({
       input: {
         name: name || "",
