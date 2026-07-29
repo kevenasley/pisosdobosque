@@ -249,8 +249,17 @@ export function LeadCapture() {
         `Olá! Sou ${parsed.data.name}. ${
           parsed.data.reason ? parsed.data.reason + " " : ""
         }Gostaria de um atendimento.`;
+
+      // Feedback de sucesso + limpeza dos campos antes do redirecionamento
+      setSent(true);
+      setName("");
+      setPhone("");
+      setReason("");
+
       window.open(buildWhatsAppUrl(msg), "_blank", "noopener,noreferrer");
-      window.location.href = "/obrigado?src=form";
+      window.setTimeout(() => {
+        window.location.href = "/obrigado?src=form";
+      }, 900);
     } finally {
       setSubmitting(false);
     }
