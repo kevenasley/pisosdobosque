@@ -1658,7 +1658,7 @@ function Testimonials() {
 
         <Reveal className="mt-10 text-center" delay={200}>
           <a
-            href="https://www.google.com/maps/search/?api=1&query=Pisos+do+Bosque+Cachoeirinha"
+            href="https://www.google.com/maps/search/?api=1&query=Pisos+do+Bosque&query_place_id=ChIJTyoE7NlzGZURHlAt9IQVcGE"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm font-semibold text-brand-green hover:underline"
@@ -1742,7 +1742,7 @@ function About() {
     { src: showroom8, alt: "Área interna da loja Pisos do Bosque" },
   ];
   const mapsUrl =
-    "https://www.google.com/maps/search/?api=1&query=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+488+Cachoeirinha+RS";
+    "https://www.google.com/maps/search/?api=1&query=Pisos+do+Bosque&query_place_id=ChIJTyoE7NlzGZURHlAt9IQVcGE";
 
   return (
     <section id="sobre" className="bg-background py-16 md:py-24">
