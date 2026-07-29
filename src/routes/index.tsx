@@ -1685,10 +1685,10 @@ function About() {
         </Reveal>
 
         {/* Main content */}
-        <div className="mt-10 grid grid-cols-1 gap-8 md:mt-14 md:grid-cols-2 md:gap-12">
+        <div className="mt-10 grid grid-cols-1 gap-8 md:mt-14 md:grid-cols-2 md:gap-12 md:items-stretch">
           {/* Left: story + value cards */}
-          <Reveal className="flex flex-col justify-center">
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
+          <Reveal className="flex h-full flex-col">
+            <div className="flex h-full flex-col justify-center rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
               <p className="text-foreground [text-wrap:balance] md:text-lg">
                 A Pisos do Bosque nasceu com um propósito claro: oferecer
                 materiais de qualidade com atendimento próximo e preços que
@@ -1749,7 +1749,7 @@ function About() {
           </Reveal>
 
           {/* Right: gallery + map */}
-          <Reveal delay={150} className="flex flex-col gap-6">
+          <Reveal delay={150} className="flex h-full flex-col gap-6">
             <AboutGallery images={showroomImages} />
 
             <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
@@ -1758,7 +1758,7 @@ function About() {
                 src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="block h-48 w-full border-0 sm:h-56"
+                className="block h-36 w-full border-0 md:h-32"
                 allowFullScreen
               />
               <a
