@@ -1399,11 +1399,13 @@ function renderBold(text: string) {
   );
 }
 
-function TestimonialsCarousel() {
+type DisplayReview = { name: string; initial: string; text: string; relativeTime?: string };
+
+function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(0);
   const pausedRef = useRef(false);
-  const total = reviews.length;
+  const total = items.length;
 
   // Track active slide via scroll position
   useEffect(() => {
