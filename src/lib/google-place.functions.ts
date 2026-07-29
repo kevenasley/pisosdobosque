@@ -18,7 +18,7 @@ export type PlaceStats = {
 };
 
 const PLACE_ID = "ChIJTyoE7NlzGZURHlAt9IQVcGE";
-const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6h
+const CACHE_TTL_MS = 3 * 24 * 60 * 60 * 1000; // 3 dias
 
 let cache: { at: number; data: PlaceStats } | null = null;
 
