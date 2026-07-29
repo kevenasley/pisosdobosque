@@ -1978,7 +1978,7 @@ function About() {
 function FAQ() {
   return (
     <section className="bg-background py-16 md:py-24">
-      <div className="mx-auto max-w-3xl px-5 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal className="text-center">
           <h2 className="font-display text-2xl font-bold [text-wrap:balance] leading-tight text-brand-green md:text-4xl">
             Perguntas Frequentes
