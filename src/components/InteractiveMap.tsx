@@ -89,7 +89,7 @@ export function InteractiveMap({ mapsUrl, className }: Props) {
     return (
       <iframe
         title="Localização Pisos do Bosque"
-        src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+488+Cachoeirinha+RS&output=embed"
+        src="https://www.google.com/maps?q=Pisos+do+Bosque+Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+488+Cachoeirinha+RS&output=embed"
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         className={className}
