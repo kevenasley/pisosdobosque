@@ -8,5 +8,6 @@ export const WHATSAPP_DEFAULT_MESSAGE =
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   WHATSAPP_DEFAULT_MESSAGE,
 )}`;
-export const SHEETS_WEBHOOK_URL =
-  "https://script.google.com/macros/s/AKfycbxYvuZx6bJ90DpL2zggkDGepJlBGN3o1DtjJtqVHHbrpUOG5-zBZrgMjJqjqUi2uuCv_g/exec";
+// SHEETS_WEBHOOK_URL foi movido para o server (env SHEETS_WEBHOOK_URL) e é
+// consumido apenas em src/lib/lead.functions.ts para evitar POSTs anônimos
+// diretos ao Apps Script a partir do cliente.
