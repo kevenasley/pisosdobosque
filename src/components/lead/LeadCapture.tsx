@@ -133,6 +133,7 @@ export function LeadCapture() {
   const [reason, setReason] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const geoRef = useRef<GeoResult | null>(null);
 
