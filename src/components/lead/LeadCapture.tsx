@@ -19,6 +19,49 @@ import {
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
 } from "@/lib/config";
+import { verifyRecaptcha, RECAPTCHA_SITE_KEY } from "@/lib/recaptcha.functions";
+
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, opts: { action: string }) => Promise<string>;
+    };
+  }
+}
+
+let recaptchaScriptPromise: Promise<void> | null = null;
+function loadRecaptcha(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if (window.grecaptcha) return Promise.resolve();
+  if (recaptchaScriptPromise) return recaptchaScriptPromise;
+  recaptchaScriptPromise = new Promise((resolve) => {
+    const s = document.createElement("script");
+    s.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    s.async = true;
+    s.defer = true;
+    s.onload = () => resolve();
+    s.onerror = () => resolve(); // fail-open
+    document.head.appendChild(s);
+  });
+  return recaptchaScriptPromise;
+}
+
+async function getRecaptchaToken(action: string): Promise<string | null> {
+  try {
+    await loadRecaptcha();
+    if (!window.grecaptcha) return null;
+    return await new Promise<string>((resolve, reject) => {
+      window.grecaptcha!.ready(() => {
+        window
+          .grecaptcha!.execute(RECAPTCHA_SITE_KEY, { action })
+          .then(resolve, reject);
+      });
+    });
+  } catch {
+    return null;
+  }
+}
 
 export const LEAD_OPEN_EVENT = "pisosdobosque:lead-open";
 
