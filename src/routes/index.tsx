@@ -1536,6 +1536,16 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
 }
 
 function Testimonials() {
+  const stats = usePlaceStats();
+  const displayReviews: DisplayReview[] =
+    stats.reviews.length > 0
+      ? stats.reviews.map((r) => ({
+          name: r.author,
+          initial: r.initial,
+          text: r.text,
+          relativeTime: r.relativeTime,
+        }))
+      : reviews.map((r) => ({ name: r.name, initial: r.initial, text: r.text }));
   return (
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
@@ -1544,7 +1554,7 @@ function Testimonials() {
             O Que Nossos Clientes Dizem Sobre Nós
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground [text-wrap:balance]">
-            Mais de <strong>2.397 clientes</strong> avaliaram nossa loja no Google. Veja o que dizem sobre atendimento, preço e qualidade.
+            Mais de <strong>{stats.userRatingCountFormatted} clientes</strong> avaliaram nossa loja no Google. Veja o que dizem sobre atendimento, preço e qualidade.
           </p>
           <div className="mt-6 flex flex-col items-center gap-2">
             <div className="flex items-center gap-1.5 text-yellow-500">
@@ -1554,20 +1564,20 @@ function Testimonials() {
             </div>
             <div className="flex items-center gap-2 text-sm font-medium text-foreground">
               <span>
-                <strong className="text-base">4.9</strong> de 5
+                <strong className="text-base">{stats.ratingFormatted}</strong> de 5
               </span>
               <GoogleG className="h-4 w-4" />
-              <span className="text-muted-foreground">· 2.397 avaliações</span>
+              <span className="text-muted-foreground">· {stats.userRatingCountFormatted} avaliações</span>
             </div>
           </div>
         </Reveal>
         {/* Mobile: auto-playing carousel */}
         <div className="mt-10 md:hidden">
-          <TestimonialsCarousel />
+          <TestimonialsCarousel items={displayReviews} />
         </div>
         {/* Desktop/Tablet: grid */}
         <div className="mt-10 hidden gap-5 md:mt-14 md:grid md:grid-cols-3 md:gap-6">
-          {reviews.map((r, i) => (
+          {displayReviews.map((r, i) => (
             <Reveal
               key={i}
               delay={i * 80}
@@ -1586,13 +1596,14 @@ function Testimonials() {
                     {r.name}
                   </span>
                   <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada
+                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada{r.relativeTime ? ` · ${r.relativeTime}` : ""}
                   </span>
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
+
         <Reveal className="mt-10 text-center" delay={200}>
           <a
             href="https://www.google.com/maps/search/?api=1&query=Pisos+do+Bosque+Cachoeirinha"
