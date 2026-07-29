@@ -292,7 +292,26 @@ export function LeadCapture() {
           </div>
           <p className="text-[11px] leading-snug text-muted-foreground">
             Ao enviar você concorda em receber contato via WhatsApp. Seus dados
-            são usados apenas para atendimento.
+            são usados apenas para atendimento. Este site é protegido pelo
+            reCAPTCHA e se aplicam a{" "}
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-brand-green"
+            >
+              Política de Privacidade
+            </a>{" "}
+            e os{" "}
+            <a
+              href="https://policies.google.com/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-brand-green"
+            >
+              Termos de Serviço
+            </a>{" "}
+            do Google.
           </p>
         </form>
       </DialogContent>
