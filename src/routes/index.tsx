@@ -1603,8 +1603,8 @@ function AboutGallery({ images }: { images: { src: string; alt: string }[] }) {
   const current = images[active];
   return (
     <div className="flex flex-1 flex-col gap-3">
-      <div className="relative overflow-hidden rounded-2xl border border-border shadow-sm">
-        <div className="aspect-[4/3] w-full bg-muted md:aspect-[5/4]">
+      <div className="relative flex flex-1 overflow-hidden rounded-2xl border border-border shadow-sm">
+        <div className="aspect-[4/3] w-full bg-muted md:aspect-auto md:h-full md:min-h-0">
           {images.map((img, i) => (
             <img
               key={img.src}
