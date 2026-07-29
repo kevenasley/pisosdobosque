@@ -163,13 +163,14 @@ function RootComponent() {
 
   useEffect(() => {
     // Intercepta cliques em links do WhatsApp para abrir modal de captura.
-    // Permite bypass com data-lead-bypass ou tecla modificadora.
+    // Permite bypass com data-lead-bypass, tecla modificadora ou na página de obrigado.
     function onClick(ev: MouseEvent) {
       const target = (ev.target as HTMLElement | null)?.closest?.(
         'a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]',
       ) as HTMLAnchorElement | null;
       if (!target) return;
       if (target.dataset.leadBypass === "true") return;
+      if (window.location.pathname.startsWith("/obrigado")) return;
       if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
       ev.preventDefault();
       const ctaOrigin =
