@@ -70,6 +70,7 @@ export const submitLead = createServerFn({ method: "POST" })
 
     const attr = data.attribution ?? {};
     const payload = {
+      ...attr,
       name: data.name,
       phone: data.phone,
       // Campos de origem sempre presentes (vazios quando não houver na URL)
@@ -91,7 +92,6 @@ export const submitLead = createServerFn({ method: "POST" })
         data.city && data.region ? `${data.city} - ${data.region.toUpperCase()}` : "",
       recaptcha_score: rc.score,
       timestamp: new Date().toISOString(),
-      ...data.attribution,
     };
 
     try {
