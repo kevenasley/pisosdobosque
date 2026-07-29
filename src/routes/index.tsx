@@ -1513,12 +1513,16 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
     items.slice(i * perSlide, (i + 1) * perSlide),
   );
 
+  const goPrev = () => goTo(index === 0 ? totalSlides - 1 : index - 1);
+  const goNext = () => goTo(index >= totalSlides - 1 ? 0 : index + 1);
+
   return (
     <div
       role="region"
       aria-roledescription="carousel"
       aria-label="Avaliações de clientes"
       onPointerDown={pause}
+      className="relative"
     >
       <div className="overflow-hidden">
         <div
@@ -1551,28 +1555,47 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
         </div>
       </div>
       {totalSlides > 1 && (
-        <div className="mt-6 flex items-center justify-center gap-1">
-          {Array.from({ length: totalSlides }).map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => goTo(i)}
-              aria-label={`Ir para grupo ${i + 1}`}
-              className="group p-3"
-            >
-              <span
-                className={`block h-2 rounded-full transition-all duration-300 ease-in-out ${
-                  i === index
-                    ? "w-6 bg-brand-orange"
-                    : "w-2 bg-muted-foreground/40 group-hover:bg-muted-foreground/60"
-                }`}
-              />
-            </button>
-          ))}
-        </div>
+        <>
+          <button
+            type="button"
+            onClick={goPrev}
+            aria-label="Avaliações anteriores"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 md:-translate-x-4 z-10 grid h-10 w-10 md:h-11 md:w-11 place-items-center rounded-full bg-white text-brand-green shadow-lg ring-1 ring-black/5 hover:bg-brand-green hover:text-white transition-colors"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6" /></svg>
+          </button>
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Próximas avaliações"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 md:translate-x-4 z-10 grid h-10 w-10 md:h-11 md:w-11 place-items-center rounded-full bg-white text-brand-green shadow-lg ring-1 ring-black/5 hover:bg-brand-green hover:text-white transition-colors"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6" /></svg>
+          </button>
+          <div className="mt-6 flex items-center justify-center gap-1">
+            {Array.from({ length: totalSlides }).map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Ir para grupo ${i + 1}`}
+                className="group p-3"
+              >
+                <span
+                  className={`block h-2 rounded-full transition-all duration-300 ease-in-out ${
+                    i === index
+                      ? "w-6 bg-brand-orange"
+                      : "w-2 bg-muted-foreground/40 group-hover:bg-muted-foreground/60"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
+
 }
 
 function Testimonials() {
