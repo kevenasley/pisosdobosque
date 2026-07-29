@@ -1598,6 +1598,63 @@ function Testimonials() {
 }
 
 
+function AboutGallery({ images }: { images: { src: string; alt: string }[] }) {
+  const [active, setActive] = useState(0);
+  const current = images[active];
+  return (
+    <div className="flex flex-1 flex-col gap-3">
+      <div className="relative overflow-hidden rounded-2xl border border-border shadow-sm">
+        <div className="aspect-[4/3] w-full bg-muted md:aspect-[5/4]">
+          {images.map((img, i) => (
+            <img
+              key={img.src}
+              src={img.src}
+              alt={img.alt}
+              loading="lazy"
+              decoding="async"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                i === active ? "opacity-100" : "opacity-0"
+              }`}
+              aria-hidden={i === active ? undefined : true}
+            />
+          ))}
+        </div>
+        <div className="pointer-events-none absolute bottom-3 left-3 rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
+          {active + 1} / {images.length}
+        </div>
+      </div>
+
+      <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:thin]">
+        {images.map((img, i) => (
+          <button
+            key={img.src}
+            type="button"
+            onClick={() => setActive(i)}
+            aria-label={`Ver imagem ${i + 1}: ${img.alt}`}
+            aria-pressed={i === active}
+            className={`relative aspect-[4/3] w-24 flex-shrink-0 overflow-hidden rounded-lg border-2 transition sm:w-28 ${
+              i === active
+                ? "border-brand-orange shadow-md"
+                : "border-transparent opacity-70 hover:opacity-100"
+            }`}
+          >
+            <img
+              src={img.src}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          </button>
+        ))}
+      </div>
+      <span className="sr-only" aria-live="polite">
+        {current?.alt}
+      </span>
+    </div>
+  );
+}
+
 function About() {
   const showroomImages = [
     { src: showroom1, alt: "Showroom com painéis de amostras de pisos" },
