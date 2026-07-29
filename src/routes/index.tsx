@@ -428,7 +428,7 @@ function Logo({
       alt="Pisos do Bosque"
       width={isLight ? 2367 : 2730}
       height={isLight ? 738 : 655}
-      className={`w-auto ${isLight ? "h-8 md:h-20" : "h-10 md:h-12"} ${className}`}
+      className={`w-auto ${isLight ? "h-16 md:h-20" : "h-10 md:h-12"} ${className}`}
       loading="eager"
       decoding="async"
       fetchPriority={isLight ? undefined : "high"}
