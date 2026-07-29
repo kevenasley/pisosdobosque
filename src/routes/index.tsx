@@ -56,6 +56,9 @@ import showroom2 from "@/assets/showroom-2.webp";
 import showroom3 from "@/assets/showroom-3.webp";
 import showroom4 from "@/assets/showroom-4.webp";
 import showroom5 from "@/assets/showroom-5.webp";
+import showroom6 from "@/assets/showroom-6.webp";
+import showroom7 from "@/assets/showroom-7.webp";
+import showroom8 from "@/assets/showroom-8.webp";
 
 
 
