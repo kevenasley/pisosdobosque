@@ -1555,6 +1555,7 @@ function Testimonials() {
           initial: r.initial,
           text: r.text,
           relativeTime: r.relativeTime,
+          photoUrl: r.photoUrl,
         }))
       : reviews.map((r) => ({ name: r.name, initial: r.initial, text: r.text }));
   return (
@@ -1582,37 +1583,8 @@ function Testimonials() {
             </div>
           </div>
         </Reveal>
-        {/* Mobile: auto-playing carousel */}
-        <div className="mt-10 md:hidden">
+        <div className="mt-10 md:mt-14">
           <TestimonialsCarousel items={displayReviews} />
-        </div>
-        {/* Desktop/Tablet: grid */}
-        <div className="mt-10 hidden items-start gap-5 md:mt-14 md:grid md:grid-cols-3 md:gap-6">
-          {displayReviews.map((r, i) => (
-            <Reveal
-              key={i}
-              delay={i * 80}
-              className="rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-elegant"
-            >
-              <Quote className="h-6 w-6 text-brand-orange/70" aria-hidden="true" />
-              <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-muted-foreground">
-                {renderBold(r.text)}
-              </p>
-              <div className="mt-4 flex items-center gap-3 border-t border-border pt-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-green text-sm font-semibold text-white">
-                  {r.initial}
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold text-foreground">
-                    {r.name}
-                  </span>
-                  <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <GoogleG className="h-3.5 w-3.5" /> Avaliação verificada{r.relativeTime ? ` · ${r.relativeTime}` : ""}
-                  </span>
-                </div>
-              </div>
-            </Reveal>
-          ))}
         </div>
 
         <Reveal className="mt-10 text-center" delay={200}>
