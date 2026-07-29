@@ -68,9 +68,15 @@ export const submitLead = createServerFn({ method: "POST" })
       return { success: true, reason: "no_webhook_configured" };
     }
 
+    const attr = data.attribution ?? {};
     const payload = {
       name: data.name,
       phone: data.phone,
+      // Campos de origem sempre presentes (vazios quando não houver na URL)
+      utm_source: attr.utm_source ?? "",
+      utm_medium: attr.utm_medium ?? "",
+      utm_campaign: attr.utm_campaign ?? "",
+      gclid: attr.gclid ?? "",
       email: data.email,
       hashed_phone: data.hashed_phone,
       reason: data.reason,
