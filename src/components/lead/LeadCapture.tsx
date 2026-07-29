@@ -290,29 +290,41 @@ export function LeadCapture() {
               Prefiro ir direto, sem preencher
             </Button>
           </div>
-          <p className="text-[11px] leading-snug text-muted-foreground">
-            Ao enviar você concorda em receber contato via WhatsApp. Seus dados
-            são usados apenas para atendimento. Este site é protegido pelo
-            reCAPTCHA e se aplicam a{" "}
-            <a
-              href="https://policies.google.com/privacy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-brand-green"
+          <div className="flex items-center justify-center gap-1.5 text-[11px] leading-snug text-muted-foreground">
+            <svg
+              viewBox="0 0 24 24"
+              className="h-3.5 w-3.5 shrink-0 text-brand-green"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
             >
-              Política de Privacidade
-            </a>{" "}
-            e os{" "}
-            <a
-              href="https://policies.google.com/terms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-brand-green"
-            >
-              Termos de Serviço
-            </a>{" "}
-            do Google.
-          </p>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+            <span>
+              Protegido por reCAPTCHA ·{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-brand-green"
+              >
+                Privacidade
+              </a>{" "}
+              ·{" "}
+              <a
+                href="https://policies.google.com/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-brand-green"
+              >
+                Termos
+              </a>
+            </span>
+          </div>
         </form>
       </DialogContent>
     </Dialog>
