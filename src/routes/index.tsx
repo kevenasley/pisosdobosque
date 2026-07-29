@@ -1946,6 +1946,7 @@ function FooterColumn({
 }
 
 function Footer() {
+  const stats = usePlaceStats();
   const navLinks = [
     { href: "#sobre", label: "Sobre Nós" },
     { href: "#produtos", label: "Produtos" },
