@@ -124,9 +124,11 @@ export function LeadCapture() {
       window.removeEventListener(LEAD_OPEN_EVENT, handler as EventListener);
   }, []);
 
-  useEffect(() => {
+    useEffect(() => {
     if (open) {
       const t = setTimeout(() => firstFieldRef.current?.focus(), 50);
+      // Pré-carrega o reCAPTCHA quando o modal abre para não atrasar o submit
+      void loadRecaptcha();
       return () => clearTimeout(t);
     }
   }, [open]);
