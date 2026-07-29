@@ -5,7 +5,7 @@ import { getMapsConfig } from "@/lib/maps-config.functions";
 
 declare global {
   interface Window {
-    google?: typeof google;
+    google?: any;
     __initPisosMap?: () => void;
   }
 }
