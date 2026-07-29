@@ -260,6 +260,21 @@ const reviews = [
     initial: "P",
     text: 'Loja completa, **encontrei tudo que precisava** para a reforma em um só lugar. Entrega rápida e produtos exatamente como combinado.',
   },
+  {
+    name: "Mariana Costa",
+    initial: "M",
+    text: 'Fui muito bem atendida desde a entrada na loja. **Profissionais competentes** e preços realmente competitivos. Recomendo!',
+  },
+  {
+    name: "Roberto Dias",
+    initial: "R",
+    text: 'Excelente variedade de pisos e revestimentos. **Consegui tudo para minha obra** com ótimas condições de pagamento.',
+  },
+  {
+    name: "Juliana Ramos",
+    initial: "J",
+    text: 'Atendimento diferenciado e entrega no prazo. **A Pisos do Bosque é minha loja de confiança** para reformas.',
+  },
 ];
 
 
@@ -1458,7 +1473,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
   useEffect(() => {
     const compute = () => {
       const w = window.innerWidth;
-      setPerView(w >= 1024 ? 3 : w >= 640 ? 2 : 1);
+      setPerView(w >= 1024 ? 5 : 2);
     };
     compute();
     window.addEventListener("resize", compute);
