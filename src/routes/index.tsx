@@ -1595,10 +1595,10 @@ function Testimonials() {
     ...googleReviews,
     ...fallbackReviews.filter((r) => !seen.has(r.name.toLowerCase())),
   ];
-  // Pad to a multiple of 8 (desktop grid = 4x2) so the last slide fills completely.
+  // Pad to a multiple of 6 (desktop grid = 3x2) so the last slide fills completely.
   const padded: DisplayReview[] = [...pool];
   if (padded.length > 0) {
-    const target = Math.max(16, Math.ceil(padded.length / 8) * 8);
+    const target = Math.max(18, Math.ceil(padded.length / 6) * 6);
     while (padded.length < target) padded.push(pool[padded.length % pool.length]);
   }
   const displayReviews: DisplayReview[] = padded;
