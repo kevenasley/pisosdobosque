@@ -181,7 +181,7 @@ export function LeadCapture() {
       const token = await getRecaptchaToken("lead_submit");
       const attribution = readAttribution() || ({} as Record<string, string>);
       const hashed_phone = await sha256Hex(parsed.data.phone);
-      const geo = geoRef.current || { ip: "", city: "", region: "", country: "" };
+      const geo = resolveGeo(geoRef.current);
 
       try {
         const result = await submitLead({
@@ -243,7 +243,7 @@ export function LeadCapture() {
   }
 
   function goDirect() {
-    const geo = geoRef.current || { ip: "", city: "", region: "", country: "" };
+    const geo = resolveGeo(geoRef.current);
     trackGenerateLead({
       input: {
         name: name || "",
