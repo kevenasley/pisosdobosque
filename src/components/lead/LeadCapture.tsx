@@ -76,7 +76,8 @@ const schema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^\+?\d[\d\s()-]{8,20}$/u, "Telefone inválido"),
+    .min(1, "Informe seu WhatsApp")
+    .regex(/^\(\d{2}\) \d{5}-\d{4}$/, "Informe um celular válido com DDD"),
   reason: z.string().trim().max(500).optional(),
 });
 
