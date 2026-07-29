@@ -2144,7 +2144,7 @@ function Footer() {
         <div className="mt-12 border-t border-white/10 pt-6">
           <div className="flex flex-col items-center justify-between gap-4 pb-20 text-xs text-white/75 md:flex-row md:pb-0">
             <p className="text-center md:text-left">
-              © 2025 Pisos do Bosque. Todos os direitos reservados.
+              © 2027 Pisos do Bosque. Todos os direitos reservados.
             </p>
             <p className="text-center text-white/70 md:text-right">
               CNPJ e endereço em Cachoeirinha/RS.
