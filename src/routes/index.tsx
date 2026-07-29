@@ -1554,30 +1554,30 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
         </div>
       </div>
       {totalSlides > 1 && (
-        <div className="mt-6 flex items-center justify-center gap-3">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           <button
             type="button"
             onClick={goPrev}
             aria-label="Avaliações anteriores"
-            className="grid h-10 w-10 place-items-center rounded-full bg-white text-brand-green shadow-lg ring-1 ring-black/5 transition-colors hover:bg-brand-green hover:text-white"
+            className="grid h-8 w-8 place-items-center rounded-full bg-white text-brand-green shadow-lg ring-1 ring-black/5 transition-colors hover:bg-brand-green hover:text-white sm:h-10 sm:w-10"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6" /></svg>
+            <svg className="h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6" /></svg>
           </button>
 
-          <div className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center justify-center gap-1">
             {Array.from({ length: totalSlides }).map((_, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => goTo(i)}
                 aria-label={`Ir para grupo ${i + 1}`}
-                className="group p-3"
+                className="group p-1.5 sm:p-3"
               >
                 <span
-                  className={`block h-2 rounded-full transition-all duration-300 ease-in-out ${
+                  className={`block rounded-full transition-all duration-300 ease-in-out ${
                     i === index
-                      ? "w-6 bg-brand-orange"
-                      : "w-2 bg-muted-foreground/40 group-hover:bg-muted-foreground/60"
+                      ? "h-1.5 w-4 bg-brand-orange sm:h-2 sm:w-6"
+                      : "h-1.5 w-1.5 bg-muted-foreground/40 group-hover:bg-muted-foreground/60 sm:h-2 sm:w-2"
                   }`}
                 />
               </button>
@@ -1588,9 +1588,9 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
             type="button"
             onClick={goNext}
             aria-label="Próximas avaliações"
-            className="grid h-10 w-10 place-items-center rounded-full bg-white text-brand-green shadow-lg ring-1 ring-black/5 transition-colors hover:bg-brand-green hover:text-white"
+            className="grid h-8 w-8 place-items-center rounded-full bg-white text-brand-green shadow-lg ring-1 ring-black/5 transition-colors hover:bg-brand-green hover:text-white sm:h-10 sm:w-10"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6" /></svg>
+            <svg className="h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6" /></svg>
           </button>
         </div>
       )}
