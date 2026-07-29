@@ -215,16 +215,22 @@ export function LeadCapture() {
             attribution: attribution as unknown as Record<string, string>,
           },
         });
-        if (!result.success && result.reason?.includes("recaptcha")) {
+        // Bloqueia SEMPRE que o servidor sinalizar falha (sem depender de string).
+        // O servidor só retorna success=false quando o envio realmente não é
+        // confiável (reCAPTCHA reprovado). Falhas de webhook seguem fail-open.
+        if (!result.success) {
+          console.error("[LeadCapture] Falha no envio do lead:", result.reason);
           setErrors({
             phone:
-              "Não conseguimos validar sua sessão. Recarregue a página e tente novamente.",
+              "Não conseguimos validar seu envio. Recarregue a página e tente novamente.",
           });
           setSubmitting(false);
           return;
         }
-      } catch {
-        // fail-open — prioriza a conversão via WhatsApp
+      } catch (err) {
+        // Erro de rede/servidor: não sabemos se salvou, mas não perdemos o lead —
+        // seguimos para o WhatsApp (canal de conversão principal).
+        console.error("[LeadCapture] Erro de rede no envio do lead:", err);
       }
 
       // Evento principal de conversão — com user_data normalizado para
