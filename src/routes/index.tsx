@@ -1479,7 +1479,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
     return () => window.removeEventListener("resize", compute);
   }, []);
 
-  const perSlide = isMobile ? 2 : 4;
+  const perSlide = isMobile ? 2 : 8;
   const totalSlides = Math.ceil(items.length / perSlide);
 
   useEffect(() => {
@@ -1536,7 +1536,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
                 className={`grid h-full ${
                   isMobile
                     ? "min-h-[520px] grid-cols-1 grid-rows-2 gap-4"
-                    : "grid-cols-4 grid-rows-1 gap-3"
+                    : "grid-cols-4 grid-rows-2 gap-3"
                 }`}
               >
                 {slide.map((r, i) => (
@@ -1591,10 +1591,17 @@ function Testimonials() {
   // Combine Google reviews (up to 5 from Places API) with curated fallbacks
   // so the carousel always has enough items to rotate beyond the visible slide.
   const seen = new Set(googleReviews.map((r) => r.name.toLowerCase()));
-  const displayReviews: DisplayReview[] = [
+  const pool: DisplayReview[] = [
     ...googleReviews,
     ...fallbackReviews.filter((r) => !seen.has(r.name.toLowerCase())),
-  ].slice(0, 12);
+  ];
+  // Pad to a multiple of 8 (desktop grid = 4x2) so the last slide fills completely.
+  const padded: DisplayReview[] = [...pool];
+  if (padded.length > 0) {
+    const target = Math.max(16, Math.ceil(padded.length / 8) * 8);
+    while (padded.length < target) padded.push(pool[padded.length % pool.length]);
+  }
+  const displayReviews: DisplayReview[] = padded;
   return (
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-5 md:px-8">
