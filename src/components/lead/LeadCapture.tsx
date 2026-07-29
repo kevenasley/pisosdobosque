@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { readAttribution } from "@/lib/attribution";
 import { trackGenerateLead, pushDataLayer } from "@/lib/tracking";
-import { initClientGeo, getClientGeo } from "@/lib/geo-client";
+import { initClientGeo, ensureClientGeo } from "@/lib/geo-client";
 import {
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
@@ -193,7 +193,7 @@ export function LeadCapture() {
       const token = await getRecaptchaToken("lead_submit");
       const attribution = readAttribution() || ({} as Record<string, string>);
       const hashed_phone = await sha256Hex(parsed.data.phone);
-      const geo = resolveGeo(geoRef.current);
+      const geo = await resolveGeo(geoRef.current);
 
       try {
         const result = await submitLead({
@@ -254,8 +254,8 @@ export function LeadCapture() {
     }
   }
 
-  function goDirect() {
-    const geo = resolveGeo(geoRef.current);
+  async function goDirect() {
+    const geo = await resolveGeo(geoRef.current);
     trackGenerateLead({
       input: {
         name: name || "",
