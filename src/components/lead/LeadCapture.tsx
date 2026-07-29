@@ -13,13 +13,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { readAttribution } from "@/lib/attribution";
-import { trackLeadDirect, trackLeadSubmit } from "@/lib/tracking";
+import { trackGenerateLead } from "@/lib/tracking";
 import {
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
 } from "@/lib/config";
 import { RECAPTCHA_SITE_KEY } from "@/lib/recaptcha.functions";
 import { submitLead } from "@/lib/lead.functions";
+import { getGeoFromIP, type GeoResult } from "@/lib/geo.functions";
 
 declare global {
   interface Window {
