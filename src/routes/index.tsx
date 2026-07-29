@@ -72,9 +72,12 @@ import showroom8 from "@/assets/showroom-8.webp";
 
 
 
-import tVin1 from "@/assets/tile-vinilico-1.webp";
-import tVin2 from "@/assets/tile-vinilico-2.webp";
-import tVin3 from "@/assets/tile-vinilico-3.webp";
+import vin01 from "@/assets/vinilico-01.webp.asset.json";
+import vin02 from "@/assets/vinilico-02.webp.asset.json";
+import vin03 from "@/assets/vinilico-03.webp.asset.json";
+import vin04 from "@/assets/vinilico-04.webp.asset.json";
+import vin05 from "@/assets/vinilico-05.webp.asset.json";
+import vin06 from "@/assets/vinilico-06.webp.asset.json";
 const logoAsset = { url: "/logo-pisos-do-bosque.webp" };
 
 const WHATSAPP_URL =
