@@ -1691,16 +1691,9 @@ function About() {
             </div>
           </Reveal>
 
-          {/* Right: facade + map */}
+          {/* Right: gallery + map */}
           <Reveal delay={150} className="flex flex-col gap-6">
-            <div className="flex flex-1 flex-col overflow-hidden rounded-2xl border border-border shadow-sm">
-              <img
-                src={storeFront}
-                alt="Fachada da loja Pisos do Bosque em Cachoeirinha"
-                loading="lazy"
-                className="h-full w-full flex-1 object-cover"
-              />
-            </div>
+            <AboutGallery images={showroomImages} />
 
             <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
               <iframe
