@@ -53,7 +53,11 @@ const avatar3 = { url: "/avatar-3.webp" };
 import catCeramica from "@/assets/cat-ceramica.webp";
 import catPorcelanato from "@/assets/cat-porcelanato.webp";
 import catVinilico from "@/assets/cat-vinilico.webp";
-import solForro from "@/assets/sol-forro.webp";
+import forro01 from "@/assets/forro-01.webp.asset.json";
+import forro02 from "@/assets/forro-02.webp.asset.json";
+import forro03 from "@/assets/forro-03.webp.asset.json";
+import forro04 from "@/assets/forro-04.webp.asset.json";
+import forro05 from "@/assets/forro-05.webp.asset.json";
 import solLouca from "@/assets/sol-louca.webp";
 import solPorta from "@/assets/sol-porta.webp";
 import storeFront from "@/assets/store-front.webp";
@@ -1265,10 +1269,34 @@ function Products() {
 function MoreSolutions() {
   const solucoes: Product[] = [
     {
-      img: solForro,
-      name: "Forro branco frisado",
+      img: forro01.url,
+      name: "Forro PVC Frisado (7mm)",
       size: "PVC — 4, 5, 6 e 7 m",
       price: "R$ 24,49 m²",
+    },
+    {
+      img: forro02.url,
+      name: "Forro PVC Duplo - Carvalho",
+      size: "6x20",
+      price: "R$ 59,90 m²",
+    },
+    {
+      img: forro03.url,
+      name: "Forro PVC Junta Seca - Plátano",
+      size: "6x20",
+      price: "R$ 59,90 m²",
+    },
+    {
+      img: forro04.url,
+      name: "Forro PVC Junta Seca - Angelim",
+      size: "6x20",
+      price: "R$ 59,90 m²",
+    },
+    {
+      img: forro05.url,
+      name: "Forro PVC Junta Seca - Branco",
+      size: "6x20",
+      price: "R$ 52,90 m²",
     },
     {
       img: solLouca,
