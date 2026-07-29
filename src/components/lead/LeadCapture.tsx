@@ -15,11 +15,11 @@ import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { readAttribution } from "@/lib/attribution";
 import { trackLeadDirect, trackLeadSubmit } from "@/lib/tracking";
 import {
-  SHEETS_WEBHOOK_URL,
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
 } from "@/lib/config";
-import { verifyRecaptcha, RECAPTCHA_SITE_KEY } from "@/lib/recaptcha.functions";
+import { RECAPTCHA_SITE_KEY } from "@/lib/recaptcha.functions";
+import { submitLead } from "@/lib/lead.functions";
 
 declare global {
   interface Window {
