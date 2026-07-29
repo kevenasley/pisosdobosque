@@ -752,9 +752,10 @@ function ProductCard({ p }: { p: Product }) {
         <h4 className="line-clamp-2 h-[2.4rem] overflow-hidden text-[13px] font-semibold leading-[1.2rem] text-foreground [text-wrap:balance] sm:h-[2.8rem] sm:text-[15px] sm:leading-[1.4rem]">
           {p.name}
         </h4>
-        <p className="mt-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground sm:text-xs">
+        <p className="mt-1 line-clamp-2 min-h-[2rem] text-[10px] font-medium uppercase tracking-wider leading-[1rem] text-muted-foreground sm:min-h-[2.2rem] sm:text-xs sm:leading-[1.1rem]">
           {p.size}
         </p>
+
 
         <div className="mt-auto pt-2">
           <p className="whitespace-nowrap font-display text-[15px] font-bold leading-none text-brand-green sm:text-xl">
