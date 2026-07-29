@@ -151,10 +151,9 @@ export function LeadCapture() {
             geoRef.current = { ip: "", city: "", region: "", country: "" };
           });
       }
+      void initClientGeo();
       // Sinaliza abertura do formulário no dataLayer
-      const w = window as unknown as { dataLayer?: unknown[] };
-      w.dataLayer = w.dataLayer || [];
-      w.dataLayer.push({
+      pushDataLayer({
         event: "formulario_aberto",
         cta_origem: ctaOrigin,
         cta_origin: ctaOrigin,
