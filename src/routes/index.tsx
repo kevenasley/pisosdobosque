@@ -39,6 +39,7 @@ import {
   PlaceStatsProvider,
   usePlaceStats,
 } from "@/components/PlaceStatsProvider";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 
 import heroVendedor from "@/assets/hero-vendedor.webp";
