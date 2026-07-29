@@ -32,6 +32,7 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { InteractiveMap } from "@/components/InteractiveMap";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -1805,13 +1806,9 @@ function About() {
             <AboutGallery images={showroomImages} />
 
             <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-              <iframe
-                title="Localização Pisos do Bosque"
-                src="https://www.google.com/maps?q=Av.+Capit%C3%A3o+Garibaldi+Pinto+dos+Santos+468+Cachoeirinha+RS&output=embed"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
+              <InteractiveMap
+                mapsUrl={mapsUrl}
                 className="block h-36 w-full border-0 md:h-32"
-                allowFullScreen
               />
               <a
                 href={mapsUrl}
