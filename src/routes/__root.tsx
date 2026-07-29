@@ -19,16 +19,11 @@ import { GTM_ID } from "../lib/config";
 const consentModeScript = `
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
-gtag('consent', 'default', {
-  ad_storage: 'denied', ad_user_data: 'denied',
-  ad_personalization: 'denied', analytics_storage: 'denied',
-  region: ['EEA','GB','CH']
-});
-gtag('consent', 'default', {
-  ad_storage: 'granted', ad_user_data: 'granted',
-  ad_personalization: 'granted', analytics_storage: 'granted'
-});
-gtag('set', 'ads_data_redaction', true);
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500,region:['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB','CH']});
+gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted',wait_for_update:500});
+gtag('set','ads_data_redaction',true);
+gtag('set','url_passthrough',true);
+try{var c=JSON.parse(localStorage.getItem('pisosdobosque_consent')||'null');if(c&&c.ads&&c.analytics){gtag('consent','update',{ad_storage:c.ads,ad_user_data:c.ads,ad_personalization:c.ads,analytics_storage:c.analytics})}}catch(e){}
 `;
 
 const gtmScript = `
