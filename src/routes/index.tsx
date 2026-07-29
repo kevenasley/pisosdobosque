@@ -62,7 +62,7 @@ import showroom5 from "@/assets/showroom-5.webp";
 import tVin1 from "@/assets/tile-vinilico-1.webp";
 import tVin2 from "@/assets/tile-vinilico-2.webp";
 import tVin3 from "@/assets/tile-vinilico-3.webp";
-const logoAsset = { url: "/logo-pisos-do-bosque.png" };
+const logoAsset = { url: "/logo-pisos-do-bosque.webp" };
 
 const WHATSAPP_URL =
   "https://wa.me/5551984905782?text=Ol%C3%A1!%20Vi%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20um%20atendimento.";
@@ -103,6 +103,12 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://pisosdobosque.lovable.app/" },
+      {
+        rel: "preload",
+        as: "image",
+        href: "/logo-pisos-do-bosque.webp",
+        fetchpriority: "high",
+      },
       {
         rel: "preload",
         as: "image",
@@ -384,13 +390,14 @@ function Logo({
   const isLight = variant === "light";
   return (
     <img
-      src={isLight ? "/logo-footer.png" : logoAsset.url}
+      src={isLight ? "/logo-footer.webp" : logoAsset.url}
       alt="Pisos do Bosque"
       width={isLight ? 2367 : 2730}
       height={isLight ? 738 : 655}
       className={`w-auto ${isLight ? "h-8 md:h-20" : "h-10 md:h-12"} ${className}`}
       loading="eager"
       decoding="async"
+      fetchPriority={isLight ? undefined : "high"}
     />
   );
 }
