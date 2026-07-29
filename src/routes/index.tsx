@@ -25,7 +25,7 @@ import {
   ArrowUp,
   Truck,
   Award,
-  
+  Plus,
   Users,
   Shield,
   ChevronRight,
