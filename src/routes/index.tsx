@@ -1487,16 +1487,16 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
             aria-roledescription="slide"
             aria-label={`${i + 1} de ${total}`}
           >
-            <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <Quote
-                className="h-7 w-7 text-brand-orange/70"
+                className="h-6 w-6 text-brand-orange/70"
                 aria-hidden="true"
               />
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-3 line-clamp-5 text-sm leading-relaxed text-muted-foreground">
                 {renderBold(r.text)}
               </p>
-              <div className="mt-6 flex items-center gap-3 border-t border-border pt-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-green font-semibold text-white">
+              <div className="mt-4 flex items-center gap-3 border-t border-border pt-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-green text-sm font-semibold text-white">
                   {r.initial}
                 </div>
                 <div className="flex flex-col">
