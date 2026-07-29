@@ -1322,7 +1322,7 @@ function Comparison() {
                   <h4 className="text-sm font-semibold text-white/90 [text-wrap:balance] sm:text-base">
                     {r.bad}
                   </h4>
-                  <p className="text-xs text-white/60 [text-wrap:balance] sm:text-sm">
+                  <p className="text-xs text-white/80 [text-wrap:balance] sm:text-sm">
                     {r.badDesc}
                   </p>
                 </Reveal>
