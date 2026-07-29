@@ -333,3 +333,10 @@ summary {
   }
 }
 
+/* Oculta o badge flutuante do reCAPTCHA — os links de Privacidade e Termos
+   do Google aparecem inline no formulário, conforme permitido pelo Google. */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
+
+
