@@ -2180,31 +2180,33 @@ function MobileCTABar() {
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-background font-sans">
-      <a
-        href="#top"
-        onClick={(e) => { e.preventDefault(); smoothScrollTo("top"); }}
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand-green focus:px-4 focus:py-2 focus:text-white"
-      >
-        Pular para o conteúdo
-      </a>
-      
-      <Header />
-      <main>
-        <Hero />
-        <Stats />
-        <Products />
-        <MoreSolutions />
-        <Comparison />
-        <Testimonials />
-        <About />
-        
-        <FAQ />
-      </main>
-      <Footer />
-      
-      <BackToTop />
-      <MobileCTABar />
-    </div>
+    <PlaceStatsProvider>
+      <div className="min-h-screen bg-background font-sans">
+        <a
+          href="#top"
+          onClick={(e) => { e.preventDefault(); smoothScrollTo("top"); }}
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand-green focus:px-4 focus:py-2 focus:text-white"
+        >
+          Pular para o conteúdo
+        </a>
+
+        <Header />
+        <main>
+          <Hero />
+          <Stats />
+          <Products />
+          <MoreSolutions />
+          <Comparison />
+          <Testimonials />
+          <About />
+
+          <FAQ />
+        </main>
+        <Footer />
+
+        <BackToTop />
+        <MobileCTABar />
+      </div>
+    </PlaceStatsProvider>
   );
 }
