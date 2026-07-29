@@ -112,6 +112,18 @@ export function openLeadCapture(detail: OpenDetail = {}) {
   window.dispatchEvent(new CustomEvent(LEAD_OPEN_EVENT, { detail }));
 }
 
+/** Combina a geo do servidor com a geo do cliente (ipapi.co), sem quebrar o envio. */
+function resolveGeo(server: GeoResult | null): GeoResult {
+  const c = getClientGeo();
+  return {
+    ip: server?.ip || "",
+    city: server?.city || c.user_city || "",
+    region: server?.region || c.user_state || "",
+    country: server?.country || c.country_code || "",
+  };
+}
+
+
 export function LeadCapture() {
   const [open, setOpen] = useState(false);
   const [ctaOrigin, setCtaOrigin] = useState("unknown");
