@@ -16,6 +16,19 @@ const FALLBACK: PlaceStats = {
   userRatingCount: 2402,
   userRatingCountFormatted: "2.402",
   reviews: [],
+  opening: {
+    openNow: null,
+    statusText: "Seg–Sex 8h–18h30 · Sáb 8h–17h",
+    weekdayDescriptions: [
+      "domingo: Fechado",
+      "segunda-feira: 08:00 – 12:00, 13:30 – 18:30",
+      "terça-feira: 08:00 – 12:00, 13:30 – 18:30",
+      "quarta-feira: 08:00 – 12:00, 13:30 – 18:30",
+      "quinta-feira: 08:00 – 12:00, 13:30 – 18:30",
+      "sexta-feira: 08:00 – 12:00, 13:30 – 18:30",
+      "sábado: 08:00 – 12:00, 13:30 – 17:00",
+    ],
+  },
 };
 
 const PlaceStatsContext = createContext<PlaceStats>(FALLBACK);
