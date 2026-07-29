@@ -664,9 +664,10 @@ function Hero() {
 }
 
 function Stats() {
+  const stats = usePlaceStats();
   const items = [
     { icon: Award, value: "20+", label: "Anos de mercado" },
-    { icon: Users, value: "2.397", label: "Avaliações no Google" },
+    { icon: Users, value: stats.userRatingCountFormatted, label: "Avaliações no Google" },
     { icon: Package, value: "1000+", label: "Itens em estoque" },
     { icon: Truck, value: "Toda RS", label: "Entregamos na região" },
   ];
