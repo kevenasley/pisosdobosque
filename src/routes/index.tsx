@@ -1479,7 +1479,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
     return () => window.removeEventListener("resize", compute);
   }, []);
 
-  const perSlide = isMobile ? 2 : 8;
+  const perSlide = isMobile ? 2 : 6;
   const totalSlides = Math.ceil(items.length / perSlide);
 
   useEffect(() => {
