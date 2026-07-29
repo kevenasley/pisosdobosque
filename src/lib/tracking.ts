@@ -95,8 +95,11 @@ export function normalizePhoneBR(phone: string): string {
 }
 
 export function normalizeRegion(uf: string): string {
-  return uf.trim().toLowerCase().slice(0, 2);
+  const v = stripAccents(uf.trim().toLowerCase());
+  // Aceita tanto sigla ("rs") quanto nome completo ("rio grande do sul").
+  return v;
 }
+
 
 function readCookie(name: string): string {
   if (typeof document === "undefined") return "";
