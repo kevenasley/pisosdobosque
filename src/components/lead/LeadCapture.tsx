@@ -147,6 +147,25 @@ export function LeadCapture() {
     setErrors({});
     setSubmitting(true);
     try {
+      // reCAPTCHA v3 — verifica antes de gravar o lead
+      const token = await getRecaptchaToken("lead_submit");
+      if (token) {
+        try {
+          const result = await verifyRecaptcha({
+            data: { token, action: "lead_submit" },
+          });
+          if (!result.success) {
+            setErrors({
+              phone:
+                "Não conseguimos validar sua sessão. Recarregue a página e tente novamente.",
+            });
+            setSubmitting(false);
+            return;
+          }
+        } catch {
+          // fail-open em caso de falha de rede na verificação
+        }
+      }
       const attribution = readAttribution() || {};
       const hashed_phone = await sha256Hex(parsed.data.phone);
       const payload = {
