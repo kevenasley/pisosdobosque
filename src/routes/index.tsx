@@ -1242,10 +1242,12 @@ function MoreSolutions() {
             </a>
           </Reveal>
 
-          <ProductCarousel
-            products={solucoes}
-            hint="Arraste para o lado para ver mais produtos →"
-          />
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+            {solucoes.map((p, i) => (
+              <ProductCard key={i} p={p} />
+            ))}
+            <PlaceholderCard />
+          </div>
         </div>
       </div>
     </section>
