@@ -34,6 +34,10 @@ import {
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  PlaceStatsProvider,
+  usePlaceStats,
+} from "@/components/PlaceStatsProvider";
 
 
 import heroVendedor from "@/assets/hero-vendedor.webp";
