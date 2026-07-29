@@ -1536,7 +1536,7 @@ function TestimonialsCarousel({ items }: { items: DisplayReview[] }) {
                 className={`grid h-full ${
                   isMobile
                     ? "min-h-[520px] grid-cols-1 grid-rows-2 gap-4"
-                    : "grid-cols-4 grid-rows-2 gap-3"
+                    : "grid-cols-3 grid-rows-2 gap-4"
                 }`}
               >
                 {slide.map((r, i) => (
