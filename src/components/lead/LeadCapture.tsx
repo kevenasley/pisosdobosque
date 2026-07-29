@@ -65,7 +65,7 @@ async function getRecaptchaToken(action: string): Promise<string | null> {
 
 export const LEAD_OPEN_EVENT = "pisosdobosque:lead-open";
 
-type OpenDetail = { ctaOrigin?: string; message?: string };
+type OpenDetail = { ctaOrigin?: string; message?: string; reason?: string };
 
 const schema = z.object({
   name: z
@@ -126,6 +126,7 @@ export function LeadCapture() {
       const detail = (ev as CustomEvent<OpenDetail>).detail || {};
       setCtaOrigin(detail.ctaOrigin || "unknown");
       setMessage(detail.message);
+      setReason(typeof detail.reason === "string" ? detail.reason : "");
       setErrors({});
       setOpen(true);
     }
