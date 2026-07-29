@@ -103,7 +103,14 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://pisosdobosque.lovable.app/" },
-      { rel: "preload", as: "image", href: heroVendedor },
+      {
+        rel: "preload",
+        as: "image",
+        href: heroVendedor,
+        imagesrcset: `${heroVendedorMobile} 600w, ${heroVendedor} 900w`,
+        imagesizes: "(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px",
+        fetchpriority: "high",
+      },
     ],
     scripts: [
       {
