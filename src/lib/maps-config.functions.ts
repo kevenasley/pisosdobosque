@@ -17,10 +17,14 @@ const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 dias
 
 export const getMapsConfig = createServerFn({ method: "GET" }).handler(
   async (): Promise<MapsConfig> => {
-    const apiKey =
-      process.env.GOOGLE_MAPS_API_KEY ||
-      process.env.GOOGLE_PLACES_API_KEY ||
-      null;
+    // Chave DEDICADA para o Maps JS carregado no browser. Deve ser restrita
+    // por HTTP referrer no Google Cloud e habilitada APENAS para Maps
+    // JavaScript API. Nunca cair na GOOGLE_PLACES_API_KEY (server-only,
+    // billing das APIs de Places) — expor essa chave ao browser permite
+    // uso indevido faturado.
+    const browserKey = process.env.GOOGLE_MAPS_BROWSER_KEY || null;
+    // Chave server-only usada apenas aqui para geocodificar o Place ID.
+    const serverKey = process.env.GOOGLE_PLACES_API_KEY || null;
 
     let lat = FALLBACK_LAT;
     let lng = FALLBACK_LNG;
@@ -28,13 +32,13 @@ export const getMapsConfig = createServerFn({ method: "GET" }).handler(
     if (cache && Date.now() - cache.at < CACHE_TTL_MS) {
       lat = cache.lat;
       lng = cache.lng;
-    } else if (apiKey) {
+    } else if (serverKey) {
       try {
         const res = await fetch(
           `https://places.googleapis.com/v1/places/${PLACE_ID}?languageCode=pt-BR&regionCode=BR`,
           {
             headers: {
-              "X-Goog-Api-Key": apiKey,
+              "X-Goog-Api-Key": serverKey,
               "X-Goog-FieldMask": "location",
             },
           },
@@ -54,6 +58,6 @@ export const getMapsConfig = createServerFn({ method: "GET" }).handler(
       }
     }
 
-    return { apiKey, lat, lng, placeId: PLACE_ID };
+    return { apiKey: browserKey, lat, lng, placeId: PLACE_ID };
   },
 );
