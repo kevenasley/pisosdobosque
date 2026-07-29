@@ -35,6 +35,7 @@ import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { openLeadCapture } from "@/components/lead/LeadCapture";
 import { InteractiveMap } from "@/components/InteractiveMap";
 import { smoothScrollTo } from "@/lib/smoothScrollTo";
+import { pushDataLayer } from "@/lib/tracking";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   PlaceStatsProvider,

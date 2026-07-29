@@ -13,7 +13,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { readAttribution } from "@/lib/attribution";
-import { trackGenerateLead } from "@/lib/tracking";
+import { trackGenerateLead, pushDataLayer } from "@/lib/tracking";
+import { initClientGeo, getClientGeo } from "@/lib/geo-client";
 import {
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
