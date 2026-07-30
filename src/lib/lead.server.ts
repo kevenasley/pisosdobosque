@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { SHEETS_WEBHOOK_URL } from "@/config/api";
+
 
 const leadSchema = z.object({
   name: z.string().trim().min(2).max(80),
