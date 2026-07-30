@@ -138,7 +138,6 @@ export function LeadCapture() {
   const [sendError, setSendError] = useState<string | null>(null);
 
   const firstFieldRef = useRef<HTMLInputElement>(null);
-  const geoRef = useRef<GeoResult | null>(null);
 
   useEffect(() => {
     function handler(ev: Event) {

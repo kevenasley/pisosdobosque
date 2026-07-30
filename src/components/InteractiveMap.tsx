@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
-import { getMapsConfig } from "@/lib/maps-config.functions";
+import { GOOGLE_MAPS_BROWSER_KEY } from "@/config/api";
 
 declare global {
   interface Window {
@@ -62,13 +60,15 @@ export function InteractiveMap({ mapsUrl, className }: Props) {
     return () => io.disconnect();
   }, [inView]);
 
-  const fetchConfig = useServerFn(getMapsConfig);
-  const { data } = useQuery({
-    queryKey: ["maps-config"],
-    queryFn: () => fetchConfig(),
-    staleTime: 24 * 60 * 60 * 1000,
-    enabled: inView,
-  });
+  // Build estático: a chave (opcional) vem de VITE_GOOGLE_MAPS_BROWSER_KEY.
+  // Sem chave, cai no iframe público do Google Maps.
+  const data = inView && GOOGLE_MAPS_BROWSER_KEY
+    ? {
+        apiKey: GOOGLE_MAPS_BROWSER_KEY,
+        lat: -29.9481,
+        lng: -51.094,
+      }
+    : null;
 
   useEffect(() => {
     if (!data?.apiKey || !mapRef.current) return;
