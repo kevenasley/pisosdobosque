@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { SHEETS_WEBHOOK_URL } from "@/config/api";
+
 
 const leadSchema = z.object({
   name: z.string().trim().min(2).max(80),
@@ -63,9 +65,10 @@ export async function processLead(data: LeadInput): Promise<LeadResult> {
     return { success: false, reason: recaptcha.reason || "recaptcha_failed" };
   }
 
-  // URL fixa do Apps Script (sem dependência de variáveis de ambiente).
-  const webhook =
-    "https://script.google.com/macros/s/AKfycbycJwWdUzopbiVd-IKt-yvvjySGmaYdxSmhzcFpy-i_qW6EEGhby0hmmC4SSykx4Mj_/exec";
+  // Endpoint centralizado em src/config/api.ts (com fallback para build estático).
+  const webhook = SHEETS_WEBHOOK_URL;
+
+
 
 
   const attr = data.attribution ?? {};
