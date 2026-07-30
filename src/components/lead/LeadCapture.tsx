@@ -19,9 +19,10 @@ import {
   WHATSAPP_NUMBER,
   WHATSAPP_DEFAULT_MESSAGE,
 } from "@/lib/config";
-import { RECAPTCHA_SITE_KEY } from "@/lib/recaptcha.functions";
-import { submitLead } from "@/lib/lead.functions";
-import { getGeoFromIP, type GeoResult } from "@/lib/geo.functions";
+import { RECAPTCHA_SITE_KEY } from "@/config/api";
+import { submitLeadClient } from "@/lib/lead-client";
+
+type GeoResult = { ip: string; city: string; region: string; country: string };
 
 declare global {
   interface Window {
@@ -112,14 +113,14 @@ export function openLeadCapture(detail: OpenDetail = {}) {
   window.dispatchEvent(new CustomEvent(LEAD_OPEN_EVENT, { detail }));
 }
 
-/** Combina a geo do servidor com a geo do cliente (ipwho.is), sem quebrar o envio. */
-async function resolveGeo(server: GeoResult | null): Promise<GeoResult> {
+/** Geo do cliente (ipwho.is) — sem servidor, nunca quebra o envio. */
+async function resolveGeo(): Promise<GeoResult> {
   const c = await ensureClientGeo();
   return {
-    ip: server?.ip || "",
-    city: server?.city || c.user_city || "",
-    region: server?.region || c.user_state_code || c.user_state || "",
-    country: server?.country || c.country_code || "",
+    ip: "",
+    city: c.user_city || "",
+    region: c.user_state_code || c.user_state || "",
+    country: c.country_code || "",
   };
 }
 
@@ -161,15 +162,6 @@ export function LeadCapture() {
       const t = setTimeout(() => firstFieldRef.current?.focus(), 50);
       void loadRecaptcha();
       // Pré-carrega geo (fail-open — não bloqueia envio)
-      if (!geoRef.current) {
-        getGeoFromIP()
-          .then((g) => {
-            geoRef.current = g;
-          })
-          .catch(() => {
-            geoRef.current = { ip: "", city: "", region: "", country: "" };
-          });
-      }
       void initClientGeo();
       // Sinaliza abertura do formulário no dataLayer
       pushDataLayer({
@@ -206,11 +198,10 @@ export function LeadCapture() {
           .map(([k, v]) => [k, v === null || v === undefined ? "" : String(v)]),
       ) as Record<string, string>;
       const hashed_phone = await sha256Hex(parsed.data.phone);
-      const geo = await resolveGeo(geoRef.current);
+      const geo = await resolveGeo();
 
       try {
-        const result = await submitLead({
-          data: {
+        const result = await submitLeadClient({
             name: parsed.data.name,
             phone: parsed.data.phone,
             reason: parsed.data.reason || "",
@@ -223,8 +214,7 @@ export function LeadCapture() {
             region: geo.region,
             country: geo.country,
             ip: geo.ip,
-            attribution: attribution as unknown as Record<string, string>,
-          },
+            attribution,
         });
         // Fail-closed: só seguimos quando o servidor confirma a gravação do lead.
         if (!result.success) {
@@ -288,7 +278,7 @@ export function LeadCapture() {
   }
 
   async function goDirect() {
-    const geo = await resolveGeo(geoRef.current);
+    const geo = await resolveGeo();
     trackGenerateLead({
       input: {
         name: name || "",
