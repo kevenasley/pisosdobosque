@@ -145,7 +145,8 @@ export function LeadCapture() {
       setCtaOrigin(detail.ctaOrigin || "unknown");
       setMessage(detail.message);
       setReason(typeof detail.reason === "string" ? detail.reason : "");
-      setErrors({});
+      setSent(false);
+      setSendError(null);
       setSent(false);
       setOpen(true);
     }
