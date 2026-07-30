@@ -198,7 +198,13 @@ export function LeadCapture() {
     setSubmitting(true);
     try {
       const token = await getRecaptchaToken("lead_submit");
-      const attribution = readAttribution() || ({} as Record<string, string>);
+      const rawAttribution = (readAttribution() || {}) as Record<string, unknown>;
+      // Normaliza tudo para string (o servidor só aceita string) e remove campos internos.
+      const attribution = Object.fromEntries(
+        Object.entries(rawAttribution)
+          .filter(([k]) => k !== "saved_at")
+          .map(([k, v]) => [k, v === null || v === undefined ? "" : String(v)]),
+      ) as Record<string, string>;
       const hashed_phone = await sha256Hex(parsed.data.phone);
       const geo = await resolveGeo(geoRef.current);
 
