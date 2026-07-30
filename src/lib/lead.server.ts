@@ -63,11 +63,10 @@ export async function processLead(data: LeadInput): Promise<LeadResult> {
     return { success: false, reason: recaptcha.reason || "recaptcha_failed" };
   }
 
-  const webhook = process.env.SHEETS_WEBHOOK_URL_V2 || process.env.SHEETS_WEBHOOK_URL;
-  if (!webhook) {
-    console.error("Sheets webhook URL is not configured");
-    return { success: false, reason: "missing_webhook_url" };
-  }
+  // URL fixa do Apps Script (sem dependência de variáveis de ambiente).
+  const webhook =
+    "https://script.google.com/macros/s/AKfycbycJwWdUzopbiVd-IKt-yvvjySGmaYdxSmhzcFpy-i_qW6EEGhby0hmmC4SSykx4Mj_/exec";
+
 
   const attr = data.attribution ?? {};
   const payload = {
