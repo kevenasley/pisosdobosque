@@ -134,6 +134,8 @@ export function LeadCapture() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
+
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const geoRef = useRef<GeoResult | null>(null);
 
@@ -144,7 +146,9 @@ export function LeadCapture() {
       setMessage(detail.message);
       setReason(typeof detail.reason === "string" ? detail.reason : "");
       setErrors({});
+      setSendError(null);
       setSent(false);
+
       setOpen(true);
     }
     window.addEventListener(LEAD_OPEN_EVENT, handler as EventListener);
@@ -190,6 +194,7 @@ export function LeadCapture() {
       return;
     }
     setErrors({});
+    setSendError(null);
     setSubmitting(true);
     try {
       const token = await getRecaptchaToken("lead_submit");
@@ -215,23 +220,28 @@ export function LeadCapture() {
             attribution: attribution as unknown as Record<string, string>,
           },
         });
-        // Bloqueia SEMPRE que o servidor sinalizar falha (sem depender de string).
-        // O servidor só retorna success=false quando o envio realmente não é
-        // confiável (reCAPTCHA reprovado). Falhas de webhook seguem fail-open.
+        // Fail-closed: só seguimos quando o servidor confirma a gravação do lead.
         if (!result.success) {
           console.error("[LeadCapture] Falha no envio do lead:", result.reason);
-          setErrors({
-            phone:
-              "Não conseguimos validar seu envio. Recarregue a página e tente novamente.",
-          });
+          setSendError(
+            result.reason === "recaptcha_failed" ||
+              result.reason === "missing_token" ||
+              result.reason === "low_score"
+              ? "Não conseguimos validar seu envio. Recarregue a página e tente novamente."
+              : "Não conseguimos registrar seus dados agora. Tente novamente em alguns segundos ou fale direto no WhatsApp.",
+          );
           setSubmitting(false);
           return;
         }
       } catch (err) {
-        // Erro de rede/servidor: não sabemos se salvou, mas não perdemos o lead —
-        // seguimos para o WhatsApp (canal de conversão principal).
         console.error("[LeadCapture] Erro de rede no envio do lead:", err);
+        setSendError(
+          "Falha de conexão ao enviar seus dados. Tente novamente ou fale direto no WhatsApp.",
+        );
+        setSubmitting(false);
+        return;
       }
+
 
       // Evento principal de conversão — com user_data normalizado para
       // Enhanced Conversions (Google Ads) e CAPI (Meta).
@@ -300,6 +310,22 @@ export function LeadCapture() {
           </DialogDescription>
         </DialogHeader>
         <form noValidate onSubmit={onSubmit} className="space-y-4">
+          {sendError && (
+            <div
+              role="alert"
+              aria-live="assertive"
+              className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            >
+              {sendError}{" "}
+              <button
+                type="button"
+                onClick={goDirect}
+                className="underline font-medium"
+              >
+                Falar agora no WhatsApp
+              </button>
+            </div>
+          )}
           {sent && (
             <div
               role="status"
