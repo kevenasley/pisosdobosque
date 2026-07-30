@@ -215,23 +215,28 @@ export function LeadCapture() {
             attribution: attribution as unknown as Record<string, string>,
           },
         });
-        // Bloqueia SEMPRE que o servidor sinalizar falha (sem depender de string).
-        // O servidor só retorna success=false quando o envio realmente não é
-        // confiável (reCAPTCHA reprovado). Falhas de webhook seguem fail-open.
+        // Fail-closed: só seguimos quando o servidor confirma a gravação do lead.
         if (!result.success) {
           console.error("[LeadCapture] Falha no envio do lead:", result.reason);
-          setErrors({
-            phone:
-              "Não conseguimos validar seu envio. Recarregue a página e tente novamente.",
-          });
+          setSendError(
+            result.reason === "recaptcha_failed" ||
+              result.reason === "missing_token" ||
+              result.reason === "low_score"
+              ? "Não conseguimos validar seu envio. Recarregue a página e tente novamente."
+              : "Não conseguimos registrar seus dados agora. Tente novamente em alguns segundos ou fale direto no WhatsApp.",
+          );
           setSubmitting(false);
           return;
         }
       } catch (err) {
-        // Erro de rede/servidor: não sabemos se salvou, mas não perdemos o lead —
-        // seguimos para o WhatsApp (canal de conversão principal).
         console.error("[LeadCapture] Erro de rede no envio do lead:", err);
+        setSendError(
+          "Falha de conexão ao enviar seus dados. Tente novamente ou fale direto no WhatsApp.",
+        );
+        setSubmitting(false);
+        return;
       }
+
 
       // Evento principal de conversão — com user_data normalizado para
       // Enhanced Conversions (Google Ads) e CAPI (Meta).
