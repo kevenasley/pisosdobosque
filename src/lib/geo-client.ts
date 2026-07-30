@@ -1,3 +1,4 @@
+import { GEO_IP_URL } from "@/config/api";
 // Geolocalização aproximada do usuário via ipwho.is (fallback: freeipapi.com),
 // com cache em sessionStorage.
 // Fail-open: qualquer erro resulta em campos vazios, sem travar a página.
@@ -70,7 +71,7 @@ async function fetchJson(url: string, timeoutMs = 4000): Promise<unknown | null>
 
 /** Provedor principal: https://ipwho.is/ */
 async function fromIpWhoIs(): Promise<ClientGeo | null> {
-  const j = (await fetchJson("https://ipwho.is/")) as
+  const j = (await fetchJson(GEO_IP_URL)) as
     | {
         success?: boolean;
         city?: string;
