@@ -14,7 +14,15 @@ const leadSchema = z.object({
   region: z.string().trim().max(40).optional().default(""),
   country: z.string().trim().max(4).optional().default(""),
   ip: z.string().trim().max(64).optional().default(""),
-  attribution: z.record(z.string().max(64), z.string().max(500)).optional().default({}),
+  attribution: z
+    .record(
+      z.string().max(64),
+      z
+        .union([z.string(), z.number(), z.boolean(), z.null(), z.undefined()])
+        .transform((v) => (v === null || v === undefined ? "" : String(v)).slice(0, 500)),
+    )
+    .optional()
+    .default({}),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
