@@ -64,8 +64,8 @@ export const submitLead = createServerFn({ method: "POST" })
     const webhook = process.env.SHEETS_WEBHOOK_URL;
     if (!webhook) {
       console.error("SHEETS_WEBHOOK_URL not configured");
-      // não bloqueia UX; lead segue para WhatsApp
-      return { success: true, reason: "no_webhook_configured" };
+      // fail-closed: sem destino de gravação, o lead seria perdido
+      return { success: false, reason: "missing_webhook_url" };
     }
 
     const attr = data.attribution ?? {};
@@ -94,21 +94,34 @@ export const submitLead = createServerFn({ method: "POST" })
       timestamp: new Date().toISOString(),
     };
 
-    try {
-      const res = await fetch(webhook, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) {
-        console.error("Sheets webhook failed:", res.status);
-        // fail-open — o lead ainda segue para o WhatsApp
-        return { success: true, reason: "webhook_failed" };
+    // Até 3 tentativas (Apps Script pode responder lento/instável)
+    let lastReason = "webhook_failed";
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const res = await fetch(webhook, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload),
+          redirect: "follow",
+        });
+        const text = (await res.text().catch(() => "")).slice(0, 500);
+        if (!res.ok) {
+          console.error(`Sheets webhook HTTP ${res.status} (try ${attempt}):`, text);
+          lastReason = "webhook_failed";
+        } else if (/"?(ok|success)"?\s*:\s*false|"?error"?\s*:/i.test(text)) {
+          // HTTP 200 mas o Apps Script sinalizou erro na gravação
+          console.error(`Sheets webhook logic error (try ${attempt}):`, text);
+          lastReason = "webhook_rejected";
+        } else {
+          return { success: true };
+        }
+      } catch (err) {
+        console.error(`Sheets webhook network error (try ${attempt}):`, err);
+        lastReason = "network_error";
       }
-    } catch (err) {
-      console.error("Sheets webhook error:", err);
-      // fail-open — não bloqueia o redirecionamento pro WhatsApp
-      return { success: true, reason: "network_error" };
+      if (attempt < 3) await new Promise((r) => setTimeout(r, attempt * 400));
     }
-    return { success: true };
+
+    return { success: false, reason: lastReason };
   });
+
