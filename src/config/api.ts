@@ -17,3 +17,12 @@ export const SHEETS_WEBHOOK_URL = SHEETS_WEBHOOK_URL_FALLBACK;
 /** Endpoint público de geolocalização por IP usado no enriquecimento de leads. */
 export const GEO_IP_URL =
   import.meta.env.VITE_GEO_IP_URL || "https://ipwho.is/";
+
+/** Site key pública do reCAPTCHA v3 (usada no navegador). */
+export const RECAPTCHA_SITE_KEY =
+  import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
+  "6LfQpWotAAAAAOtWaIQSL8FUnCFo0kQAPdqGQ23t";
+
+/** Chave do Maps JS restrita por referrer (opcional; sem ela usamos iframe). */
+export const GOOGLE_MAPS_BROWSER_KEY =
+  import.meta.env.VITE_GOOGLE_MAPS_BROWSER_KEY || "";
