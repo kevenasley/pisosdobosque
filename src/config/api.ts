@@ -7,13 +7,12 @@
  *   build estático caso a variável não seja detectada.
  */
 
-/** Fallback fixo: Web App público do Google Apps Script (planilha de leads). */
+/** Web App público do Google Apps Script (planilha de leads) — URL fixa. */
 export const SHEETS_WEBHOOK_URL_FALLBACK =
   "https://script.google.com/macros/s/AKfycbycJwWdUzopbiVd-IKt-yvvjySGmaYdxSmhzcFpy-i_qW6EEGhby0hmmC4SSykx4Mj_/exec";
 
-/** URL efetiva do webhook de leads (Apps Script). */
-export const SHEETS_WEBHOOK_URL =
-  import.meta.env.VITE_SHEETS_WEBHOOK_URL || SHEETS_WEBHOOK_URL_FALLBACK;
+/** URL efetiva do webhook de leads (fixa, sem variáveis de ambiente). */
+export const SHEETS_WEBHOOK_URL = SHEETS_WEBHOOK_URL_FALLBACK;
 
 /** Endpoint público de geolocalização por IP usado no enriquecimento de leads. */
 export const GEO_IP_URL =
