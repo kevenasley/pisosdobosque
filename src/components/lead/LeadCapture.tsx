@@ -194,6 +194,7 @@ export function LeadCapture() {
       return;
     }
     setErrors({});
+    setSendError(null);
     setSubmitting(true);
     try {
       const token = await getRecaptchaToken("lead_submit");
@@ -309,6 +310,22 @@ export function LeadCapture() {
           </DialogDescription>
         </DialogHeader>
         <form noValidate onSubmit={onSubmit} className="space-y-4">
+          {sendError && (
+            <div
+              role="alert"
+              aria-live="assertive"
+              className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            >
+              {sendError}{" "}
+              <button
+                type="button"
+                onClick={goDirect}
+                className="underline font-medium"
+              >
+                Falar agora no WhatsApp
+              </button>
+            </div>
+          )}
           {sent && (
             <div
               role="status"
