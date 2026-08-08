@@ -320,6 +320,11 @@ html.lenis body {
   .btn {
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
+
+  /* Prevent browser jumping for internal anchor links while smooth scrolling */
+  :root {
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Desktop-only: pointer cursor on all interactive elements (Tailwind v4 preflight
