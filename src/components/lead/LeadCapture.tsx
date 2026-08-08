@@ -277,22 +277,61 @@ export function LeadCapture() {
   }
 
   async function goDirect() {
-    const geo = await resolveGeo();
-    trackGenerateLead({
-      input: {
-        name: name || "",
-        phone: phone || "",
+    if (submitting) return;
+    setSubmitting(true);
+    try {
+      const leadId = crypto.randomUUID();
+      const geo = await resolveGeo();
+      const rawAttribution = (readAttribution() || {}) as Record<string, unknown>;
+      const attribution = Object.fromEntries(
+        Object.entries(rawAttribution)
+          .filter(([k]) => k !== "saved_at")
+          .map(([k, v]) => [k, v === null || v === undefined ? "" : String(v)]),
+      ) as Record<string, string>;
+
+      // Dispara o evento dataLayer IMEDIATAMENTE antes do redirect e da planilha
+      trackGenerateLead({
+        input: {
+          name: "",
+          phone: "",
+          city: geo.city,
+          region: geo.region,
+          country: geo.country || "br",
+          ip: geo.ip,
+        },
+        ctaOrigin,
+        status: "sem_dados",
+        eventName: "lead_direct",
+        extra: {
+          lead_id: leadId,
+          transaction_id: leadId,
+        }
+      });
+
+      // Registro na planilha em background (fail-open)
+      void submitLeadClient({
+        lead_id: leadId,
+        tipo_lead: "Lead direto WhatsApp",
+        evento: "lead_direct",
+        status: "Clique no WhatsApp — não identificado",
+        valor_conversao: "30",
+        cta_origin: ctaOrigin,
+        page_url: typeof window !== "undefined" ? window.location.href : "",
+        user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
         city: geo.city,
         region: geo.region,
-        country: geo.country || "br",
+        country: geo.country,
         ip: geo.ip,
-      },
-      ctaOrigin,
-      status: "sem_dados",
-      eventName: "lead_direct",
-    });
-    window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
-    window.location.href = "/obrigado?src=direct";
+        attribution,
+      }).catch((err) => console.error("[LeadCapture] Erro silencioso goDirect:", err));
+
+      // Redirecionamento
+      window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
+      window.location.href = "/obrigado?src=direct";
+    } finally {
+      // Pequeno delay para evitar duplo clique efetivo antes da navegação
+      setTimeout(() => setSubmitting(false), 500);
+    }
   }
 
   return (

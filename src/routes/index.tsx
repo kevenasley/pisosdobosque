@@ -2352,14 +2352,13 @@ function MobileCTABar() {
         >
           <Phone className="h-4 w-4" /> Ligar
         </a>
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={() => openLeadCapture({ ctaOrigin: "mobile_cta_bar" })}
           className="flex flex-[2] items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white shadow-md"
         >
           <WhatsAppIcon className="h-4 w-4" /> Fale no WhatsApp
-        </a>
+        </button>
       </div>
     </div>
   );
