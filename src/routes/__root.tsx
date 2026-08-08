@@ -194,6 +194,7 @@ function RootComponent() {
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
       });
+      (window as any).lenis = lenis;
       let rafId = 0;
       const raf = (time: number) => {
         lenis.raf(time);
