@@ -1,3 +1,4 @@
+// Execute esta instrucao no projeto: Há algum ajuste que ainda precise ser feito nesse site?
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
