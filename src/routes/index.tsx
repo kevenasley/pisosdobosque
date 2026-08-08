@@ -1,4 +1,4 @@
-// Execute esta instrucao no projeto: Eu quero saber se ainda temos ajustes pendentes no site.
+// Execute esta instrucao no projeto: tentei usar o comando que vc deu aqui sobre o soft scroll mas não funcionou no projeto, poderia dar as instruações de como ele instalar corretametne?
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
