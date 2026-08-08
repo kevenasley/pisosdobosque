@@ -1,4 +1,4 @@
-// Execute esta instrucao no projeto: Há algum ajuste que ainda precise ser feito nesse site?
+// Execute esta instrucao no projeto: Eu quero saber se ainda temos ajustes pendentes no site.
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
