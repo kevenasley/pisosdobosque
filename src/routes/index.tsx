@@ -1,4 +1,4 @@
-// Execute esta instrucao no projeto: tentei usar o comando que vc deu aqui sobre o soft scroll mas não funcionou no projeto, poderia dar as instruações de como ele instalar corretametne?
+// Execute esta instrucao no projeto: agora deu certo a ultima instrução sobre rolagem suave, mas a transição suave não funcionou, ela continua pulando, ou seja, ao clicar em algum botão ancora de alguma sessão, ele dá um pulo seco para lá ao invés de rolar a página de forma suave até lá, as transisções continuam todas muito "cruas"
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
