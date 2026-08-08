@@ -1,4 +1,4 @@
-// Execute esta instrucao no projeto: agora deu certo a ultima instrução sobre rolagem suave, mas a transição suave não funcionou, ela continua pulando, ou seja, ao clicar em algum botão ancora de alguma sessão, ele dá um pulo seco para lá ao invés de rolar a página de forma suave até lá, as transisções continuam todas muito "cruas"
+// Execute esta instrucao no projeto: Não, digo, eu quero a instrução para outro projeto como vc tinha feito sobre a rolagem suave.
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
