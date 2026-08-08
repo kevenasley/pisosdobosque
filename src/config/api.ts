@@ -9,7 +9,7 @@
 
 /** Web App público do Google Apps Script (planilha de leads) — URL fixa. */
 export const SHEETS_WEBHOOK_URL_FALLBACK =
-  "https://script.google.com/macros/s/AKfycbycJwWdUzopbiVd-IKt-yvvjySGmaYdxSmhzcFpy-i_qW6EEGhby0hmmC4SSykx4Mj_/exec";
+  "https://script.google.com/macros/s/AKfycbzQJcGilDC4Yya5mCvE6rXl2jh8nVKWc0lE6s7jsllMOMSnXDgBDCsBjVbalVG-xjtP9g/exec";
 
 /** URL efetiva do webhook de leads (fixa, sem variáveis de ambiente). */
 export const SHEETS_WEBHOOK_URL = SHEETS_WEBHOOK_URL_FALLBACK;
