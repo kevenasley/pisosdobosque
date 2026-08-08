@@ -190,6 +190,19 @@ export function trackGenerateLead(args: {
     fbc: readFbc(),
     ...(args.extra || {}),
   };
+
+  // Se for lead_direct, adicionamos os campos solicitados
+  if (args.eventName === "lead_direct") {
+    const leadId = (args.extra?.lead_id as string) || (args.extra?.transaction_id as string);
+    if (leadId) {
+      payload.lead_id = leadId;
+      payload.transaction_id = leadId;
+      payload.lead_type = "whatsapp_direct";
+      payload.value = 30;
+      payload.currency = "BRL";
+    }
+  }
+
   push(payload);
 
   const w = window as unknown as DL;

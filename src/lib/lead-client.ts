@@ -8,8 +8,8 @@
 import { SHEETS_WEBHOOK_URL } from "@/config/api";
 
 export type LeadPayload = {
-  name: string;
-  phone: string;
+  name?: string;
+  phone?: string;
   email?: string;
   reason?: string;
   hashed_phone?: string;
@@ -22,6 +22,11 @@ export type LeadPayload = {
   country?: string;
   ip?: string;
   attribution?: Record<string, string>;
+  lead_id?: string;
+  tipo_lead?: string;
+  valor_conversao?: string;
+  evento?: string;
+  status?: string;
 };
 
 export type LeadResult = { success: boolean; reason?: string };
@@ -30,8 +35,13 @@ function buildBody(data: LeadPayload) {
   const attr = data.attribution ?? {};
   return {
     ...attr,
-    name: data.name,
-    phone: data.phone,
+    lead_id: data.lead_id ?? "",
+    tipo_lead: data.tipo_lead ?? "",
+    valor_conversao: data.valor_conversao ?? "",
+    evento: data.evento ?? "",
+    status: data.status ?? "",
+    name: data.name ?? "",
+    phone: data.phone ?? "",
     utm_source: attr.utm_source ?? "",
     utm_medium: attr.utm_medium ?? "",
     utm_campaign: attr.utm_campaign ?? "",

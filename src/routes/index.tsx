@@ -397,16 +397,15 @@ function WhatsAppButton({
   ariaLabel?: string;
 }) {
   return (
-    <a
-      href={WHATSAPP_URL}
-      target="_blank"
-      rel="noopener noreferrer"
+    <button
+      type="button"
+      onClick={() => openLeadCapture({ ctaOrigin: ariaLabel || "whatsapp_button" })}
       aria-label={ariaLabel}
       className={`inline-flex items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 ease-out hover:brightness-95 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] ${className}`}
     >
       <WhatsAppIcon className="h-5 w-5" />
       {children}
-    </a>
+    </button>
   );
 }
 
@@ -2018,15 +2017,14 @@ function About() {
                 Tire suas dúvidas, peça um orçamento ou agende uma visita ao showroom.
               </p>
             </div>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => openLeadCapture({ ctaOrigin: "footer_cta_about" })}
               className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand-green-teal hover:shadow-md sm:w-auto"
             >
               <WhatsAppIcon className="h-5 w-5" />
               Fale Conosco no WhatsApp
-            </a>
+            </button>
           </div>
         </Reveal>
       </div>
@@ -2352,14 +2350,13 @@ function MobileCTABar() {
         >
           <Phone className="h-4 w-4" /> Ligar
         </a>
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={() => openLeadCapture({ ctaOrigin: "mobile_cta_bar" })}
           className="flex flex-[2] items-center justify-center gap-2 rounded-md bg-brand-whatsapp px-4 py-2.5 text-sm font-semibold text-white shadow-md"
         >
           <WhatsAppIcon className="h-4 w-4" /> Fale no WhatsApp
-        </a>
+        </button>
       </div>
     </div>
   );
