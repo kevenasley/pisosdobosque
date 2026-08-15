@@ -1,6 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
+import LoginPage from "@/components/dashboard/LoginPage";
+
 
 export const Route = createFileRoute("/painel/login")({
   validateSearch: z.object({
@@ -20,4 +22,6 @@ export const Route = createFileRoute("/painel/login")({
       { title: "Login | Painel Pisos do Bosque" },
     ],
   }),
+  component: LoginPage,
 });
+
