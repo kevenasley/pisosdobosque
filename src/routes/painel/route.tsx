@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/painel")({
   beforeLoad: async ({ location }) => {
     if (typeof window === "undefined") return; // Skip during SSG/SSR
+    
+    // Check session
     const { data } = await supabase.auth.getSession();
 
     if (!data.session) {
