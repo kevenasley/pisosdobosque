@@ -14,7 +14,126 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      meta_ads_config: {
+        Row: {
+          key: string
+          updated_at: string | null
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string | null
+          value: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string | null
+          value?: Json
+        }
+        Relationships: []
+      }
+      meta_ads_daily: {
+        Row: {
+          account_id: string
+          campaign_id: string
+          campaign_name: string
+          campaign_status: string
+          clicks: number
+          cpc: number | null
+          cpl: number | null
+          cpm: number | null
+          ctr: number | null
+          date: string
+          frequency: number | null
+          id: string
+          impressions: number
+          lead_action_type: string | null
+          leads: number | null
+          link_clicks: number
+          objective: string | null
+          reach: number
+          spend: number
+          updated_at: string | null
+        }
+        Insert: {
+          account_id: string
+          campaign_id: string
+          campaign_name: string
+          campaign_status: string
+          clicks?: number
+          cpc?: number | null
+          cpl?: number | null
+          cpm?: number | null
+          ctr?: number | null
+          date: string
+          frequency?: number | null
+          id?: string
+          impressions?: number
+          lead_action_type?: string | null
+          leads?: number | null
+          link_clicks?: number
+          objective?: string | null
+          reach?: number
+          spend?: number
+          updated_at?: string | null
+        }
+        Update: {
+          account_id?: string
+          campaign_id?: string
+          campaign_name?: string
+          campaign_status?: string
+          clicks?: number
+          cpc?: number | null
+          cpl?: number | null
+          cpm?: number | null
+          ctr?: number | null
+          date?: string
+          frequency?: number | null
+          id?: string
+          impressions?: number
+          lead_action_type?: string | null
+          leads?: number | null
+          link_clicks?: number
+          objective?: string | null
+          reach?: number
+          spend?: number
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      meta_ads_sync_runs: {
+        Row: {
+          date_from: string | null
+          date_to: string | null
+          error_message: string | null
+          finished_at: string | null
+          id: string
+          records_processed: number | null
+          started_at: string | null
+          status: string
+        }
+        Insert: {
+          date_from?: string | null
+          date_to?: string | null
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          records_processed?: number | null
+          started_at?: string | null
+          status: string
+        }
+        Update: {
+          date_from?: string | null
+          date_to?: string | null
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          records_processed?: number | null
+          started_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
