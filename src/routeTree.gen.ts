@@ -14,6 +14,8 @@ import { Route as PainelRouteRouteImport } from './routes/painel/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PainelIndexRouteImport } from './routes/painel/index'
 import { Route as PainelLoginRouteImport } from './routes/painel/login'
+import { Route as ApiDashboardSyncMetaAdsRouteImport } from './routes/api/dashboard/sync-meta-ads'
+import { Route as ApiDashboardGetMetaDashboardRouteImport } from './routes/api/dashboard/get-meta-dashboard'
 
 const ObrigadoRoute = ObrigadoRouteImport.update({
   id: '/obrigado',
@@ -40,6 +42,17 @@ const PainelLoginRoute = PainelLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => PainelRouteRoute,
 } as any)
+const ApiDashboardSyncMetaAdsRoute = ApiDashboardSyncMetaAdsRouteImport.update({
+  id: '/api/dashboard/sync-meta-ads',
+  path: '/api/dashboard/sync-meta-ads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDashboardGetMetaDashboardRoute =
+  ApiDashboardGetMetaDashboardRouteImport.update({
+    id: '/api/dashboard/get-meta-dashboard',
+    path: '/api/dashboard/get-meta-dashboard',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,12 +60,16 @@ export interface FileRoutesByFullPath {
   '/obrigado': typeof ObrigadoRoute
   '/painel/login': typeof PainelLoginRoute
   '/painel/': typeof PainelIndexRoute
+  '/api/dashboard/get-meta-dashboard': typeof ApiDashboardGetMetaDashboardRoute
+  '/api/dashboard/sync-meta-ads': typeof ApiDashboardSyncMetaAdsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/obrigado': typeof ObrigadoRoute
   '/painel/login': typeof PainelLoginRoute
   '/painel': typeof PainelIndexRoute
+  '/api/dashboard/get-meta-dashboard': typeof ApiDashboardGetMetaDashboardRoute
+  '/api/dashboard/sync-meta-ads': typeof ApiDashboardSyncMetaAdsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,19 +78,44 @@ export interface FileRoutesById {
   '/obrigado': typeof ObrigadoRoute
   '/painel/login': typeof PainelLoginRoute
   '/painel/': typeof PainelIndexRoute
+  '/api/dashboard/get-meta-dashboard': typeof ApiDashboardGetMetaDashboardRoute
+  '/api/dashboard/sync-meta-ads': typeof ApiDashboardSyncMetaAdsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/painel' | '/obrigado' | '/painel/login' | '/painel/'
+  fullPaths:
+    | '/'
+    | '/painel'
+    | '/obrigado'
+    | '/painel/login'
+    | '/painel/'
+    | '/api/dashboard/get-meta-dashboard'
+    | '/api/dashboard/sync-meta-ads'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/obrigado' | '/painel/login' | '/painel'
-  id: '__root__' | '/' | '/painel' | '/obrigado' | '/painel/login' | '/painel/'
+  to:
+    | '/'
+    | '/obrigado'
+    | '/painel/login'
+    | '/painel'
+    | '/api/dashboard/get-meta-dashboard'
+    | '/api/dashboard/sync-meta-ads'
+  id:
+    | '__root__'
+    | '/'
+    | '/painel'
+    | '/obrigado'
+    | '/painel/login'
+    | '/painel/'
+    | '/api/dashboard/get-meta-dashboard'
+    | '/api/dashboard/sync-meta-ads'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PainelRouteRoute: typeof PainelRouteRouteWithChildren
   ObrigadoRoute: typeof ObrigadoRoute
+  ApiDashboardGetMetaDashboardRoute: typeof ApiDashboardGetMetaDashboardRoute
+  ApiDashboardSyncMetaAdsRoute: typeof ApiDashboardSyncMetaAdsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -113,6 +155,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PainelLoginRouteImport
       parentRoute: typeof PainelRouteRoute
     }
+    '/api/dashboard/sync-meta-ads': {
+      id: '/api/dashboard/sync-meta-ads'
+      path: '/api/dashboard/sync-meta-ads'
+      fullPath: '/api/dashboard/sync-meta-ads'
+      preLoaderRoute: typeof ApiDashboardSyncMetaAdsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/dashboard/get-meta-dashboard': {
+      id: '/api/dashboard/get-meta-dashboard'
+      path: '/api/dashboard/get-meta-dashboard'
+      fullPath: '/api/dashboard/get-meta-dashboard'
+      preLoaderRoute: typeof ApiDashboardGetMetaDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -134,6 +190,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PainelRouteRoute: PainelRouteRouteWithChildren,
   ObrigadoRoute: ObrigadoRoute,
+  ApiDashboardGetMetaDashboardRoute: ApiDashboardGetMetaDashboardRoute,
+  ApiDashboardSyncMetaAdsRoute: ApiDashboardSyncMetaAdsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
