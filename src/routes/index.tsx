@@ -1,6 +1,4 @@
-// Execute esta instrucao no projeto: "Fale no WhatsApp" clicks not saved to leads sheet
-// When a visitor chooses to skip the form and go straight to WhatsApp, the site tries to log that click to the leads spreadsheet but then immediately navigates the page to /obrigado, which cancels the request — so most of these "direct WhatsApp" leads never appear in the sheet the owner uses to track and follow up on them.Mais informações
-// tente corrigir.
+// Execute esta instrucao no projeto: Correçõo o preço do piso mykonos bronw é de 26,90
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -204,7 +202,7 @@ type Product = { img: string; name: string; size: string; price: string };
 const ceramica: Product[] = [
   { img: "/piso-interno-esmaltado-angelus-gray.webp", name: "Piso Interno Esmaltado Angelus Gray", size: "60 x 60 cm", price: "R$ 23,90 m²" },
   { img: "/piso-santorini-bege-esmaltado.webp", name: "Piso Santorini Bege Esmaltado", size: "60 x 60 cm", price: "R$ 26,90 m²" },
-  { img: "/piso-externo-mykonos-brown.webp", name: "Piso Externo Mykonos Brown", size: "53 x 53 cm", price: "R$ 26,60 m²" },
+  { img: "/piso-externo-mykonos-brown.webp", name: "Piso Externo Mykonos Brown", size: "53 x 53 cm", price: "R$ 26,90 m²" },
   { img: "/piso-externo-angelus-gray.webp", name: "Piso Externo Angelus Gray", size: "60 x 60 cm", price: "R$ 26,90 m²" },
   { img: "/piso-interno-esmaltado-legno-linear.webp", name: "Piso Interno Esmaltado Legno Linear", size: "60 x 60 cm", price: "R$ 29,90 m²" },
   { img: "/piso-astano-gris-matte-retificado.webp", name: "Piso Astano Gris Matte Retificado", size: "75 x 75 cm", price: "R$ 49,90 m²" },
