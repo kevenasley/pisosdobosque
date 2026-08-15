@@ -1,4 +1,138 @@
-// Execute esta instrucao no projeto: Vamos mudar a integração da Meta para usar Cloudflare Pages Functions.\n// \n// IMPORTANTE SOBRE A ARQUITETURA:\n// \n// - Lovable continua sendo apenas o editor do código.\n// - GitHub continua armazenando o código.\n// - Cloudflare Pages continua sendo a hospedagem de produção.\n// - NÃO usar Lovable Cloud Edge Functions para a Meta.\n// - NÃO usar createServerFn.\n// - NÃO usar TanStack Server Routes.\n// - NÃO usar RPC para chamar a Meta.\n// - NÃO colocar nenhum token no frontend.\n// \n// Os seguintes Secrets JÁ estão configurados no Cloudflare Pages:\n// \n// META_ACCESS_TOKEN\n// META_AD_ACCOUNT_ID\n// META_GRAPH_API_VERSION\n// \n// Agora faça SOMENTE um teste de conexão.\n// \n// ==================================================\n// CRIAR CLOUDFLARE PAGES FUNCTION\n// ==================================================\n// \n// Crie na RAIZ do projeto:\n// \n// functions/api/meta/test.js\n// \n// IMPORTANTE:\n// A pasta /functions deve ficar na raiz do projeto, e NÃO dentro de src, public ou dist.\n// \n// Esta função será executada pelo Cloudflare Pages Functions.\n// \n// Ela deverá exportar:\n// \n// onRequestGet(context)\n// \n// ==================================================\n// FUNCIONAMENTO\n// ==================================================\n// \n// A função deve ler exclusivamente de:\n// \n// context.env.META_ACCESS_TOKEN\n// context.env.META_AD_ACCOUNT_ID\n// context.env.META_GRAPH_API_VERSION\n// \n// Nunca colocar valores hardcoded.\n// \n// Validar se os três existem.\n// \n// Se algum estiver ausente, retornar JSON:\n// \n// {\n//   \"success\": false,\n//   \"error\": \"CONFIG_MISSING\"\n// }\n// \n// sem revelar qual valor secreto estava configurado.\n// \n// ==================================================\n// TESTE META API\n// ==================================================\n// \n// Fazer uma requisição server-side para:\n// \n// https://graph.facebook.com/{META_GRAPH_API_VERSION}/act_{META_AD_ACCOUNT_ID}\n// \n// Solicitar somente:\n// \n// fields=id,name\n// \n// Utilizar:\n// \n// Authorization: Bearer {META_ACCESS_TOKEN}\n// \n// Preferir Authorization header em vez de colocar o access_token na URL.\n// \n// ==================================================\n// RESPOSTA DE SUCESSO\n// ==================================================\n// \n// Retornar somente:\n// \n// {\n//   \"success\": true,\n//   \"account_id\": \"...\",\n//   \"account_name\": \"...\"\n// }\n// \n// Adicionar:\n// \n// Content-Type: application/json\n// Cache-Control: no-store\n// \n// ==================================================\n// TRATAMENTO DE ERRO\n// ==================================================\n// \n// Caso a Meta retorne erro:\n// \n// retornar apenas:\n// \n// {\n//   \"success\": false,\n//   \"meta_error\": {\n//     \"message\": \"...\",\n//     \"code\": \"...\",\n//     \"type\": \"...\"\n//   }\n// }\n// \n// Nunca retornar:\n// \n// - access token\n// - Authorization header\n// - request completa\n// - Secrets\n// - stack trace\n// - variáveis de ambiente\n// \n// Não registrar o token em logs.\n// \n// ==================================================\n// IMPORTANTE\n// ==================================================\n// \n// Este é apenas um endpoint TEMPORÁRIO de diagnóstico.\n// \n// Não ligar ao dashboard ainda.\n// \n// Não alterar:\n// \n// - /painel\n// - autenticação\n// - banco\n// - GTM\n// - GA4\n// - Meta Pixel\n// - formulários\n// - Cloudflare configuration\n// - domínio\n// \n// Não criar nenhuma sincronização automática.\n// \n// Não alterar nenhum Secret.\n// \n// Não usar mocks.\n// \n// ==================================================\n// VALIDAÇÃO\n// ==================================================\n// \n// Depois de criar:\n// \n// 1. rode o build normal do projeto;\n// 2. confirme que o build continua funcionando;\n// 3. confirme que existe exatamente:\n// \n// /functions/api/meta/test.js\n// \n// 4. confirme que nenhum Secret foi adicionado ao código;\n// 5. confirme que nenhum arquivo .env contendo credenciais foi criado;\n// 6. informe quais arquivos foram alterados.\n// \n// Não tente executar a função dentro do ambiente do Lovable, porque os Secrets estão configurados no Cloudflare e só estarão disponíveis depois que a versão for implantada no Cloudflare Pages.
+// Execute esta instrucao no projeto: A conexão de teste com a Meta funcionou corretamente.
+// 
+// O endpoint:
+// 
+// /api/meta/test
+// 
+// retornou com sucesso a conta:
+// 
+// "Atual | Pisos do Bosque"
+// 
+// Agora quero criar SOMENTE um segundo endpoint temporário de diagnóstico para listar as campanhas reais dessa conta.
+// 
+// NÃO altere o dashboard ainda.
+// NÃO altere autenticação.
+// NÃO altere GTM, GA4, Pixel ou formulários.
+// NÃO crie sincronização automática.
+// NÃO mexa nos Secrets.
+// 
+// ==================================================
+// NOVO ENDPOINT
+// ==================================================
+// 
+// Criar na raiz:
+// 
+// functions/api/meta/campaigns.js
+// 
+// Ele deverá ser uma Cloudflare Pages Function.
+// 
+// Usar:
+// 
+// context.env.META_ACCESS_TOKEN
+// context.env.META_AD_ACCOUNT_ID
+// context.env.META_GRAPH_API_VERSION
+// 
+// Nunca hardcodear esses valores.
+// 
+// ==================================================
+// CHAMADA META
+// ==================================================
+// 
+// Consultar:
+// 
+// https://graph.facebook.com/{META_GRAPH_API_VERSION}/act_{META_AD_ACCOUNT_ID}/campaigns
+// 
+// Solicitar somente:
+// 
+// id
+// name
+// status
+// effective_status
+// objective
+// 
+// Usar:
+// 
+// Authorization: Bearer {META_ACCESS_TOKEN}
+// 
+// Não colocar access_token na URL.
+// 
+// Utilizar limit=100.
+// 
+// ==================================================
+// RESPOSTA
+// ==================================================
+// 
+// Em caso de sucesso retornar:
+// 
+// {
+//   "success": true,
+//   "count": número_de_campanhas,
+//   "campaigns": [
+//     {
+//       "id": "...",
+//       "name": "...",
+//       "status": "...",
+//       "effective_status": "...",
+//       "objective": "..."
+//     }
+//   ]
+// }
+// 
+// Não retornar:
+// - token;
+// - Authorization header;
+// - Secrets;
+// - URL completa da Meta;
+// - stack trace;
+// - paging URL da Meta.
+// 
+// Se existirem mais de 100 campanhas, pode retornar:
+// 
+// "has_more": true
+// 
+// sem retornar qualquer URL de paginação.
+// 
+// Adicionar:
+// 
+// Content-Type: application/json
+// Cache-Control: no-store
+// 
+// ==================================================
+// ERROS
+// ==================================================
+// 
+// Sanitizar erros da Meta.
+// 
+// Retornar apenas:
+// 
+// {
+//   "success": false,
+//   "meta_error": {
+//     "message": "...",
+//     "code": "...",
+//     "type": "..."
+//   }
+// }
+// 
+// Nunca registrar ou retornar o token.
+// 
+// ==================================================
+// IMPORTANTE
+// ==================================================
+// 
+// Não remover /api/meta/test ainda.
+// 
+// Não conectar esse endpoint ao dashboard.
+// 
+// Não fazer nenhuma alteração visual.
+// 
+// Rode o build e confirme que foi criado exatamente:
+// 
+// /functions/api/meta/campaigns.js
+// 
+// Depois informe os arquivos alterados.
+// 
+// A função será testada somente depois do deploy no Cloudflare Pages.
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
