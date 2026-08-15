@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -74,6 +74,39 @@ export function MarketingDashboard() {
       setLoading(false);
     }
   };
+
+  /**
+   * Helper to call authenticated Cloudflare Pages Functions
+   * Use this for future integrations with /api/meta/*
+   */
+  const callMetaApi = useCallback(async (endpoint: string, options: RequestInit = {}) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate({ to: "/painel/login" });
+        throw new Error("No session");
+      }
+
+      const response = await fetch(endpoint, {
+        ...options,
+        headers: {
+          ...options.headers,
+          "Authorization": `Bearer ${session.access_token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 401) {
+        navigate({ to: "/painel/login" });
+        throw new Error("Unauthorized");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(`Error calling ${endpoint}:`, error);
+      throw error;
+    }
+  }, [navigate]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
