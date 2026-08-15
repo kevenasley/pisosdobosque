@@ -1,4 +1,6 @@
-// Execute esta instrucao no projeto: Ajustar o preço do piso externo mykonos para 26,60
+// Execute esta instrucao no projeto: "Fale no WhatsApp" clicks not saved to leads sheet
+// When a visitor chooses to skip the form and go straight to WhatsApp, the site tries to log that click to the leads spreadsheet but then immediately navigates the page to /obrigado, which cancels the request — so most of these "direct WhatsApp" leads never appear in the sheet the owner uses to track and follow up on them.Mais informações
+// tente corrigir.
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
