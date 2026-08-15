@@ -12,7 +12,8 @@ export default defineConfig({
   nitro: false,
   tanstackStart: {
     prerender: { enabled: true, crawlLinks: false },
-    pages: [{ path: "/" }, { path: "/obrigado" }, { path: "/painel" }, { path: "/painel/login" }],
+    pages: [{ path: "/" }, { path: "/obrigado" }],
   },
 });
+
 
