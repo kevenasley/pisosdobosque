@@ -1,15 +1,172 @@
-// Execute esta instrucao no projeto: Me informe somente o valor atual de:
+// Execute esta instrucao no projeto: Agora quero proteger TODOS os endpoints:
 // 
-// VITE_SUPABASE_PUBLISHABLE_KEY
+// /api/meta/*
 // 
-// Essa é uma chave pública/publishable.
+// Eles NÃO podem mais responder para usuários não autenticados.
 // 
-// NÃO mostre:
-// - SUPABASE_SERVICE_ROLE_KEY
-// - service_role
-// - JWT secret
-// - database password
-// - nenhum outro Secret.
+// A autenticação do painel utiliza Supabase/Lovable Cloud.
+// 
+// No Cloudflare já existem:
+// 
+// SUPABASE_URL
+// SUPABASE_PUBLISHABLE_KEY
+// 
+// Também continuam existindo os Secrets da Meta.
+// 
+// ==================================================
+// CRIAR MIDDLEWARE
+// ==================================================
+// 
+// Criar exatamente:
+// 
+// functions/api/meta/_middleware.js
+// 
+// Esse middleware deve proteger automaticamente todas as Cloudflare Pages Functions dentro de:
+// 
+// functions/api/meta/
+// 
+// ==================================================
+// AUTENTICAÇÃO
+// ==================================================
+// 
+// 1. Ler o header:
+// 
+// Authorization
+// 
+// 2. Exigir formato:
+// 
+// Bearer <access_token_do_usuario>
+// 
+// 3. Se não houver Bearer token, retornar:
+// 
+// HTTP 401
+// 
+// {
+//   "success": false,
+//   "error": "UNAUTHORIZED"
+// }
+// 
+// 4. Validar esse access token diretamente no Supabase Auth usando:
+// 
+// GET {SUPABASE_URL}/auth/v1/user
+// 
+// Headers:
+// 
+// apikey: {SUPABASE_PUBLISHABLE_KEY}
+// Authorization: Bearer {access_token_do_usuario}
+// 
+// Essa é a validação oficial do token do usuário.
+// 
+// 5. Considerar autenticado SOMENTE se o Supabase responder HTTP 200 e retornar usuário válido.
+// 
+// 6. Se inválido ou expirado:
+// 
+// HTTP 401
+// 
+// {
+//   "success": false,
+//   "error": "UNAUTHORIZED"
+// }
+// 
+// 7. Se válido:
+// 
+// armazenar de forma segura no context.data:
+// 
+// context.data.user = {
+//   id: user.id,
+//   email: user.email
+// }
+// 
+// e continuar:
+// 
+// return context.next()
+// 
+// ==================================================
+// SEGURANÇA
+// ==================================================
+// 
+// Nunca:
+// 
+// - aceitar SUPABASE_PUBLISHABLE_KEY como Bearer token;
+// - usar SERVICE_ROLE_KEY;
+// - expor JWT em resposta;
+// - registrar JWT completo em logs;
+// - retornar resposta bruta do Supabase;
+// - retornar qualquer Secret;
+// - deixar fallback anônimo.
+// 
+// Adicionar:
+// 
+// Cache-Control: no-store
+// 
+// às respostas 401.
+// 
+// ==================================================
+// FRONTEND DO PAINEL
+// ==================================================
+// 
+// Atualize apenas o cliente do dashboard para que, ao chamar futuramente endpoints /api/meta/*:
+// 
+// 1. obtenha a sessão atual usando o cliente Supabase já existente;
+// 2. pegue session.access_token;
+// 3. envie:
+// 
+// Authorization: Bearer ${session.access_token}
+// 
+// Não hardcodear JWT.
+// 
+// Se a sessão estiver ausente:
+// redirecionar para /painel/login.
+// 
+// IMPORTANTE:
+// Não conecte ainda os dados do dashboard final.
+// Quero apenas preparar o mecanismo autenticado para as chamadas API.
+// 
+// ==================================================
+// ENDPOINTS EXISTENTES
+// ==================================================
+// 
+// Manter temporariamente:
+// 
+// /api/meta/test
+// /api/meta/campaigns
+// /api/meta/insights
+// 
+// Mas agora TODOS devem passar pelo middleware.
+// 
+// ==================================================
+// NÃO ALTERAR
+// ==================================================
+// 
+// Não alterar:
+// 
+// - GTM
+// - GA4
+// - Meta Pixel
+// - formulários
+// - banco
+// - Cloudflare settings
+// - Secrets
+// - domínio
+// - Pages públicas
+// 
+// Não criar dados mockados.
+// 
+// ==================================================
+// VALIDAÇÃO
+// ==================================================
+// 
+// 1. Rodar build.
+// 2. Confirmar criação de:
+// 
+// functions/api/meta/_middleware.js
+// 
+// 3. Confirmar que nenhuma service role key foi adicionada.
+// 4. Confirmar que nenhum JWT foi hardcoded.
+// 5. Confirmar que /api/meta/* exige Authorization Bearer válido.
+// 6. Informar arquivos alterados.
+// 
+// Não fazer mudanças visuais no dashboard nesta etapa.
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
