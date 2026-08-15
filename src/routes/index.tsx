@@ -1,4 +1,4 @@
-// redeploy após atualização das variáveis do Cloudflare
+// redeploy após atualização das variáveis do Cloudflare e implementação do dashboard real
 
 
 // 
