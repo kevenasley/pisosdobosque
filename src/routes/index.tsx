@@ -1,138 +1,199 @@
-// Execute esta instrucao no projeto: A conexão de teste com a Meta funcionou corretamente.
+// Execute esta instrucao no projeto: A conexão com a Meta e a listagem de campanhas funcionaram.
 // 
-// O endpoint:
+// Agora quero criar um TERCEIRO endpoint temporário de diagnóstico para consultar os Insights reais da conta.
 // 
-// /api/meta/test
-// 
-// retornou com sucesso a conta:
-// 
-// "Atual | Pisos do Bosque"
-// 
-// Agora quero criar SOMENTE um segundo endpoint temporário de diagnóstico para listar as campanhas reais dessa conta.
-// 
-// NÃO altere o dashboard ainda.
-// NÃO altere autenticação.
-// NÃO altere GTM, GA4, Pixel ou formulários.
-// NÃO crie sincronização automática.
-// NÃO mexa nos Secrets.
+// Não altere o dashboard ainda.
+// Não grave nada no banco.
+// Não crie sincronização automática.
+// Não altere Secrets.
+// Não mexa em GTM, GA4, Pixel, formulários ou autenticação.
 // 
 // ==================================================
-// NOVO ENDPOINT
+// ARQUIVO
 // ==================================================
 // 
 // Criar na raiz:
 // 
-// functions/api/meta/campaigns.js
+// functions/api/meta/insights.js
 // 
-// Ele deverá ser uma Cloudflare Pages Function.
+// Cloudflare Pages Function.
 // 
-// Usar:
+// Usar exclusivamente:
 // 
 // context.env.META_ACCESS_TOKEN
 // context.env.META_AD_ACCOUNT_ID
 // context.env.META_GRAPH_API_VERSION
 // 
-// Nunca hardcodear esses valores.
+// Nunca hardcodear credenciais.
 // 
 // ==================================================
-// CHAMADA META
+// OBJETIVO
 // ==================================================
 // 
-// Consultar:
+// Consultar a Meta Marketing API no nível de CAMPANHA para os ÚLTIMOS 7 DIAS, com detalhamento POR DIA.
 // 
-// https://graph.facebook.com/{META_GRAPH_API_VERSION}/act_{META_AD_ACCOUNT_ID}/campaigns
+// Endpoint conceitual:
 // 
-// Solicitar somente:
+// https://graph.facebook.com/{META_GRAPH_API_VERSION}/act_{META_AD_ACCOUNT_ID}/insights
 // 
-// id
-// name
-// status
-// effective_status
-// objective
+// Usar Authorization:
+// 
+// Bearer {META_ACCESS_TOKEN}
+// 
+// Não colocar token na URL.
+// 
+// ==================================================
+// PARÂMETROS META
+// ==================================================
 // 
 // Usar:
 // 
-// Authorization: Bearer {META_ACCESS_TOKEN}
+// level=campaign
+// date_preset=last_7d
+// time_increment=1
+// limit=100
 // 
-// Não colocar access_token na URL.
+// Solicitar:
 // 
-// Utilizar limit=100.
+// date_start
+// date_stop
+// campaign_id
+// campaign_name
+// spend
+// impressions
+// reach
+// clicks
+// ctr
+// cpc
+// cpm
+// frequency
+// actions
+// cost_per_action_type
+// 
+// Não utilizar breakdowns nesta etapa.
 // 
 // ==================================================
-// RESPOSTA
+// PAGINAÇÃO
 // ==================================================
 // 
-// Em caso de sucesso retornar:
+// Se a API retornar várias páginas:
+// 
+// - fazer paginação internamente;
+// - reunir todos os registros;
+// - não retornar paging.next;
+// - não retornar URLs da Meta;
+// - não retornar token.
+// 
+// Implementar limite de segurança para evitar loop infinito.
+// 
+// ==================================================
+// IMPORTANTE SOBRE LEADS
+// ==================================================
+// 
+// NÃO decidir ainda qual action_type significa lead.
+// 
+// Quero receber temporariamente os arrays:
+// 
+// actions
+// cost_per_action_type
+// 
+// para conseguirmos inspecionar quais action_types a conta realmente utiliza.
+// 
+// Não somar vários tipos de ações como lead.
+// Não inventar "Resultados".
+// Não calcular CPL nesta etapa.
+// 
+// ==================================================
+// FORMATAÇÃO
+// ==================================================
+// 
+// Retornar JSON:
 // 
 // {
 //   "success": true,
-//   "count": número_de_campanhas,
-//   "campaigns": [
+//   "period": "last_7d",
+//   "count": X,
+//   "rows": [
 //     {
-//       "id": "...",
-//       "name": "...",
-//       "status": "...",
-//       "effective_status": "...",
-//       "objective": "..."
+//       "date_start": "...",
+//       "date_stop": "...",
+//       "campaign_id": "...",
+//       "campaign_name": "...",
+//       "spend": "...",
+//       "impressions": "...",
+//       "reach": "...",
+//       "clicks": "...",
+//       "ctr": "...",
+//       "cpc": "...",
+//       "cpm": "...",
+//       "frequency": "...",
+//       "actions": [...],
+//       "cost_per_action_type": [...]
 //     }
 //   ]
 // }
 // 
-// Não retornar:
-// - token;
-// - Authorization header;
-// - Secrets;
-// - URL completa da Meta;
-// - stack trace;
-// - paging URL da Meta.
+// Não transformar actions nesta etapa.
 // 
-// Se existirem mais de 100 campanhas, pode retornar:
+// ==================================================
+// SEGURANÇA
+// ==================================================
 // 
-// "has_more": true
+// Nunca retornar:
 // 
-// sem retornar qualquer URL de paginação.
+// - access token
+// - Authorization header
+// - Secrets
+// - URL completa da Graph API
+// - paging URL
+// - stack trace
+// - variáveis de ambiente
 // 
-// Adicionar:
-// 
-// Content-Type: application/json
 // Cache-Control: no-store
-// 
-// ==================================================
-// ERROS
-// ==================================================
+// Content-Type: application/json
 // 
 // Sanitizar erros da Meta.
 // 
-// Retornar apenas:
-// 
-// {
-//   "success": false,
-//   "meta_error": {
-//     "message": "...",
-//     "code": "...",
-//     "type": "..."
-//   }
-// }
-// 
-// Nunca registrar ou retornar o token.
-// 
 // ==================================================
-// IMPORTANTE
+// NÃO ALTERAR
 // ==================================================
 // 
-// Não remover /api/meta/test ainda.
+// Não alterar:
 // 
-// Não conectar esse endpoint ao dashboard.
+// /painel
+// Banco
+// RPCs
+// Cloudflare settings
+// GitHub settings
+// GTM
+// GA4
+// Meta Pixel
+// Formulários
 // 
-// Não fazer nenhuma alteração visual.
+// Não remover ainda:
 // 
-// Rode o build e confirme que foi criado exatamente:
+// functions/api/meta/test.js
+// functions/api/meta/campaigns.js
 // 
-// /functions/api/meta/campaigns.js
+// ==================================================
+// VALIDAÇÃO
+// ==================================================
 // 
-// Depois informe os arquivos alterados.
+// Rodar build.
 // 
-// A função será testada somente depois do deploy no Cloudflare Pages.
+// Confirmar:
+// 
+// functions/api/meta/insights.js
+// 
+// Nenhuma credencial no código.
+// Nenhum arquivo .env criado.
+// 
+// Informar apenas:
+// - arquivo criado;
+// - resultado do build;
+// - arquivos alterados.
+// 
+// O endpoint será testado somente depois do deploy no Cloudflare.
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
