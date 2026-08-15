@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { 
   BarChart3, 
   TrendingUp, 
@@ -23,16 +24,15 @@ import {
   Tooltip, 
   ResponsiveContainer, 
   LineChart, 
-  Line,
-  Legend
+  Line
 } from "recharts";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export function MarketingDashboard() {
   const [loading, setLoading] = useState(true);
-  const [syncing, setSyncing] = useState(false);
   const [data, setData] = useState<any>(null);
   const navigate = useNavigate();
 
@@ -85,7 +85,18 @@ export function MarketingDashboard() {
     navigate({ to: "/painel/login" });
   };
 
-  if (loading) return <div className="p-12 text-center text-brand-green-teal">Carregando dados reais da Meta...</div>;
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 pt-8 space-y-4">
+        <Skeleton className="h-16 w-full" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Skeleton className="h-32" />
+          <Skeleton className="h-32" />
+          <Skeleton className="h-32" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-brand-cream font-sans pb-12">
@@ -116,7 +127,6 @@ export function MarketingDashboard() {
           </div>
         ) : (
           <>
-            {/* Hierarquia de KPIs */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <KPICard title="Investimento" value={`R$ ${data.totals.spend.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`} trend="Neutral" />
               <KPICard title="Conversas" value={data.totals.conversations.toString()} trend="Up" />
@@ -135,7 +145,6 @@ export function MarketingDashboard() {
               <KPICard title="CPL" value={`R$ ${data.totals.cpl?.toLocaleString('pt-BR', {minimumFractionDigits: 2}) || '0,00'}`} trend="Down" />
             </div>
 
-            {/* Gráficos */}
             <Card className="p-6">
               <CardTitle className="mb-6">Investimento x Conversas</CardTitle>
               <div className="h-[300px]">
@@ -153,31 +162,28 @@ export function MarketingDashboard() {
               </div>
             </Card>
 
-            {/* Tabelas de Campanhas e Detalhamento */}
             <Card className="p-6">
               <CardTitle className="mb-4">Desempenho por campanha</CardTitle>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b text-left text-muted-foreground uppercase text-[10px]">
-                      <th className="p-2">Campanha</th>
-                      <th className="p-2">Investimento</th>
-                      <th className="p-2">Conversas</th>
-                      <th className="p-2">Custo/Conv</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.campaigns.map((c: any) => (
-                      <tr key={c.campaign_id} className="border-b">
-                        <td className="p-2">{c.campaign_name}</td>
-                        <td className="p-2">R$ {c.spend.toLocaleString('pt-BR')}</td>
-                        <td className="p-2">{c.conversations}</td>
-                        <td className="p-2">R$ {c.cost_per_conversation?.toLocaleString('pt-BR') || '0'}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Campanha</TableHead>
+                    <TableHead>Investimento</TableHead>
+                    <TableHead>Conversas</TableHead>
+                    <TableHead>Custo/Conv</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {data.campaigns.map((c: any) => (
+                    <TableRow key={c.campaign_id}>
+                      <TableCell>{c.campaign_name}</TableCell>
+                      <TableCell>R$ {c.spend.toLocaleString('pt-BR')}</TableCell>
+                      <TableCell>{c.conversations}</TableCell>
+                      <TableCell>R$ {c.cost_per_conversation?.toLocaleString('pt-BR') || '0'}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </Card>
 
             <Accordion type="single" collapsible>
