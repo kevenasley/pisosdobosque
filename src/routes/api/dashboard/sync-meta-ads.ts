@@ -30,6 +30,7 @@ export const Route = createFileRoute("/api/dashboard/sync-meta-ads")({
           const metaVersion = process.env["META_GRAPH_API_VERSION"];
 
           if (!metaToken || !metaAccountId || !metaVersion) {
+            console.log("[sync-meta-ads] Secrets missing");
             return new Response(
               JSON.stringify({ error: "Meta Ads ainda não configurado", code: "CONFIG_MISSING" }),
               { status: 400, headers: { "Content-Type": "application/json" } }
