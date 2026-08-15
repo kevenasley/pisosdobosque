@@ -52,19 +52,20 @@ export function MarketingDashboard() {
         return;
       }
 
-      const response = await fetch("/api/dashboard/get-meta-dashboard", {
-        headers: { Authorization: `Bearer ${session.access_token}` }
-      });
+      const { data, error } = await supabase.rpc("get_meta_dashboard_data");
       
-      if (response.status === 401) {
-        navigate({ to: "/painel/login" });
-        return;
+      if (error) {
+        if (error.code === 'PGRST301' || error.message.includes('authorized')) {
+          navigate({ to: "/painel/login" });
+          return;
+        }
+        throw error;
       }
 
-      const data = await response.json();
-      setDailyData(data.dailyStats || []);
-      if (data.lastSync) {
-        setLastSync(new Date(data.lastSync).toLocaleString("pt-BR"));
+      const dashboardData = data as any;
+      setDailyData(dashboardData.dailyStats || []);
+      if (dashboardData.lastSync) {
+        setLastSync(new Date(dashboardData.lastSync).toLocaleString("pt-BR"));
       }
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
@@ -85,22 +86,18 @@ export function MarketingDashboard() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
 
-      const response = await fetch("/api/dashboard/sync-meta-ads", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${session.access_token}` }
-      });
+      const { data, error } = await supabase.rpc("sync_meta_ads_rpc");
 
-      const result = await response.json();
-      
-      if (!response.ok) {
+      if (error) {
+        toast.error(error.message || "Erro na sincronização");
+      } else {
+        const result = data as any;
         if (result.code === "CONFIG_MISSING") {
           toast.error("Meta Ads ainda não configurado no backend");
         } else {
-          toast.error(result.error || "Erro na sincronização");
+          toast.success("Sincronização iniciada com sucesso!");
+          fetchDashboardData();
         }
-      } else {
-        toast.success("Sincronização iniciada com sucesso!");
-        fetchDashboardData();
       }
     } catch (error) {
       toast.error("Erro de conexão");
