@@ -38,6 +38,8 @@ export function MarketingDashboard() {
   const [lastSync, setLastSync] = useState<string | null>(null);
   const [dailyData, setDailyData] = useState<any[]>([]);
   const navigate = useNavigate();
+  const [diagnosing, setDiagnosing] = useState(false);
+  const [diagResult, setDiagResult] = useState<any>(null);
 
   useEffect(() => {
     fetchDashboardData();
@@ -136,6 +138,21 @@ export function MarketingDashboard() {
       toast.error("Erro de conexão");
     } finally {
       setSyncing(false);
+    }
+  };
+
+  const handleRunDiagnosis = async () => {
+    setDiagnosing(true);
+    setDiagResult(null);
+    try {
+      const data = await callMetaApi("/api/meta/reach-test");
+      setDiagResult(data);
+      toast.success("Diagnóstico concluído");
+    } catch (error: any) {
+      setDiagResult({ error: error.message || "Erro desconhecido" });
+      toast.error("Erro no diagnóstico");
+    } finally {
+      setDiagnosing(false);
     }
   };
 
@@ -365,6 +382,40 @@ export function MarketingDashboard() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Bloco de Diagnóstico Temporário */}
+            <div className="mt-12 pt-8 border-t border-brand-green/10">
+              <div className="flex flex-col items-center gap-4">
+                <Button 
+                  variant="outline" 
+                  onClick={handleRunDiagnosis}
+                  disabled={diagnosing}
+                  className="text-xs text-muted-foreground hover:text-brand-orange border-dashed"
+                >
+                  {diagnosing ? (
+                    <>
+                      <RefreshCw className="h-3 w-3 mr-2 animate-spin" />
+                      Executando diagnóstico...
+                    </>
+                  ) : (
+                    "Diagnóstico de alcance"
+                  )}
+                </Button>
+
+                {diagResult && (
+                  <Card className="w-full max-w-4xl bg-slate-950 text-slate-50 border-none shadow-2xl overflow-hidden">
+                    <CardHeader className="py-3 px-6 bg-slate-900 border-b border-slate-800">
+                      <CardTitle className="text-xs font-mono text-slate-400 uppercase tracking-widest">Reach Diagnostics Output</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                      <pre className="text-[10px] sm:text-xs font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed opacity-90">
+                        {JSON.stringify(diagResult, null, 2)}
+                      </pre>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </div>
           </>
         )}
       </main>
