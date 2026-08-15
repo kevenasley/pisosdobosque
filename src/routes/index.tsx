@@ -1,4 +1,4 @@
-// Execute esta instrucao no projeto: Correçõo o preço do piso mykonos bronw é de 26,90
+// Execute esta instrucao no projeto: gere um documento para eu enviar essa ultima resposta para o chat gpt
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
