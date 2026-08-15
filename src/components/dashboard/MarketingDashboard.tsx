@@ -8,7 +8,6 @@ import {
   TrendingDown, 
   Users, 
   MousePointer2, 
-  Eye, 
   DollarSign, 
   RefreshCw,
   LogOut,
@@ -29,8 +28,6 @@ import {
 } from "recharts";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
-
-// Visual logic uses API data now. Mock constants removed.
 
 export function MarketingDashboard() {
   const [loading, setLoading] = useState(true);
@@ -77,10 +74,6 @@ export function MarketingDashboard() {
     }
   };
 
-  /**
-   * Helper to call authenticated Cloudflare Pages Functions
-   * Use this for future integrations with /api/meta/*
-   */
   const callMetaApi = useCallback(async (endpoint: string, options: RequestInit = {}) => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -262,7 +255,6 @@ export function MarketingDashboard() {
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <KPICard 
                 title="Investimento" 
                 value={`R$ ${totals.spend.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`} 
@@ -442,10 +434,6 @@ function DiagnosisBlock({ diagnosing, onRun, result }: {
           </Card>
         )}
       </div>
-    </div>
-  );
-}
-      </main>
     </div>
   );
 }
