@@ -1,208 +1,63 @@
-// Execute esta instrucao no projeto: Quero criar apenas um endpoint TEMPORÁRIO de diagnóstico para investigar uma divergência de Reach/Frequency entre a Meta Marketing API e o Ads Manager.
+// Execute esta instrucao no projeto: Quero adicionar TEMPORARIAMENTE ao /painel um botão de diagnóstico técnico para executar o endpoint autenticado já existente:
 //
-// NÃO altere o dashboard.
-// NÃO altere autenticação.
-// NÃO altere banco.
-// NÃO altere Secrets.
-// NÃO altere os outros endpoints.
-// NÃO faça sincronização.
-// NÃO altere GTM, GA4, Pixel ou formulários.
+// /api/meta/reach-test
 //
-// ==================================================
-// REFERÊNCIA DO ADS MANAGER
-// ==================================================
+// IMPORTANTE:
+// - Não alterar nenhuma lógica do dashboard.
+// - Não alterar autenticação.
+// - Não alterar Cloudflare Functions.
+// - Não alterar Meta API.
+// - Não alterar banco.
+// - Não alterar GTM, GA4, Pixel ou formulários.
+// - Este botão será removido depois do diagnóstico.
 //
-// Data:
-// 2026-08-14
-//
-// Campaign ID:
-// 120255229344600405
-//
-// Campaign name:
-// Engajamento | Julho (Refeito)
-//
-// No Ads Manager aparecem:
-//
-// spend = 142.99
-// impressions = 15284
-// reach = 13587
-// frequency ≈ 1.12
-//
-// Na consulta anterior da API vieram:
-//
-// spend = 142.99
-// impressions = 15284
-// reach = 7123
-// frequency = 2.145725
-//
-// Quero descobrir de onde vem a divergência.
+// Use o helper autenticado callMetaApi já existente no MarketingDashboard.tsx.
 //
 // ==================================================
-// CRIAR ENDPOINT
+// BOTÃO TEMPORÁRIO
 // ==================================================
 //
-// Criar:
+// Adicionar discretamente no final do dashboard, apenas para usuário autenticado:
 //
-// functions/api/meta/reach-test.js
+// "Diagnóstico de alcance"
 //
-// Como ele fica dentro de /api/meta/, deve continuar protegido pelo middleware autenticado existente.
+// Ao clicar:
 //
-// Usar:
+// 1. executar:
 //
-// context.env.META_ACCESS_TOKEN
-// context.env.META_AD_ACCOUNT_ID
-// context.env.META_GRAPH_API_VERSION
+// callMetaApi("/api/meta/reach-test")
 //
-// Nunca hardcodear Secrets.
+// 2. mostrar loading:
+// "Executando diagnóstico..."
 //
-// ==================================================
-// FAZER 3 CONSULTAS INDEPENDENTES
-// ==================================================
+// 3. ao terminar, renderizar na própria tela, em um bloco técnico simples, o JSON retornado.
 //
-// Todas para EXATAMENTE:
+// Não mostrar:
+// - access token
+// - JWT
+// - Secrets
+// - headers
+// - qualquer credencial
 //
-// since = 2026-08-14
-// until = 2026-08-14
-//
-// E solicitar apenas:
-//
-// date_start
-// date_stop
-// campaign_id
-// campaign_name
-// spend
-// impressions
-// reach
-// frequency
-//
-// ------------------------------------------
-// TESTE A — ENDPOINT DA CAMPANHA
-// ------------------------------------------
-//
-// Consultar diretamente:
-//
-// /120255229344600405/insights
-//
-// time_range:
-// 2026-08-14 até 2026-08-14
-//
-// SEM time_increment.
-//
-// ------------------------------------------
-// TESTE B — ENDPOINT DA CAMPANHA COM DIA
-// ------------------------------------------
-//
-// Consultar novamente:
-//
-// /120255229344600405/insights
-//
-// time_range:
-// 2026-08-14 até 2026-08-14
-//
-// time_increment=1
-//
-// ------------------------------------------
-// TESTE C — ENDPOINT DA CONTA
-// ------------------------------------------
-//
-// Consultar:
-//
-// /act_{META_AD_ACCOUNT_ID}/insights
-//
-// level=campaign
-//
-// time_range:
-// 2026-08-14 até 2026-08-14
-//
-// filtrar exclusivamente:
-//
-// campaign.id = 120255229344600405
-//
-// SEM breakdowns.
-//
-// ==================================================
-// RESULTADO DO DIAGNÓSTICO
-// ==================================================
-//
-// Retornar:
-//
-// {
-//   "success": true,
-//
-//   "expected_ads_manager": {
-//     "spend": 142.99,
-//     "impressions": 15284,
-//     "reach": 13587,
-//     "frequency": 1.12
-//   },
-//
-//   "test_a_campaign": {
-//     "spend": ...,
-//     "impressions": ...,
-//     "reach": ...,
-//     "frequency_api": ...,
-//     "frequency_calculated": impressions / reach
-//   },
-//
-//   "test_b_campaign_daily": {
-//     "spend": ...,
-//     "impressions": ...,
-//     "reach": ...,
-//     "frequency_api": ...,
-//     "frequency_calculated": impressions / reach
-//   },
-//
-//   "test_c_account_level_campaign": {
-//     "spend": ...,
-//     "impressions": ...,
-//     "reach": ...,
-//     "frequency_api": ...,
-//     "frequency_calculated": impressions / reach
-//   }
-// }
+// 4. Em caso de erro, mostrar apenas o JSON sanitizado retornado pelo endpoint.
 //
 // ==================================================
 // IMPORTANTE
 // ==================================================
 //
-// Não tente corrigir ou substituir os números.
+// Não modificar os valores retornados.
 //
-// Quero os valores BRUTOS devolvidos pela Meta em cada método.
+// Quero visualizar exatamente:
 //
-// Não arredondar reach ou impressions.
+// expected_ads_manager
 //
-// Pode arredondar apenas frequency_calculated para 6 casas.
+// test_a_campaign
 //
-// Não usar breakdown.
+// test_b_campaign_daily
 //
-// Não somar reach.
+// test_c_account_level_campaign
 //
-// Não inferir reach.
-//
-// Não reconstruir reach.
-//
-// Não utilizar dados de outras campanhas.
-//
-// Não alterar parâmetros de atribuição nesta etapa.
-//
-// ==================================================
-// SEGURANÇA
-// ==================================================
-//
-// Usar:
-//
-// Authorization: Bearer {META_ACCESS_TOKEN}
-//
-// Nunca retornar:
-//
-// - token
-// - authorization header
-// - Secrets
-// - URL completa com credenciais
-// - stack trace
-// - paging URL
-//
-// Cache-Control: no-store
+// Não interpretar nem corrigir os números.
 //
 // ==================================================
 // VALIDAÇÃO
@@ -210,16 +65,12 @@
 //
 // Rodar build.
 //
-// Confirmar existência de:
+// Confirmar que apenas o componente do dashboard foi alterado.
 //
-// functions/api/meta/reach-test.js
+// Não modificar nenhum endpoint.
 //
-// Informar apenas:
-// - arquivo criado;
-// - build;
-// - arquivos alterados.
-//
-// Não alterar o frontend.
+// Este recurso é TEMPORÁRIO e será removido depois do teste.
+
 
 // 
 // functions/api/meta/_middleware.js
