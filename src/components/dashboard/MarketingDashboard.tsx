@@ -1,52 +1,29 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  BarChart3, 
-  TrendingUp, 
-  TrendingDown, 
-  Users, 
-  MousePointer2, 
-  DollarSign, 
-  RefreshCw,
-  LogOut,
-  Calendar,
-  ChevronDown
-} from "lucide-react";
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer, 
-  LineChart, 
-  Line
-} from "recharts";
+import { RefreshCw, LogOut, TrendingUp, TrendingDown, ChevronDown } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Label } from "@/components/ui/label";
 
 export function MarketingDashboard() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
+  const [campaign, setCampaign] = useState("all");
+  const [period, setPeriod] = useState("last_7_days");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const from = new Date();
-      from.setDate(from.getDate() - 7);
-      const to = new Date();
-      const res = await callMetaApi(`/api/meta/dashboard?from=${from.toISOString().split('T')[0]}&to=${to.toISOString().split('T')[0]}`);
+      const { from, to } = calculateDates(period);
+      const res = await callMetaApi(`/api/meta/dashboard?from=${from}&to=${to}`);
       setData(res);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
@@ -54,165 +31,128 @@ export function MarketingDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [period]);
 
-  const callMetaApi = useCallback(async (endpoint: string, options: RequestInit = {}) => {
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const callMetaApi = useCallback(async (endpoint: string) => {
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      navigate({ to: "/painel/login" });
-      throw new Error("No session");
-    }
-
-    const response = await fetch(endpoint, {
-      ...options,
-      headers: {
-        ...options.headers,
-        "Authorization": `Bearer ${session.access_token}`,
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.status === 401) {
-      navigate({ to: "/painel/login" });
-      throw new Error("Unauthorized");
-    }
-
+    if (!session) { navigate({ to: "/painel/login" }); throw new Error("No session"); }
+    const response = await fetch(endpoint, { headers: { "Authorization": `Bearer ${session.access_token}` } });
+    if (response.status === 401) { navigate({ to: "/painel/login" }); throw new Error("Unauthorized"); }
     return await response.json();
   }, [navigate]);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate({ to: "/painel/login" });
-  };
+  if (loading || !data?.success) return <div className="p-12 text-center">Carregando...</div>;
 
-  if (loading) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 pt-8 space-y-4">
-        <Skeleton className="h-16 w-full" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Skeleton className="h-32" />
-          <Skeleton className="h-32" />
-          <Skeleton className="h-32" />
-        </div>
-      </div>
-    );
-  }
+  const filtered = filterData(data, campaign);
 
   return (
-    <div className="min-h-screen bg-brand-cream font-sans pb-12">
+    <div className="min-h-screen bg-brand-cream pb-12">
       <header className="bg-white border-b border-brand-green/10 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <img src="/logo-pisos-do-bosque.webp" alt="Logo" className="h-8" />
-            <h1 className="text-lg font-bold text-brand-green-teal">Painel de Marketing</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="text-right hidden sm:block">
-              <p className="text-[10px] uppercase text-muted-foreground">Última consulta</p>
-              <p className="text-xs font-bold text-brand-green-teal">{new Date().toLocaleTimeString('pt-BR')}</p>
-            </div>
-            <Button onClick={fetchData} size="sm" className="bg-brand-orange hover:bg-brand-orange/90">
-              <RefreshCw className="h-4 w-4 mr-2" /> Atualizar agora
-            </Button>
-            <Button variant="ghost" size="icon" onClick={handleLogout}><LogOut className="h-4 w-4" /></Button>
+        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+          <img src="/logo-pisos-do-bosque.webp" alt="Logo" className="h-10" />
+          <div className="flex gap-4">
+            <Button variant="outline" onClick={fetchData}><RefreshCw className="h-4 w-4 mr-2" /> Atualizar agora</Button>
+            <Button variant="ghost" onClick={() => supabase.auth.signOut().then(() => navigate({ to: "/painel/login" }))}><LogOut className="h-4 w-4" /></Button>
           </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 pt-8 space-y-8">
-        {!data?.success ? (
-          <div className="text-center p-12 bg-white rounded-xl shadow-elegant border border-red-100">
-            <h3 className="text-lg font-bold text-red-600">Não foi possível carregar os dados.</h3>
-            <Button onClick={fetchData} variant="outline" className="mt-4">Tentar novamente</Button>
+        <div className="flex flex-wrap gap-4 items-end bg-white p-4 rounded-lg shadow-sm border border-brand-green/5">
+          <div className="w-64">
+            <Label className="mb-2 block">Campanha</Label>
+            <Select onValueChange={setCampaign} value={campaign}>
+              <SelectTrigger><SelectValue placeholder="Todas as campanhas" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todas as campanhas</SelectItem>
+                {data.campaigns.map((c: any) => <SelectItem key={c.campaign_id} value={c.campaign_id}>{c.campaign_name}</SelectItem>)}
+              </SelectContent>
+            </Select>
           </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <KPICard title="Investimento" value={`R$ ${data.totals.spend.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`} trend="Neutral" />
-              <KPICard title="Conversas" value={data.totals.conversations.toString()} trend="Up" />
-              <KPICard title="Custo por Conversa" value={`R$ ${data.totals.cost_per_conversation?.toLocaleString('pt-BR', {minimumFractionDigits: 2}) || '0,00'}`} trend="Down" />
-            </div>
+          <div className="w-64">
+            <Label className="mb-2 block">Período</Label>
+            <Select onValueChange={setPeriod} value={period}>
+              <SelectTrigger><SelectValue placeholder="Últimos 7 dias" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="today">Hoje</SelectItem>
+                <SelectItem value="yesterday">Ontem</SelectItem>
+                <SelectItem value="last_7_days">Últimos 7 dias</SelectItem>
+                <SelectItem value="last_30_days">Últimos 30 dias</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <KPICard title="Impressões" value={data.totals.impressions.toLocaleString('pt-BR')} trend="Neutral" />
-              <KPICard title="Cliques no link" value={data.totals.link_clicks.toLocaleString('pt-BR')} trend="Up" />
-              <KPICard title="CTR" value={`${data.totals.link_ctr?.toFixed(1) || '0'}%`} trend="Up" />
-              <KPICard title="CPC" value={`R$ ${data.totals.link_cpc?.toLocaleString('pt-BR', {minimumFractionDigits: 2}) || '0,00'}`} trend="Down" />
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <KPICard title="Investimento" value={`R$ ${filtered.spend.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`} desc="Total investido em anúncios no período." />
+          <KPICard title="Novas conversas" value={filtered.conversations.toString()} desc="Pessoas que iniciaram uma conversa pelos anúncios." />
+          <KPICard title="Custo por conversa" value={`R$ ${(filtered.conversations > 0 ? filtered.spend / filtered.conversations : 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})}`} desc="Valor médio para gerar uma nova conversa." />
+        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <KPICard title="Leads" value={data.totals.leads.toString()} trend="Up" />
-              <KPICard title="CPL" value={`R$ ${data.totals.cpl?.toLocaleString('pt-BR', {minimumFractionDigits: 2}) || '0,00'}`} trend="Down" />
-            </div>
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-brand-green/5">
+          <h3 className="font-bold text-lg mb-2">Resumo do período</h3>
+          <p className="text-muted-foreground">Neste período, foram investidos R$ {filtered.spend.toLocaleString('pt-BR', {minimumFractionDigits: 2})} e os anúncios geraram {filtered.conversations} novas conversas, com custo médio de R$ {(filtered.conversations > 0 ? filtered.spend / filtered.conversations : 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})} por conversa.</p>
+        </div>
 
-            <Card className="p-6">
-              <CardTitle className="mb-6">Investimento x Conversas</CardTitle>
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={data.daily}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="date" />
-                    <YAxis yAxisId="left" />
-                    <YAxis yAxisId="right" orientation="right" />
-                    <Tooltip />
-                    <Bar yAxisId="left" dataKey="spend" fill="#FF6400" name="Investimento" />
-                    <Bar yAxisId="right" dataKey="conversations" fill="#6EC046" name="Conversas" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </Card>
+        <section>
+          <h3 className="font-bold text-lg mb-4">Visibilidade e interesse</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <SmallCard title="Exibições" value={filtered.impressions.toLocaleString()} desc="Quantas vezes os anúncios apareceram." />
+            <SmallCard title="Cliques no link" value={filtered.link_clicks.toLocaleString()} desc="Cliques para saber mais." />
+            <SmallCard title="Taxa de cliques" value={`${(filtered.link_ctr || 0).toFixed(1)}%`} desc="Percentual de exibições resultando em clique." />
+            <SmallCard title="Custo por clique" value={`R$ ${(filtered.link_cpc || 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})}`} desc="Valor médio por clique no link." />
+          </div>
+        </section>
 
-            <Card className="p-6">
-              <CardTitle className="mb-4">Desempenho por campanha</CardTitle>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Campanha</TableHead>
-                    <TableHead>Investimento</TableHead>
-                    <TableHead>Conversas</TableHead>
-                    <TableHead>Custo/Conv</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.campaigns.map((c: any) => (
-                    <TableRow key={c.campaign_id}>
-                      <TableCell>{c.campaign_name}</TableCell>
-                      <TableCell>R$ {c.spend.toLocaleString('pt-BR')}</TableCell>
-                      <TableCell>{c.conversations}</TableCell>
-                      <TableCell>R$ {c.cost_per_conversation?.toLocaleString('pt-BR') || '0'}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Card>
-
-            <Accordion type="single" collapsible>
-              <AccordionItem value="daily">
-                <AccordionTrigger>Detalhamento diário</AccordionTrigger>
-                <AccordionContent>
-                  <pre className="text-[10px] overflow-auto">{JSON.stringify(data.daily, null, 2)}</pre>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </>
-        )}
+        <section>
+          <h3 className="font-bold text-lg mb-4">Conversões atribuídas pela Meta</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <KPICard title="Leads do site" value={filtered.leads.toString()} desc="Conversões registradas no site atribuídas pela Meta." />
+            <KPICard title="Custo por lead" value={`R$ ${(filtered.cpl || 0).toLocaleString('pt-BR', {minimumFractionDigits: 2})}`} desc="Custo médio por lead atribuído." />
+          </div>
+        </section>
       </main>
     </div>
   );
 }
 
-function KPICard({ title, value, trend }: { title: string; value: string; trend: 'Up' | 'Down' | 'Neutral' }) {
+function calculateDates(period: string) {
+  const to = new Date();
+  const from = new Date();
+  if (period === 'last_7_days') from.setDate(from.getDate() - 7);
+  else if (period === 'last_30_days') from.setDate(from.getDate() - 30);
+  else if (period === 'yesterday') { to.setDate(to.getDate() - 1); from.setDate(from.getDate() - 1); }
+  return { from: from.toISOString().split('T')[0], to: to.toISOString().split('T')[0] };
+}
+
+function filterData(data: any, campaignId: string) {
+  if (campaignId === "all") return data.totals;
+  const c = data.campaigns.find((item: any) => item.campaign_id === campaignId);
+  return c || { spend: 0, conversations: 0, impressions: 0, link_clicks: 0, leads: 0, link_ctr: 0, link_cpc: 0, cpl: 0 };
+}
+
+function KPICard({ title, value, desc }: { title: string; value: string; desc: string }) {
   return (
-    <Card className="p-4 shadow-elegant border-brand-green/10">
-      <p className="text-xs text-muted-foreground uppercase font-bold mb-1">{title}</p>
-      <div className="flex justify-between items-end">
-        <h3 className="text-xl font-bold text-brand-green-teal">{value}</h3>
-        {trend !== 'Neutral' && (
-          <div className={trend === 'Up' ? 'text-green-600' : 'text-red-600'}>
-            {trend === 'Up' ? <TrendingUp className="h-4" /> : <TrendingDown className="h-4" />}
-          </div>
-        )}
-      </div>
+    <Card className="shadow-none border-brand-green/10">
+      <CardContent className="p-6">
+        <p className="text-xs uppercase font-bold text-muted-foreground mb-1">{title}</p>
+        <h3 className="text-3xl font-bold text-brand-green-teal mb-2">{value}</h3>
+        <p className="text-sm text-muted-foreground">{desc}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function SmallCard({ title, value, desc }: { title: string; value: string; desc: string }) {
+  return (
+    <Card className="shadow-none border-brand-green/10">
+      <CardContent className="p-4">
+        <p className="text-xs uppercase font-bold text-muted-foreground mb-1">{title}</p>
+        <h3 className="text-lg font-bold text-brand-green-teal mb-1">{value}</h3>
+        <p className="text-[10px] text-muted-foreground">{desc}</p>
+      </CardContent>
     </Card>
   );
 }
