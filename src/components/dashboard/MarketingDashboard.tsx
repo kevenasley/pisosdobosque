@@ -246,13 +246,22 @@ export function MarketingDashboard() {
             <RefreshCw className="h-8 w-8 animate-spin mr-2" /> Carregando dados reais...
           </div>
         ) : dailyData.length === 0 ? (
-          <div className="text-center p-12 bg-white rounded-xl shadow-elegant border border-brand-green/10">
-            <BarChart3 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-bold text-brand-green-teal">Nenhum dado encontrado</h3>
-            <p className="text-muted-foreground">Clique em "Atualizar Agora" para sincronizar com o Meta Ads.</p>
+          <div className="space-y-8">
+            <div className="text-center p-12 bg-white rounded-xl shadow-elegant border border-brand-green/10">
+              <BarChart3 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-bold text-brand-green-teal">Nenhum dado encontrado</h3>
+              <p className="text-muted-foreground">Clique em "Atualizar Agora" para sincronizar com o Meta Ads.</p>
+            </div>
+            {/* Bloco de Diagnóstico Temporário (Estado Vazio) */}
+            <DiagnosisBlock 
+              diagnosing={diagnosing} 
+              onRun={handleRunDiagnosis} 
+              result={diagResult} 
+            />
           </div>
         ) : (
           <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <KPICard 
                 title="Investimento" 
