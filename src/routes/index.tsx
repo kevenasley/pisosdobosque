@@ -1,23 +1,226 @@
-// Execute esta instrucao no projeto: Agora quero proteger TODOS os endpoints:
-// 
-// /api/meta/*
-// 
-// Eles NÃO podem mais responder para usuários não autenticados.
-// 
-// A autenticação do painel utiliza Supabase/Lovable Cloud.
-// 
-// No Cloudflare já existem:
-// 
-// SUPABASE_URL
-// SUPABASE_PUBLISHABLE_KEY
-// 
-// Também continuam existindo os Secrets da Meta.
-// 
+// Execute esta instrucao no projeto: Quero criar apenas um endpoint TEMPORÁRIO de diagnóstico para investigar uma divergência de Reach/Frequency entre a Meta Marketing API e o Ads Manager.
+//
+// NÃO altere o dashboard.
+// NÃO altere autenticação.
+// NÃO altere banco.
+// NÃO altere Secrets.
+// NÃO altere os outros endpoints.
+// NÃO faça sincronização.
+// NÃO altere GTM, GA4, Pixel ou formulários.
+//
 // ==================================================
-// CRIAR MIDDLEWARE
+// REFERÊNCIA DO ADS MANAGER
 // ==================================================
-// 
-// Criar exatamente:
+//
+// Data:
+// 2026-08-14
+//
+// Campaign ID:
+// 120255229344600405
+//
+// Campaign name:
+// Engajamento | Julho (Refeito)
+//
+// No Ads Manager aparecem:
+//
+// spend = 142.99
+// impressions = 15284
+// reach = 13587
+// frequency ≈ 1.12
+//
+// Na consulta anterior da API vieram:
+//
+// spend = 142.99
+// impressions = 15284
+// reach = 7123
+// frequency = 2.145725
+//
+// Quero descobrir de onde vem a divergência.
+//
+// ==================================================
+// CRIAR ENDPOINT
+// ==================================================
+//
+// Criar:
+//
+// functions/api/meta/reach-test.js
+//
+// Como ele fica dentro de /api/meta/, deve continuar protegido pelo middleware autenticado existente.
+//
+// Usar:
+//
+// context.env.META_ACCESS_TOKEN
+// context.env.META_AD_ACCOUNT_ID
+// context.env.META_GRAPH_API_VERSION
+//
+// Nunca hardcodear Secrets.
+//
+// ==================================================
+// FAZER 3 CONSULTAS INDEPENDENTES
+// ==================================================
+//
+// Todas para EXATAMENTE:
+//
+// since = 2026-08-14
+// until = 2026-08-14
+//
+// E solicitar apenas:
+//
+// date_start
+// date_stop
+// campaign_id
+// campaign_name
+// spend
+// impressions
+// reach
+// frequency
+//
+// ------------------------------------------
+// TESTE A — ENDPOINT DA CAMPANHA
+// ------------------------------------------
+//
+// Consultar diretamente:
+//
+// /120255229344600405/insights
+//
+// time_range:
+// 2026-08-14 até 2026-08-14
+//
+// SEM time_increment.
+//
+// ------------------------------------------
+// TESTE B — ENDPOINT DA CAMPANHA COM DIA
+// ------------------------------------------
+//
+// Consultar novamente:
+//
+// /120255229344600405/insights
+//
+// time_range:
+// 2026-08-14 até 2026-08-14
+//
+// time_increment=1
+//
+// ------------------------------------------
+// TESTE C — ENDPOINT DA CONTA
+// ------------------------------------------
+//
+// Consultar:
+//
+// /act_{META_AD_ACCOUNT_ID}/insights
+//
+// level=campaign
+//
+// time_range:
+// 2026-08-14 até 2026-08-14
+//
+// filtrar exclusivamente:
+//
+// campaign.id = 120255229344600405
+//
+// SEM breakdowns.
+//
+// ==================================================
+// RESULTADO DO DIAGNÓSTICO
+// ==================================================
+//
+// Retornar:
+//
+// {
+//   "success": true,
+//
+//   "expected_ads_manager": {
+//     "spend": 142.99,
+//     "impressions": 15284,
+//     "reach": 13587,
+//     "frequency": 1.12
+//   },
+//
+//   "test_a_campaign": {
+//     "spend": ...,
+//     "impressions": ...,
+//     "reach": ...,
+//     "frequency_api": ...,
+//     "frequency_calculated": impressions / reach
+//   },
+//
+//   "test_b_campaign_daily": {
+//     "spend": ...,
+//     "impressions": ...,
+//     "reach": ...,
+//     "frequency_api": ...,
+//     "frequency_calculated": impressions / reach
+//   },
+//
+//   "test_c_account_level_campaign": {
+//     "spend": ...,
+//     "impressions": ...,
+//     "reach": ...,
+//     "frequency_api": ...,
+//     "frequency_calculated": impressions / reach
+//   }
+// }
+//
+// ==================================================
+// IMPORTANTE
+// ==================================================
+//
+// Não tente corrigir ou substituir os números.
+//
+// Quero os valores BRUTOS devolvidos pela Meta em cada método.
+//
+// Não arredondar reach ou impressions.
+//
+// Pode arredondar apenas frequency_calculated para 6 casas.
+//
+// Não usar breakdown.
+//
+// Não somar reach.
+//
+// Não inferir reach.
+//
+// Não reconstruir reach.
+//
+// Não utilizar dados de outras campanhas.
+//
+// Não alterar parâmetros de atribuição nesta etapa.
+//
+// ==================================================
+// SEGURANÇA
+// ==================================================
+//
+// Usar:
+//
+// Authorization: Bearer {META_ACCESS_TOKEN}
+//
+// Nunca retornar:
+//
+// - token
+// - authorization header
+// - Secrets
+// - URL completa com credenciais
+// - stack trace
+// - paging URL
+//
+// Cache-Control: no-store
+//
+// ==================================================
+// VALIDAÇÃO
+// ==================================================
+//
+// Rodar build.
+//
+// Confirmar existência de:
+//
+// functions/api/meta/reach-test.js
+//
+// Informar apenas:
+// - arquivo criado;
+// - build;
+// - arquivos alterados.
+//
+// Não alterar o frontend.
+
 // 
 // functions/api/meta/_middleware.js
 // 
