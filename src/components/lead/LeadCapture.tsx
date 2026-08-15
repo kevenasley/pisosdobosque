@@ -189,9 +189,17 @@ export function LeadCapture() {
     setSubmitting(true);
     try {
       // 1. Gerar lead_id único para esta submissão lógica
-      const leadId = typeof crypto !== 'undefined' && crypto.randomUUID 
-        ? crypto.randomUUID() 
-        : `id-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+      const leadId = (() => {
+        if (typeof crypto !== 'undefined') {
+          if (crypto.randomUUID) return crypto.randomUUID();
+          if (crypto.getRandomValues) {
+            const bytes = new Uint8Array(16);
+            crypto.getRandomValues(bytes);
+            return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+          }
+        }
+        return `id-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+      })();
 
       const token = await getRecaptchaToken("lead_submit");
       const rawAttribution = (readAttribution() || {}) as Record<string, unknown>;
