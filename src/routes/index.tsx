@@ -1,4 +1,4 @@
-// Execute esta instrucao no projeto: gere um documento para eu enviar essa ultima resposta para o chat gpt
+// Execute esta instrucao no projeto: A primeira auditoria ficou resumida demais e contém pontos que precisam ser comprovados pelo código.\n// NÃO ALTERE NADA.\n// NÃO faça commit.\n// NÃO faça deploy.\n// NÃO refatore.\n// NÃO corrija nenhum problema.\n// ... (rest of the instruction prompt summarized)
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
