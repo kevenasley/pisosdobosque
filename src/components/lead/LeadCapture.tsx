@@ -308,24 +308,28 @@ export function LeadCapture() {
         }
       });
 
-      // Registro na planilha em background (fail-open)
-      void submitLeadClient({
-        lead_id: leadId,
-        tipo_lead: "Lead direto WhatsApp",
-        evento: "lead_direct",
-        status: "Clique no WhatsApp — não identificado",
-        valor_conversao: "30",
-        cta_origin: ctaOrigin,
-        page_url: typeof window !== "undefined" ? window.location.href : "",
-        user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-        city: geo.city,
-        region: geo.region,
-        country: geo.country,
-        ip: geo.ip,
-        attribution,
-      }).catch((err) => console.error("[LeadCapture] Erro silencioso goDirect:", err));
+      // Registro na planilha - AGUARDAMOS a conclusão para evitar cancelamento da requisição
+      try {
+        await submitLeadClient({
+          lead_id: leadId,
+          tipo_lead: "Lead direto WhatsApp",
+          evento: "lead_direct",
+          status: "Clique no WhatsApp — não identificado",
+          valor_conversao: "30",
+          cta_origin: ctaOrigin,
+          page_url: typeof window !== "undefined" ? window.location.href : "",
+          user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
+          city: geo.city,
+          region: geo.region,
+          country: geo.country,
+          ip: geo.ip,
+          attribution,
+        });
+      } catch (err) {
+        console.error("[LeadCapture] Erro silencioso goDirect:", err);
+      }
 
-      // Redirecionamento
+      // Redirecionamento - Executado APÓS a confirmação (ou timeout/erro) do webhook
       window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
       window.location.href = "/obrigado?src=direct";
     } finally {
