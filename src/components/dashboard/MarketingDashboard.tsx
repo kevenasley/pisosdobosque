@@ -392,41 +392,59 @@ export function MarketingDashboard() {
               </CardContent>
             </Card>
 
-            {/* Bloco de Diagnóstico Temporário */}
-            <div className="mt-12 pt-8 border-t border-brand-green/10">
-              <div className="flex flex-col items-center gap-4">
-                <Button 
-                  variant="outline" 
-                  onClick={handleRunDiagnosis}
-                  disabled={diagnosing}
-                  className="text-xs text-muted-foreground hover:text-brand-orange border-dashed"
-                >
-                  {diagnosing ? (
-                    <>
-                      <RefreshCw className="h-3 w-3 mr-2 animate-spin" />
-                      Executando diagnóstico...
-                    </>
-                  ) : (
-                    "Diagnóstico de alcance"
-                  )}
-                </Button>
-
-                {diagResult && (
-                  <Card className="w-full max-w-4xl bg-slate-950 text-slate-50 border-none shadow-2xl overflow-hidden">
-                    <CardHeader className="py-3 px-6 bg-slate-900 border-b border-slate-800">
-                      <CardTitle className="text-xs font-mono text-slate-400 uppercase tracking-widest">Reach Diagnostics Output</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <pre className="text-[10px] sm:text-xs font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed opacity-90">
-                        {JSON.stringify(diagResult, null, 2)}
-                      </pre>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </div>
+            {/* Bloco de Diagnóstico Temporário (Estado com Dados) */}
+            <DiagnosisBlock 
+              diagnosing={diagnosing} 
+              onRun={handleRunDiagnosis} 
+              result={diagResult} 
+            />
           </>
         )}
+      </main>
+    </div>
+  );
+}
+
+function DiagnosisBlock({ diagnosing, onRun, result }: { 
+  diagnosing: boolean; 
+  onRun: () => void; 
+  result: any; 
+}) {
+  return (
+    <div className="mt-12 pt-8 border-t border-brand-green/10">
+      <div className="flex flex-col items-center gap-4">
+        <Button 
+          variant="outline" 
+          onClick={onRun}
+          disabled={diagnosing}
+          className="text-xs text-muted-foreground hover:text-brand-orange border-dashed"
+        >
+          {diagnosing ? (
+            <>
+              <RefreshCw className="h-3 w-3 mr-2 animate-spin" />
+              Executando diagnóstico...
+            </>
+          ) : (
+            "Diagnóstico de alcance"
+          )}
+        </Button>
+
+        {result && (
+          <Card className="w-full max-w-4xl bg-slate-950 text-slate-50 border-none shadow-2xl overflow-hidden">
+            <CardHeader className="py-3 px-6 bg-slate-900 border-b border-slate-800">
+              <CardTitle className="text-xs font-mono text-slate-400 uppercase tracking-widest">Reach Diagnostics Output</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <pre className="text-[10px] sm:text-xs font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed opacity-90">
+                {JSON.stringify(result, null, 2)}
+              </pre>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}
       </main>
     </div>
   );
