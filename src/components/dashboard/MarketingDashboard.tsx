@@ -52,10 +52,46 @@ const mockCampaigns = [
 ];
 
 export function MarketingDashboard() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
-  const [lastSync, setLastSync] = useState<string | null>("15/08/2026 06:15");
+  const [lastSync, setLastSync] = useState<string | null>(null);
+  const [dailyData, setDailyData] = useState<any[]>([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    setLoading(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate({ to: "/painel/login" });
+        return;
+      }
+
+      const response = await fetch("/api/dashboard/get-meta-dashboard", {
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+      
+      if (response.status === 401) {
+        navigate({ to: "/painel/login" });
+        return;
+      }
+
+      const data = await response.json();
+      setDailyData(data.dailyStats || []);
+      if (data.lastSync) {
+        setLastSync(new Date(data.lastSync).toLocaleString("pt-BR"));
+      }
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      toast.error("Falha ao carregar dados do painel");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -64,12 +100,32 @@ export function MarketingDashboard() {
 
   const handleSync = async () => {
     setSyncing(true);
-    // This will call the Edge Function in the future
-    setTimeout(() => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const response = await fetch("/api/dashboard/sync-meta-ads", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok) {
+        if (result.code === "CONFIG_MISSING") {
+          toast.error("Meta Ads ainda não configurado no backend");
+        } else {
+          toast.error(result.error || "Erro na sincronização");
+        }
+      } else {
+        toast.success("Sincronização iniciada com sucesso!");
+        fetchDashboardData();
+      }
+    } catch (error) {
+      toast.error("Erro de conexão");
+    } finally {
       setSyncing(false);
-      setLastSync(new Date().toLocaleString("pt-BR"));
-      toast.success("Dados sincronizados com sucesso!");
-    }, 2000);
+    }
   };
 
   return (
