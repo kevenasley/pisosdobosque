@@ -10,8 +10,6 @@ export const getMetaDashboardData = createServerFn({ method: "GET" })
     }).parse(data)
   )
   .handler(async ({ data }) => {
-    // In a real scenario, we'd use requireSupabaseAuth or check session here.
-    // For now, querying the DB.
     const { data: dailyStats, error } = await supabase
       .from("meta_ads_daily")
       .select("*")
@@ -22,7 +20,7 @@ export const getMetaDashboardData = createServerFn({ method: "GET" })
     if (error) throw error;
 
     return {
-      dailyStats,
+      dailyStats: dailyStats || [],
       lastSync: new Date().toISOString()
     };
   });
@@ -30,6 +28,5 @@ export const getMetaDashboardData = createServerFn({ method: "GET" })
 export const syncMetaAds = createServerFn({ method: "POST" })
   .handler(async () => {
     // This will contain the Meta API integration logic
-    // Using process.env['META_ACCESS_TOKEN'] etc here
     return { message: "Sincronização iniciada" };
   });
