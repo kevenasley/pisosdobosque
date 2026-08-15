@@ -9,7 +9,9 @@ export const Route = createFileRoute("/painel/login")({
     redirect: z.string().optional(),
   }),
   beforeLoad: async ({ search }) => {
+    if (typeof window === "undefined") return; // Skip during SSG/SSR
     const { data } = await supabase.auth.getSession();
+
     if (data.session) {
       throw redirect({
         to: search.redirect || "/painel",
