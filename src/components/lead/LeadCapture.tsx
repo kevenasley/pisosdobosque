@@ -188,6 +188,11 @@ export function LeadCapture() {
     setSendError(null);
     setSubmitting(true);
     try {
+      // 1. Gerar lead_id único para esta submissão lógica
+      const leadId = typeof crypto !== 'undefined' && crypto.randomUUID 
+        ? crypto.randomUUID() 
+        : `id-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+
       const token = await getRecaptchaToken("lead_submit");
       const rawAttribution = (readAttribution() || {}) as Record<string, unknown>;
       // Normaliza tudo para string (o servidor só aceita string) e remove campos internos.
@@ -201,6 +206,7 @@ export function LeadCapture() {
 
       try {
         const result = await submitLeadClient({
+            lead_id: leadId,
             name: parsed.data.name,
             phone: parsed.data.phone,
             reason: parsed.data.reason || "",
@@ -252,7 +258,11 @@ export function LeadCapture() {
         ctaOrigin,
         status: "qualificado",
         eventName: "generate_lead",
-        extra: { hashed_phone },
+        extra: { 
+          hashed_phone,
+          lead_id: leadId,
+          transaction_id: leadId
+        },
       });
 
       const msg =
