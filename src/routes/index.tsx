@@ -1,4 +1,4 @@
-// Execute esta instrucao no projeto: Não, digo, eu quero a instrução para outro projeto como vc tinha feito sobre a rolagem suave.
+// Execute esta instrucao no projeto: Ajustar o preço do piso externo mykonos para 26,60
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
