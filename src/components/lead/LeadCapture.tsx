@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
+import { Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -187,111 +188,98 @@ export function LeadCapture() {
     setErrors({});
     setSendError(null);
     setSubmitting(true);
-    try {
-      // 1. Gerar lead_id único para esta submissão lógica
-      const leadId = (() => {
-        if (typeof crypto !== 'undefined') {
-          if (crypto.randomUUID) return crypto.randomUUID();
-          if (crypto.getRandomValues) {
-            const bytes = new Uint8Array(16);
-            crypto.getRandomValues(bytes);
-            return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
-          }
+
+    // 1. Gerar lead_id único para esta submissão lógica
+    const leadId = (() => {
+      if (typeof crypto !== 'undefined') {
+        if (crypto.randomUUID) return crypto.randomUUID();
+        if (crypto.getRandomValues) {
+          const bytes = new Uint8Array(16);
+          crypto.getRandomValues(bytes);
+          return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
         }
-        return `id-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
-      })();
+      }
+      return `id-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+    })();
 
-      const token = await getRecaptchaToken("lead_submit");
-      const rawAttribution = (readAttribution() || {}) as Record<string, unknown>;
-      // Normaliza tudo para string (o servidor só aceita string) e remove campos internos.
-      const attribution = Object.fromEntries(
-        Object.entries(rawAttribution)
-          .filter(([k]) => k !== "saved_at")
-          .map(([k, v]) => [k, v === null || v === undefined ? "" : String(v)]),
-      ) as Record<string, string>;
-      const hashed_phone = await sha256Hex(parsed.data.phone);
-      const geo = await resolveGeo();
+    // 2. Montar mensagem e abrir WhatsApp IMEDIATAMENTE (antes de qualquer await)
+    const msg = message || `Olá! Sou ${parsed.data.name}. ${parsed.data.reason ? parsed.data.reason + " " : ""}Gostaria de um atendimento.`;
+    const whatsappUrl = buildWhatsAppUrl(msg);
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
+    // Inicia o processo de fundo
+    (async () => {
       try {
-        const result = await submitLeadClient({
-            lead_id: leadId,
+        const token = await getRecaptchaToken("lead_submit");
+        const rawAttribution = (readAttribution() || {}) as Record<string, unknown>;
+        const attribution = Object.fromEntries(
+          Object.entries(rawAttribution)
+            .filter(([k]) => k !== "saved_at")
+            .map(([k, v]) => [k, v === null || v === undefined ? "" : String(v)]),
+        ) as Record<string, string>;
+        
+        const hashed_phone = await sha256Hex(parsed.data.phone);
+        const geo = await resolveGeo();
+
+        // Evento principal de conversão
+        trackGenerateLead({
+          input: {
             name: parsed.data.name,
             phone: parsed.data.phone,
-            reason: parsed.data.reason || "",
-            hashed_phone,
-            cta_origin: ctaOrigin,
-            page_url: typeof window !== "undefined" ? window.location.href : "",
-            user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-            recaptcha_token: token || undefined,
             city: geo.city,
             region: geo.region,
-            country: geo.country,
+            country: geo.country || "br",
             ip: geo.ip,
-            attribution,
+          },
+          ctaOrigin,
+          status: "qualificado",
+          eventName: "generate_lead",
+          extra: { 
+            hashed_phone,
+            lead_id: leadId,
+            transaction_id: leadId
+          },
         });
-        // Fail-closed: só seguimos quando o servidor confirma a gravação do lead.
-        if (!result.success) {
-          console.error("[LeadCapture] Falha no envio do lead:", result.reason);
-          setSendError(
-            result.reason === "recaptcha_failed" ||
-              result.reason === "missing_token" ||
-              result.reason === "low_score"
-              ? "Não conseguimos validar seu envio. Recarregue a página e tente novamente."
-              : "Não conseguimos registrar seus dados agora. Tente novamente em alguns segundos ou fale direto no WhatsApp.",
-          );
-          setSubmitting(false);
-          return;
-        }
-      } catch (err) {
-        console.error("[LeadCapture] Erro de rede no envio do lead:", err);
-        setSendError(
-          "Falha de conexão ao enviar seus dados. Tente novamente ou fale direto no WhatsApp.",
-        );
-        setSubmitting(false);
-        return;
-      }
 
-
-      // Evento principal de conversão — com user_data normalizado para
-      // Enhanced Conversions (Google Ads) e CAPI (Meta).
-      trackGenerateLead({
-        input: {
+        // Envio para o backend
+        const result = await submitLeadClient({
+          lead_id: leadId,
           name: parsed.data.name,
           phone: parsed.data.phone,
+          reason: parsed.data.reason || "",
+          hashed_phone,
+          cta_origin: ctaOrigin,
+          page_url: typeof window !== "undefined" ? window.location.href : "",
+          user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
+          recaptcha_token: token || undefined,
           city: geo.city,
           region: geo.region,
-          country: geo.country || "br",
+          country: geo.country,
           ip: geo.ip,
-        },
-        ctaOrigin,
-        status: "qualificado",
-        eventName: "generate_lead",
-        extra: { 
-          hashed_phone,
-          lead_id: leadId,
-          transaction_id: leadId
-        },
-      });
+          attribution,
+        });
 
-      const msg =
-        message ||
-        `Olá! Sou ${parsed.data.name}. ${
-          parsed.data.reason ? parsed.data.reason + " " : ""
-        }Gostaria de um atendimento.`;
-
-      // Feedback de sucesso + limpeza dos campos antes do redirecionamento
-      setSent(true);
-      setName("");
-      setPhone("");
-      setReason("");
-
-      window.open(buildWhatsAppUrl(msg), "_blank", "noopener,noreferrer");
-      window.setTimeout(() => {
+        if (!result.success) {
+          console.error("[LeadCapture] Falha no envio do lead:", result.reason);
+        }
+        
+        // Sucesso ou falha controlada, limpamos e navegamos
+        setSent(true);
+        setName("");
+        setPhone("");
+        setReason("");
+        
+        window.setTimeout(() => {
+          window.location.href = "/obrigado?src=form";
+        }, 500);
+      } catch (err) {
+        console.error("[LeadCapture] Erro no fluxo de fundo:", err);
+        // Mesmo com erro, navegamos para não deixar o usuário preso
         window.location.href = "/obrigado?src=form";
-      }, 900);
-    } finally {
-      setSubmitting(false);
-    }
+      } finally {
+        setSubmitting(false);
+      }
+    })();
   }
 
   async function goDirect() {
@@ -447,8 +435,17 @@ export function LeadCapture() {
               disabled={submitting || sent}
               className="w-full gap-2 bg-brand-green text-white hover:bg-brand-green/90 focus-visible:ring-brand-green"
             >
-              <WhatsAppIcon className="h-4 w-4" />
-              {sent ? "Enviado!" : submitting ? "Enviando..." : "Falar no WhatsApp"}
+              {submitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Enviando dados...
+                </>
+              ) : (
+                <>
+                  <WhatsAppIcon className="h-4 w-4" />
+                  {sent ? "Enviado!" : "Falar no WhatsApp"}
+                </>
+              )}
             </Button>
             <Button
               type="button"
