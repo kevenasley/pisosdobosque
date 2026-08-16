@@ -5,25 +5,36 @@ import googleIcon from "@/assets/icons/google-icon.svg.asset.json";
 export function PlatformSelector({ active, onChange }: { active: "meta" | "google"; onChange: (p: "meta" | "google") => void }) {
   return (
     <div className="max-w-7xl mx-auto px-4 mt-6">
-      <div className="flex bg-white p-1 rounded-lg border border-brand-green/10 shadow-sm w-full">
+      <div className="flex bg-white p-1 rounded-lg border border-brand-green/10 shadow-sm w-full overflow-hidden">
         <button
           onClick={() => onChange("meta")}
           className={cn(
-            "flex-1 flex items-center justify-center gap-2 py-3 rounded-md text-sm font-bold transition-all",
+            "flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-md text-sm font-bold transition-all whitespace-nowrap",
             active === "meta" ? "bg-brand-green-teal text-white" : "text-slate-600 hover:bg-slate-50"
           )}
         >
-          <img src={metaIcon.url} alt="Meta" className="w-4 h-4 md:w-5 md:h-5 object-contain" />
+          <img 
+            src={metaIcon.url} 
+            alt="Meta" 
+            className={cn(
+              "w-4 h-4 md:w-5 md:h-5 object-contain",
+              active === "meta" && "brightness-0 invert"
+            )} 
+          />
           <span>Meta Ads</span>
         </button>
         <button
           onClick={() => onChange("google")}
           className={cn(
-            "flex-1 flex items-center justify-center gap-2 py-3 rounded-md text-sm font-bold transition-all",
+            "flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-md text-sm font-bold transition-all whitespace-nowrap",
             active === "google" ? "bg-brand-green-teal text-white" : "text-slate-600 hover:bg-slate-50"
           )}
         >
-          <img src={googleIcon.url} alt="Google" className="w-4 h-4 md:w-5 md:h-5 object-contain" />
+          <img 
+            src={googleIcon.url} 
+            alt="Google" 
+            className="w-4 h-4 md:w-5 md:h-5 object-contain"
+          />
           <span>Google Ads</span>
         </button>
       </div>
