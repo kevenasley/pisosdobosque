@@ -63,10 +63,34 @@ function buildBody(data: LeadPayload) {
   };
 }
 
-/** Envia o lead com até 3 tentativas. Nunca lança. */
-export async function submitLeadClient(data: LeadPayload): Promise<LeadResult> {
+/** 
+ * Envia o lead com até 3 tentativas. Nunca lança. 
+ * @param keepalive Se true, usa o mecanismo keepalive do fetch para sobreviver à navegação.
+ */
+export async function submitLeadClient(
+  data: LeadPayload,
+  options: { keepalive?: boolean } = {}
+): Promise<LeadResult> {
   const body = JSON.stringify(buildBody(data));
   let lastReason = "webhook_failed";
+
+  // Se keepalive for solicitado, usamos uma única tentativa robusta
+  // pois o keepalive é otimizado para envios "fire and forget" no unload.
+  if (options.keepalive) {
+    try {
+      await fetch(SHEETS_WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        keepalive: true,
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body,
+      });
+      return { success: true, reason: "keepalive_sent" };
+    } catch (error) {
+      console.error("[lead] erro no envio keepalive:", error);
+      return { success: false, reason: "keepalive_failed" };
+    }
+  }
 
   for (let attempt = 1; attempt <= 3; attempt += 1) {
     try {
@@ -96,8 +120,7 @@ export async function submitLeadClient(data: LeadPayload): Promise<LeadResult> {
     }
   }
 
-  // Última tentativa opaca (no-cors): não conseguimos ler a resposta, mas o
-  // Apps Script recebe e grava o lead. Melhor gravar do que perder o lead.
+  // Última tentativa opaca (no-cors)
   try {
     await fetch(SHEETS_WEBHOOK_URL, {
       method: "POST",

@@ -297,6 +297,11 @@ export function LeadCapture() {
   async function goDirect() {
     if (submitting) return;
     setSubmitting(true);
+    
+    // Abrir WhatsApp imediatamente para não prejudicar UX (percepção de velocidade)
+    // Usamos window.open antes da navegação local para garantir abertura da aba.
+    window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
+
     try {
       const leadId = crypto.randomUUID();
       const geo = await resolveGeo();
@@ -307,7 +312,7 @@ export function LeadCapture() {
           .map(([k, v]) => [k, v === null || v === undefined ? "" : String(v)]),
       ) as Record<string, string>;
 
-      // Dispara o evento dataLayer IMEDIATAMENTE antes do redirect e da planilha
+      // Dispara o evento dataLayer IMEDIATAMENTE
       trackGenerateLead({
         input: {
           name: "",
@@ -326,9 +331,10 @@ export function LeadCapture() {
         }
       });
 
-      // Registro na planilha - AGUARDAMOS a conclusão para evitar cancelamento da requisição
-      try {
-        await submitLeadClient({
+      // Registro na planilha usando keepalive: true para sobreviver à navegação iminente.
+      // mode: 'no-cors' é usado internamente em submitLeadClient quando keepalive é true.
+      void submitLeadClient(
+        {
           lead_id: leadId,
           tipo_lead: "Lead direto WhatsApp",
           evento: "lead_direct",
@@ -342,17 +348,18 @@ export function LeadCapture() {
           country: geo.country,
           ip: geo.ip,
           attribution,
-        });
-      } catch (err) {
-        console.error("[LeadCapture] Erro silencioso goDirect:", err);
-      }
+        },
+        { keepalive: true }
+      );
 
-      // Redirecionamento - Executado APÓS a confirmação (ou timeout/erro) do webhook
-      window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
+      // Navegação para /obrigado acontece quase instantaneamente
+      window.location.href = "/obrigado?src=direct";
+    } catch (err) {
+      console.error("[LeadCapture] Erro silencioso goDirect:", err);
+      // Se algo falhar no JS, ainda assim tentamos levar para a página de obrigado
       window.location.href = "/obrigado?src=direct";
     } finally {
-      // Pequeno delay para evitar duplo clique efetivo antes da navegação
-      setTimeout(() => setSubmitting(false), 500);
+      // Submitting não precisa ser resetado se a página vai navegar
     }
   }
 
