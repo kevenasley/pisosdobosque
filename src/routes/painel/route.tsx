@@ -1,22 +1,7 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { supabase } from "@/integrations/supabase/client";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/painel")({
-  beforeLoad: async ({ location }) => {
-    if (typeof window === "undefined") return; // Skip during SSG/SSR
-    
-    // Check session
-    const { data } = await supabase.auth.getSession();
-
-    if (!data.session) {
-      throw redirect({
-        to: "/painel/login",
-        search: {
-          redirect: location.href,
-        },
-      });
-    }
-  },
+  component: () => <Outlet />,
   head: () => ({
     meta: [
       { name: "robots", content: "noindex,nofollow" },
