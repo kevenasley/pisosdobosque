@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import metaIcon from "@/assets/icons/meta-icon.svg.asset.json";
+import googleIcon from "@/assets/icons/google-icon.svg.asset.json";
 
 export function PlatformSelector({ active, onChange }: { active: "meta" | "google"; onChange: (p: "meta" | "google") => void }) {
   return (
@@ -12,7 +13,8 @@ export function PlatformSelector({ active, onChange }: { active: "meta" | "googl
             active === "meta" ? "bg-brand-green-teal text-white" : "text-slate-600 hover:bg-slate-50"
           )}
         >
-          <span className="text-lg">Meta Ads</span>
+          <img src={metaIcon.url} alt="Meta" className="w-4 h-4 md:w-5 md:h-5 object-contain" />
+          <span>Meta Ads</span>
         </button>
         <button
           onClick={() => onChange("google")}
@@ -21,7 +23,8 @@ export function PlatformSelector({ active, onChange }: { active: "meta" | "googl
             active === "google" ? "bg-brand-green-teal text-white" : "text-slate-600 hover:bg-slate-50"
           )}
         >
-          <span className="text-lg">Google Ads</span>
+          <img src={googleIcon.url} alt="Google" className="w-4 h-4 md:w-5 md:h-5 object-contain" />
+          <span>Google Ads</span>
         </button>
       </div>
     </div>
