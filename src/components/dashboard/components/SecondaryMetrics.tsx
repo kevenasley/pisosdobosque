@@ -34,12 +34,7 @@ export function SecondaryMetrics({ leads, spend, formatCurrency }: { leads: numb
         />
       </div>
 
-      <div className="flex flex-wrap gap-4 pt-4 border-t border-brand-green/5">
-        <div className="text-center md:text-left">
-          <p className="text-[10px] font-bold text-slate-400 uppercase">Taxa de cliques</p>
-          <p className="text-sm font-bold text-slate-600">Calculado automaticamente</p>
-        </div>
-      </div>
+      {/* Removed "Calculado automaticamente" CTR text as per requirement */}
     </section>
   );
 }
