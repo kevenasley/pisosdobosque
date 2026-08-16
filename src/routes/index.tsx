@@ -1,4 +1,164 @@
-// redeploy após atualização das variáveis do Cloudflare e implementação do dashboard real
+// Execute esta instrucao no projeto: Quero fazer mais uma melhoria de UX no Painel de Marketing, SEM alterar a integração Meta, autenticação, endpoints, definição das métricas ou tracking.
+
+// O público continua sendo a proprietária da empresa, uma pessoa leiga em tráfego pago.
+
+// 1. SELETOR DE PERÍODO
+// Manter as opções rápidas:
+// Hoje
+// Ontem
+// Últimos 7 dias
+// Últimos 14 dias
+// Últimos 30 dias
+// Este mês
+// Mês passado
+// Personalizado
+
+// Ao clicar em "Personalizado", abrir um date range picker visual.
+// O calendário deve permitir:
+// - selecionar um único dia;
+// - selecionar data inicial e data final;
+// - navegar entre meses;
+// - limpar seleção;
+// - aplicar período.
+
+// Se for um único dia, mostrar:
+// 14 ago 2026
+
+// Se for intervalo:
+// 08 ago – 14 ago 2026
+
+// O filtro de período deve continuar funcionando em conjunto com o filtro de campanha.
+// Não recarregar a página inteira.
+
+// ==================================================
+// 2. FILTRO DE CAMPANHA
+// ==================================================
+// Manter o seletor de Campanha no topo.
+// Opções:
+// Todas as campanhas
+// +
+// campanhas retornadas pela API.
+
+// Ao mudar campanha:
+// TODOS os cards, jornada, gráficos, resumos e tabelas devem mostrar apenas aquela campanha.
+
+// ==================================================
+// 3. RENOMEAR LEADS
+// ==================================================
+// Hoje existe:
+// "Conversões atribuídas pela Meta"
+// "Leads do site"
+
+// Quero deixar mais claro para uma pessoa leiga.
+// Alterar a seção para:
+// "Resultados no site"
+
+// Card:
+// "Leads registrados no site"
+
+// Descrição:
+// "Conversões de lead registradas no site e atribuídas aos anúncios pela Meta."
+
+// Outro card:
+// "Custo por lead"
+
+// Descrição:
+// "Valor médio investido para cada lead registrado no site."
+
+// Adicionar tooltip discreto:
+// "Leads do site são diferentes de pessoas que iniciaram uma conversa."
+
+// Não somar Leads + Conversas.
+
+// ==================================================
+// 4. SUBSTITUIR RESUMO POR JORNADA VISUAL
+// ==================================================
+// Quero substituir o atual bloco simples "Resumo do período" por uma visualização didática chamada:
+// "Jornada dos anúncios"
+
+// Ela deve ajudar uma pessoa leiga a entender o caminho dos anúncios.
+// Não criar um funil sequencial falso entre Conversas e Leads.
+
+// Representar:
+//                     ┌──→ Novas conversas
+// Exibições → Cliques ┤
+//                     └──→ Leads no site
+
+// Usar os dados reais:
+// Exibições = impressions
+// Cliques no link = link_clicks
+// Novas conversas = onsite_conversion.messaging_conversation_started_7d
+// Leads no site = action_type lead
+
+// Visualmente:
+// EXIBIÇÕES
+// 10.391
+// "Quantas vezes os anúncios apareceram"
+
+// ↓ ou conexão visual
+
+// CLIQUES NO LINK
+// 71
+// "Quantas pessoas demonstraram interesse e clicaram"
+
+// Depois bifurcar:
+// NOVAS CONVERSAS
+// 19
+// "Pessoas que iniciaram uma conversa"
+// e
+// LEADS NO SITE
+// 6
+// "Conversões de lead registradas no site"
+
+// ==================================================
+// 5. TAXAS NA JORNADA
+// ==================================================
+// Pode mostrar:
+// Clique / Impressões
+// como: "0,7% geraram clique"
+
+// Pode mostrar:
+// Conversas / Cliques
+// como uma métrica informativa: "26,8% dos cliques resultaram em conversa"
+
+// MAS:
+// NÃO mostrar automaticamente:
+// Leads / Conversas
+// porque não podemos garantir que los leads sejam subconjunto das conversas.
+// Não criar qualquer taxa que implique uma relação causal não garantida pelos dados.
+
+// ==================================================
+// 6. CARDS PRINCIPAIS
+// ==================================================
+// Manter no topo:
+// Investimento
+// Novas conversas
+// Custo por conversa
+// Eles continuam sendo os três KPIs comerciais principais.
+
+// ==================================================
+// 7. FORMATAÇÃO DE MOEDA
+// ==================================================
+// Corrigir todos os valores monetários para exatamente duas casas decimais.
+// Usar Intl.NumberFormat pt-BR com: minimumFractionDigits: 2, maximumFractionDigits: 2
+
+// ==================================================
+// 8. FORMATAÇÃO DE PERCENTUAIS
+// ==================================================
+// Usar no máximo uma casa decimal para percentuais apresentados à proprietária.
+
+// ==================================================
+// 9. MOBILE
+// ==================================================
+// A Jornada dos anúncios precisa funcionar muito bem no celular.
+// Não permitir scroll horizontal.
+
+// ==================================================
+// 10. NÃO ALTERAR
+// ==================================================
+// Não alterar: endpoint /api/meta/dashboard, Cloudflare Functions, autenticação Magic Link, middleware, definição de Conversas/Leads, Meta API, GTM, GA4, Meta Pixel, formulário de leads, Secrets, páginas públicas.
+
+// Rodar build ao final.
 
 
 // 
