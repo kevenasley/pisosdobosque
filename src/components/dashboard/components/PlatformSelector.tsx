@@ -23,20 +23,23 @@ export function PlatformSelector({ active, onChange }: { active: "meta" | "googl
           />
           <span>Meta Ads</span>
         </button>
-        <button
-          onClick={() => onChange("google")}
-          className={cn(
-            "flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-md text-sm font-bold transition-all whitespace-nowrap",
-            active === "google" ? "bg-brand-green-teal text-white" : "text-slate-600 hover:bg-slate-50"
-          )}
-        >
-          <img 
-            src={googleIcon.url} 
-            alt="Google" 
-            className="w-4 h-4 md:w-5 md:h-5 object-contain"
-          />
-          <span>Google Ads</span>
-        </button>
+        {/* Google Ads tab hidden for now */}
+        {false && (
+          <button
+            onClick={() => onChange("google")}
+            className={cn(
+              "flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-md text-sm font-bold transition-all whitespace-nowrap",
+              active === "google" ? "bg-brand-green-teal text-white" : "text-slate-600 hover:bg-slate-50"
+            )}
+          >
+            <img 
+              src={googleIcon.url} 
+              alt="Google" 
+              className="w-4 h-4 md:w-5 md:h-5 object-contain"
+            />
+            <span>Google Ads</span>
+          </button>
+        )}
       </div>
     </div>
   );
