@@ -1,6 +1,4 @@
 import { cn } from "@/lib/utils";
-import metaAdsIcon from "@/assets/meta-ads.svg";
-import googleAdsIcon from "@/assets/google-ads.svg";
 
 export function PlatformSelector({ active, onChange }: { active: "meta" | "google"; onChange: (p: "meta" | "google") => void }) {
   return (
@@ -14,7 +12,7 @@ export function PlatformSelector({ active, onChange }: { active: "meta" | "googl
           )}
         >
           <img 
-            src={metaAdsIcon} 
+            src="/meta-ads.svg" 
             alt="" 
             aria-hidden="true"
             className={cn(
@@ -34,7 +32,7 @@ export function PlatformSelector({ active, onChange }: { active: "meta" | "googl
             )}
           >
             <img 
-              src={googleAdsIcon} 
+              src="/google-ads.svg" 
               alt="" 
               aria-hidden="true"
               className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] object-contain flex-shrink-0"
