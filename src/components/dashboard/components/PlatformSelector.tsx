@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import metaIcon from "@/assets/icons/meta-icon.svg.asset.json";
-import googleIcon from "@/assets/icons/google-icon.svg.asset.json";
+import metaAdsIcon from "@/assets/meta-ads.svg";
+import googleAdsIcon from "@/assets/google-ads.svg";
 
 export function PlatformSelector({ active, onChange }: { active: "meta" | "google"; onChange: (p: "meta" | "google") => void }) {
   return (
@@ -14,10 +14,11 @@ export function PlatformSelector({ active, onChange }: { active: "meta" | "googl
           )}
         >
           <img 
-            src={metaIcon.url} 
-            alt="Meta" 
+            src={metaAdsIcon} 
+            alt="" 
+            aria-hidden="true"
             className={cn(
-              "w-4 h-4 md:w-5 md:h-5 object-contain",
+              "w-[18px] h-[18px] md:w-[20px] md:h-[20px] object-contain flex-shrink-0",
               active === "meta" && "brightness-0 invert"
             )} 
           />
@@ -33,9 +34,10 @@ export function PlatformSelector({ active, onChange }: { active: "meta" | "googl
             )}
           >
             <img 
-              src={googleIcon.url} 
-              alt="Google" 
-              className="w-4 h-4 md:w-5 md:h-5 object-contain"
+              src={googleAdsIcon} 
+              alt="" 
+              aria-hidden="true"
+              className="w-[18px] h-[18px] md:w-[20px] md:h-[20px] object-contain flex-shrink-0"
             />
             <span>Google Ads</span>
           </button>
