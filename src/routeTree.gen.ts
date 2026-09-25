@@ -13,7 +13,6 @@ import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as PainelRouteRouteImport } from './routes/painel/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PainelIndexRouteImport } from './routes/painel/index'
-import { Route as PainelLoginRouteImport } from './routes/painel/login'
 
 const ObrigadoRoute = ObrigadoRouteImport.update({
   id: '/obrigado',
@@ -35,23 +34,16 @@ const PainelIndexRoute = PainelIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PainelRouteRoute,
 } as any)
-const PainelLoginRoute = PainelLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => PainelRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/painel': typeof PainelRouteRouteWithChildren
   '/obrigado': typeof ObrigadoRoute
-  '/painel/login': typeof PainelLoginRoute
   '/painel/': typeof PainelIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/obrigado': typeof ObrigadoRoute
-  '/painel/login': typeof PainelLoginRoute
   '/painel': typeof PainelIndexRoute
 }
 export interface FileRoutesById {
@@ -59,15 +51,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/painel': typeof PainelRouteRouteWithChildren
   '/obrigado': typeof ObrigadoRoute
-  '/painel/login': typeof PainelLoginRoute
   '/painel/': typeof PainelIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/painel' | '/obrigado' | '/painel/login' | '/painel/'
+  fullPaths: '/' | '/painel' | '/obrigado' | '/painel/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/obrigado' | '/painel/login' | '/painel'
-  id: '__root__' | '/' | '/painel' | '/obrigado' | '/painel/login' | '/painel/'
+  to: '/' | '/obrigado' | '/painel'
+  id: '__root__' | '/' | '/painel' | '/obrigado' | '/painel/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,23 +97,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PainelIndexRouteImport
       parentRoute: typeof PainelRouteRoute
     }
-    '/painel/login': {
-      id: '/painel/login'
-      path: '/login'
-      fullPath: '/painel/login'
-      preLoaderRoute: typeof PainelLoginRouteImport
-      parentRoute: typeof PainelRouteRoute
-    }
   }
 }
 
 interface PainelRouteRouteChildren {
-  PainelLoginRoute: typeof PainelLoginRoute
   PainelIndexRoute: typeof PainelIndexRoute
 }
 
 const PainelRouteRouteChildren: PainelRouteRouteChildren = {
-  PainelLoginRoute: PainelLoginRoute,
   PainelIndexRoute: PainelIndexRoute,
 }
 
