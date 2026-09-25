@@ -40,20 +40,11 @@ export function MarketingDashboard() {
     try {
       const dates = calculateDates(period, customRange);
       if (!dates) return;
-      
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate({ to: "/painel/login" });
-        return;
-      }
 
-      const response = await fetch(`/api/meta/dashboard?from=${dates.from}&to=${dates.to}`, {
-        headers: { "Authorization": `Bearer ${session.access_token}` }
-      });
+      const response = await fetch(`/api/meta/dashboard?from=${dates.from}&to=${dates.to}`);
 
-      if (response.status === 401) {
-        navigate({ to: "/painel/login" });
-        return;
+      if (!response.ok) {
+        throw new Error(`Erro ${response.status}`);
       }
 
       const res = await response.json();
@@ -64,7 +55,7 @@ export function MarketingDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [period, customRange, navigate]);
+  }, [period, customRange]);
 
   useEffect(() => {
     if (period !== "custom") {
