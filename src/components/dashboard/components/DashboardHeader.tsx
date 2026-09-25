@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { LogOut, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 
@@ -54,14 +53,6 @@ export function DashboardHeader({ loading, onRefresh }: { loading: boolean; onRe
           >
             <RefreshCw className={cn("h-4 w-4 md:mr-2", loading && "animate-spin")} />
             <span className="hidden md:inline">Atualizar</span>
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => supabase.auth.signOut().then(() => navigate({ to: "/painel/login" }))}
-            className="text-brand-green hover:bg-brand-cream"
-          >
-            <LogOut className="h-4 w-4" />
           </Button>
         </div>
       </div>
