@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { useNavigate } from "@tanstack/react-router";
 import { format, startOfMonth, subMonths, endOfMonth, subDays, startOfDay, endOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import type { DateRange } from "react-day-picker";
@@ -23,7 +21,6 @@ export function MarketingDashboard() {
   const [period, setPeriod] = useState("last_7_days");
   const [customRange, setCustomRange] = useState<DateRange | undefined>();
   const [platform, setPlatform] = useState<"meta" | "google">("meta");
-  const navigate = useNavigate();
   const isMobile = useIsMobile();
 
   const formatCurrency = (value: number) => {
