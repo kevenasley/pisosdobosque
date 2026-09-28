@@ -110,9 +110,13 @@ function ObrigadoPage() {
         </a>
 
         <div className="mt-8 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
-          <div className="flex items-center justify-center gap-2">
-            <Clock className="h-4 w-4" />
-            Seg–Sex 8h–18h30
+          <div className="flex items-center justify-center gap-2 text-center">
+            <Clock className="h-4 w-4 shrink-0" />
+            <span>
+              Seg–Sex 8h–12h · 13h30–18h30
+              <br />
+              Sáb 8h–12h · 13h30–17h
+            </span>
           </div>
           <div className="flex items-center justify-center gap-2">
             <MapPin className="h-4 w-4" />
