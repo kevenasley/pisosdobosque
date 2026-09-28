@@ -8,14 +8,14 @@ export function SecondaryMetrics({ leads, spend, formatCurrency }: { leads: numb
   return (
     <section className="space-y-4">
       <div className="flex items-center gap-2">
-        <h3 className="font-bold text-lg text-brand-green-teal">Outros resultados atribuídos pela Meta</h3>
+        <h3 className="font-bold text-lg text-brand-green-teal">Outros resultados registrados pela Meta</h3>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Info className="h-4 w-4 text-muted-foreground cursor-help" />
             </TooltipTrigger>
             <TooltipContent className="max-w-xs p-3">
-              <p className="text-xs">A Meta atribuiu estas conversões aos anúncios neste período. A atribuição da Meta pode ser diferente do total de contatos registrados pela empresa.</p>
+              <p className="text-xs">Outras conversões que a Meta atribuiu aos anúncios neste período. A atribuição da Meta pode ser diferente do total de contatos registrados pela empresa.</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -23,14 +23,14 @@ export function SecondaryMetrics({ leads, spend, formatCurrency }: { leads: numb
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <KPICard 
-          title="CONVERSÕES DE LEAD ATRIBUÍDAS" 
+          title="Outras conversões" 
           value={leads.toString()} 
           desc="A Meta atribuiu estas conversões aos anúncios neste período." 
         />
         <KPICard 
-          title="CUSTO POR CONVERSÃO" 
+          title="Custo por outra conversão" 
           value={formatCurrency(cpl)} 
-          desc="Investimento por lead registrado no site." 
+          desc="Investimento médio por outra conversão atribuída pela Meta." 
         />
       </div>
 
