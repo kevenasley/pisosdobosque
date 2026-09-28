@@ -154,33 +154,35 @@ export function MarketingDashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-brand-cream pb-12">
+    <div className="min-h-screen bg-brand-cream pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-12">
       <DashboardHeader loading={loading} onRefresh={fetchData} />
 
       <PlatformSelector active={platform} onChange={setPlatform} />
 
-      <main className="mx-auto max-w-7xl space-y-6 px-4 pt-6 md:space-y-8">
+      <main className="mx-auto max-w-7xl space-y-5 px-3 pt-4 sm:px-4 md:space-y-8 md:pt-6">
         {platform === "google" ? (
           <GoogleAdsEmpty />
         ) : (
           <>
             <section className="overflow-hidden rounded-2xl border border-brand-green/10 bg-white shadow-sm">
-              <div className="flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-7">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-green">
+              <div className="p-4 sm:p-5 md:flex md:items-center md:justify-between md:gap-6 md:p-7">
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-green md:text-xs">
                     Visão geral
                   </p>
-                  <h1 className="mt-1 text-2xl font-bold text-slate-900 md:text-3xl">
+                  <h1 className="mt-1 text-xl font-bold leading-tight text-slate-900 sm:text-2xl md:text-3xl">
                     Resultado dos anúncios
                   </h1>
-                  <p className="mt-2 text-sm text-slate-500">
-                    {periodText} · {selectedCampaignName}
+                  <p className="mt-1.5 text-xs leading-relaxed text-slate-500 sm:text-sm">
+                    {periodText}
+                    <span className="mx-1.5 text-slate-300">·</span>
+                    <span className="break-words">{selectedCampaignName}</span>
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="mt-3 md:mt-0 md:shrink-0">
                   <span
-                    className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold ${
+                    className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold sm:px-3 sm:py-1.5 sm:text-xs ${
                       loading
                         ? "bg-amber-50 text-amber-700"
                         : "bg-emerald-50 text-emerald-700"
@@ -196,29 +198,64 @@ export function MarketingDashboard() {
               </div>
 
               {filtered && (
-                <div className="border-t border-brand-green/10 bg-brand-green-teal px-5 py-5 text-white md:px-7">
-                  <p className="text-xs font-bold uppercase tracking-wide text-white/70">
-                    Resumo em uma frase
-                  </p>
-                  <p className="mt-1 text-lg font-semibold leading-snug md:text-xl">
-                    {filtered.conversations > 0 ? (
-                      <>
-                        Com {formatCurrency(filtered.spend)} investidos, os anúncios iniciaram{" "}
-                        <strong>{filtered.conversations.toLocaleString("pt-BR")} conversas</strong>,
-                        com custo médio de{" "}
-                        <strong>
-                          {formatCurrency(filtered.spend / filtered.conversations)}
-                        </strong>{" "}
-                        por conversa.
-                      </>
-                    ) : (
-                      <>
-                        Foram investidos {formatCurrency(filtered.spend)} neste período e a Meta não
-                        atribuiu novas conversas aos anúncios selecionados.
-                      </>
-                    )}
-                  </p>
-                </div>
+                <>
+                  <div className="grid grid-cols-2 gap-px bg-white/15 text-white md:hidden">
+                    <div className="col-span-2 bg-brand-green-teal px-4 py-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-white/65">
+                        Investimento
+                      </p>
+                      <p className="mt-1 text-2xl font-bold leading-none">
+                        {formatCurrency(filtered.spend)}
+                      </p>
+                    </div>
+
+                    <div className="bg-brand-green-teal px-4 py-3.5">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-white/65">
+                        Conversas
+                      </p>
+                      <p className="mt-1 text-xl font-bold leading-none">
+                        {filtered.conversations.toLocaleString("pt-BR")}
+                      </p>
+                    </div>
+
+                    <div className="bg-brand-green-teal px-4 py-3.5">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-white/65">
+                        Custo / conversa
+                      </p>
+                      <p className="mt-1 text-xl font-bold leading-none">
+                        {formatCurrency(
+                          filtered.conversations > 0
+                            ? filtered.spend / filtered.conversations
+                            : 0,
+                        )}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="hidden border-t border-brand-green/10 bg-brand-green-teal px-7 py-5 text-white md:block">
+                    <p className="text-xs font-bold uppercase tracking-wide text-white/70">
+                      Resumo em uma frase
+                    </p>
+                    <p className="mt-1 text-xl font-semibold leading-snug">
+                      {filtered.conversations > 0 ? (
+                        <>
+                          Com {formatCurrency(filtered.spend)} investidos, os anúncios iniciaram{" "}
+                          <strong>{filtered.conversations.toLocaleString("pt-BR")} conversas</strong>,
+                          com custo médio de{" "}
+                          <strong>
+                            {formatCurrency(filtered.spend / filtered.conversations)}
+                          </strong>{" "}
+                          por conversa.
+                        </>
+                      ) : (
+                        <>
+                          Foram investidos {formatCurrency(filtered.spend)} neste período e a Meta não
+                          atribuiu novas conversas aos anúncios selecionados.
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </>
               )}
             </section>
 
@@ -238,16 +275,16 @@ export function MarketingDashboard() {
               <>
                 <section>
                   <div className="mb-3">
-                    <h2 className="text-lg font-bold text-brand-green-teal">
+                    <h2 className="text-base font-bold text-brand-green-teal sm:text-lg">
                       Números principais
                     </h2>
-                    <p className="text-sm text-slate-500">
+                    <p className="mt-0.5 text-xs leading-relaxed text-slate-500 sm:text-sm">
                       Os três números mais importantes para acompanhar a campanha.
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6">
-                    <div className="col-span-1">
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
+                    <div>
                       <KPICard
                         title="Investimento"
                         value={formatCurrency(filtered.spend)}
@@ -257,7 +294,7 @@ export function MarketingDashboard() {
                       />
                     </div>
 
-                    <div className="col-span-1">
+                    <div>
                       <KPICard
                         title="Conversas iniciadas"
                         value={filtered.conversations.toLocaleString("pt-BR")}
@@ -268,7 +305,7 @@ export function MarketingDashboard() {
                       />
                     </div>
 
-                    <div className="col-span-2 md:col-span-1">
+                    <div className="sm:col-span-2 md:col-span-1">
                       <KPICard
                         title="Custo por conversa"
                         value={formatCurrency(
@@ -296,7 +333,7 @@ export function MarketingDashboard() {
                   formatCurrency={formatCurrency}
                 />
 
-                <p className="pb-2 text-center text-[11px] leading-relaxed text-slate-400 md:text-xs">
+                <p className="px-2 pb-2 text-center text-[10px] leading-relaxed text-slate-400 sm:text-[11px] md:text-xs">
                   Dados consultados diretamente da Meta Ads. Conversas e conversões seguem
                   a atribuição informada pela própria plataforma.
                 </p>

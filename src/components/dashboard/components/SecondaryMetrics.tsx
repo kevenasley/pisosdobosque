@@ -6,9 +6,9 @@ export function SecondaryMetrics({ leads, spend, formatCurrency }: { leads: numb
   const cpl = leads > 0 ? spend / leads : 0;
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-3 sm:space-y-4">
       <div className="flex items-center gap-2">
-        <h3 className="font-bold text-lg text-brand-green-teal">Outros resultados registrados pela Meta</h3>
+        <h3 className="text-base font-bold leading-snug text-brand-green-teal sm:text-lg">Outros resultados registrados pela Meta</h3>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -21,7 +21,7 @@ export function SecondaryMetrics({ leads, spend, formatCurrency }: { leads: numb
         </TooltipProvider>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
         <KPICard 
           title="Outras conversões" 
           value={leads.toString()} 

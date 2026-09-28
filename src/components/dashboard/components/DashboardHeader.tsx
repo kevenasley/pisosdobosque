@@ -22,7 +22,7 @@ export function DashboardHeader({ loading, onRefresh }: { loading: boolean; onRe
         scrolled ? "border-border/60 shadow-sm" : "border-transparent"
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2.5 sm:px-5 sm:py-3 md:px-8">
         <a
           href="/painel"
           onClick={(e) => {
@@ -36,7 +36,7 @@ export function DashboardHeader({ loading, onRefresh }: { loading: boolean; onRe
             alt="Pisos do Bosque"
             width={2730}
             height={655}
-            className="w-auto h-10 md:h-12"
+            className="h-8 w-auto sm:h-9 md:h-12"
             loading="eager"
             decoding="async"
             fetchPriority="high"
@@ -49,10 +49,10 @@ export function DashboardHeader({ loading, onRefresh }: { loading: boolean; onRe
             size="sm" 
             onClick={onRefresh} 
             disabled={loading}
-            className="border-brand-green text-brand-green hover:bg-brand-green hover:text-white"
+            className="h-10 w-10 rounded-xl border-brand-green p-0 text-brand-green hover:bg-brand-green hover:text-white md:h-9 md:w-auto md:px-3"
           >
-            <RefreshCw className={cn("h-4 w-4 md:mr-2", loading && "animate-spin")} />
-            <span className="hidden md:inline">Atualizar</span>
+            <RefreshCw className={cn("h-4 w-4 md:mr-2", loading && "animate-spin")} aria-hidden="true" />
+            <span className="sr-only md:not-sr-only">Atualizar</span>
           </Button>
         </div>
       </div>

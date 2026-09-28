@@ -49,12 +49,12 @@ export function KPICard({
   return (
     <Card
       className={cn(
-        "h-full border-brand-green/10 shadow-sm",
+        "h-full rounded-2xl border-brand-green/10 shadow-sm",
         variant === "green" &&
           "border-brand-green-teal/20 bg-brand-green-teal/5",
       )}
     >
-      <CardContent className="p-4 md:p-6">
+      <CardContent className="p-4 sm:p-5 md:p-6">
         <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground md:text-xs">
           {title}
         </p>
@@ -62,7 +62,7 @@ export function KPICard({
         <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
           <h3
             className={cn(
-              "text-2xl font-bold md:text-3xl",
+              "text-[1.65rem] font-bold leading-none sm:text-3xl",
               variant === "green"
                 ? "text-brand-green-teal"
                 : "text-slate-800",
@@ -90,7 +90,7 @@ export function KPICard({
           )}
         </div>
 
-        <p className="mt-2 text-xs leading-snug text-muted-foreground md:text-sm">
+        <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground sm:text-xs md:text-sm">
           {desc}
         </p>
 
