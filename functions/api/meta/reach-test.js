@@ -8,7 +8,7 @@ export async function onRequest(context) {
 
   const META_TOKEN = env.META_ACCESS_TOKEN;
   const AD_ACCOUNT_ID = env.META_AD_ACCOUNT_ID;
-  const API_VERSION = env.META_GRAPH_API_VERSION || 'v20.0';
+  const API_VERSION = /^v(?:2[1-9]|[3-9]\\d)\\.0$/.test(env.META_GRAPH_API_VERSION || '') ? env.META_GRAPH_API_VERSION : 'v26.0';
   
   const CAMPAIGN_ID = "120255229344600405";
   const DATE = "2026-08-14";
