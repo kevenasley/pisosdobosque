@@ -1,3 +1,5 @@
+import { GOOGLE_PLACE_STATS } from "./place-stats.generated";
+
 /**
  * Dados do Google Business Profile (avaliações / horários).
  *
@@ -32,22 +34,22 @@ export type PlaceStats = {
 export const PLACE_ID = "ChIJTyoE7NlzGZURHlAt9IQVcGE";
 
 export const PLACE_STATS: PlaceStats = {
-  rating: 4.9,
-  ratingFormatted: "4.9",
-  userRatingCount: 2402,
-  userRatingCountFormatted: "2.402",
+  rating: GOOGLE_PLACE_STATS.rating,
+  ratingFormatted: GOOGLE_PLACE_STATS.rating.toLocaleString("pt-BR"),
+  userRatingCount: GOOGLE_PLACE_STATS.userRatingCount,
+  userRatingCountFormatted: GOOGLE_PLACE_STATS.userRatingCount.toLocaleString("pt-BR"),
   reviews: [],
   opening: {
     openNow: null,
     statusText: "Seg–Sex 8h–18h30 · Sáb 8h–17h",
     weekdayDescriptions: [
       "domingo: Fechado",
-      "segunda-feira: 08:00 – 12:00, 13:30 – 18:30",
-      "terça-feira: 08:00 – 12:00, 13:30 – 18:30",
-      "quarta-feira: 08:00 – 12:00, 13:30 – 18:30",
-      "quinta-feira: 08:00 – 12:00, 13:30 – 18:30",
-      "sexta-feira: 08:00 – 12:00, 13:30 – 18:30",
-      "sábado: 08:00 – 12:00, 13:30 – 17:00",
+      "segunda-feira: 08:00–12:00, 13:30–18:30",
+      "terça-feira: 08:00–12:00, 13:30–18:30",
+      "quarta-feira: 08:00–12:00, 13:30–18:30",
+      "quinta-feira: 08:00–12:00, 13:30–18:30",
+      "sexta-feira: 08:00–12:00, 13:30–18:30",
+      "sábado: 08:00–12:00, 13:30–17:00",
     ],
   },
 };
