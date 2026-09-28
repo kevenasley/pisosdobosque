@@ -1,9 +1,7 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { toast } from "sonner";
-import { format, startOfMonth, subMonths, endOfMonth, subDays, startOfDay, endOfDay } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { format, startOfMonth, subMonths, endOfMonth, subDays } from "date-fns";
 import type { DateRange } from "react-day-picker";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 // Components
 import { DashboardHeader } from "./components/DashboardHeader";
@@ -21,7 +19,8 @@ export function MarketingDashboard() {
   const [period, setPeriod] = useState("last_7_days");
   const [customRange, setCustomRange] = useState<DateRange | undefined>();
   const [platform, setPlatform] = useState<"meta" | "google">("meta");
-  const isMobile = useIsMobile();
+  const requestIdRef = useRef(0);
+  const abortRef = useRef<AbortController | null>(null);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("pt-BR", {
@@ -33,39 +32,86 @@ export function MarketingDashboard() {
   };
 
   const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const dates = calculateDates(period, customRange);
-      if (!dates) return;
+    const dates = calculateDates(period, customRange);
+    if (!dates) {
+      setLoading(false);
+      return;
+    }
 
-      const response = await fetch(`/api/meta/dashboard?from=${dates.from}&to=${dates.to}`);
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const requestId = ++requestIdRef.current;
+
+    setLoading(true);
+
+    try {
+      const params = new URLSearchParams({
+        from: dates.from,
+        to: dates.to,
+        _ts: Date.now().toString(),
+      });
+
+      const response = await fetch(`/api/meta/dashboard?${params.toString()}`, {
+        cache: "no-store",
+        signal: controller.signal,
+        headers: { Accept: "application/json" },
+      });
 
       if (!response.ok) {
         throw new Error(`Erro ${response.status}`);
       }
 
+      const contentType = response.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        throw new Error("Resposta inesperada do servidor");
+      }
+
       const res = await response.json();
-      setData(res);
+      if (!res?.success) {
+        throw new Error(res?.error || "Falha ao consultar Meta Ads");
+      }
+
+      if (requestId === requestIdRef.current) {
+        setData(res);
+      }
     } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return;
       console.error("Erro ao buscar dados:", error);
       toast.error("Falha ao carregar dados do Meta Ads");
     } finally {
-      setLoading(false);
+      if (requestId === requestIdRef.current) {
+        setLoading(false);
+      }
     }
   }, [period, customRange]);
 
   useEffect(() => {
     if (period !== "custom") {
-      fetchData();
+      void fetchData();
     }
   }, [period, fetchData]);
+
+  useEffect(() => {
+    return () => abortRef.current?.abort();
+  }, []);
+
+  useEffect(() => {
+    if (
+      campaign !== "all" &&
+      data?.campaigns &&
+      !data.campaigns.some((item: any) => item.campaign_id === campaign)
+    ) {
+      setCampaign("all");
+    }
+  }, [data, campaign]);
 
   const onApplyCustom = (clear: boolean) => {
     if (clear) {
       setCustomRange(undefined);
       setPeriod("last_7_days");
     } else {
-      fetchData();
+      void fetchData();
     }
   };
 
@@ -173,21 +219,24 @@ function calculateDates(period: string, customRange?: DateRange) {
 
   switch (period) {
     case 'today':
-      return { from: format(startOfDay(from), 'yyyy-MM-dd'), to: format(endOfDay(to), 'yyyy-MM-dd') };
-    case 'yesterday':
+      return { from: format(from, 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
+    case 'yesterday': {
       const yesterday = subDays(new Date(), 1);
-      return { from: format(startOfDay(yesterday), 'yyyy-MM-dd'), to: format(endOfDay(yesterday), 'yyyy-MM-dd') };
+      const day = format(yesterday, 'yyyy-MM-dd');
+      return { from: day, to: day };
+    }
     case 'last_7_days':
-      return { from: format(subDays(from, 7), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
+      return { from: format(subDays(from, 6), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
     case 'last_14_days':
-      return { from: format(subDays(from, 14), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
+      return { from: format(subDays(from, 13), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
     case 'last_30_days':
-      return { from: format(subDays(from, 30), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
+      return { from: format(subDays(from, 29), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
     case 'this_month':
       return { from: format(startOfMonth(from), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
-    case 'last_month':
+    case 'last_month': {
       const lastMonth = subMonths(new Date(), 1);
       return { from: format(startOfMonth(lastMonth), 'yyyy-MM-dd'), to: format(endOfMonth(lastMonth), 'yyyy-MM-dd') };
+    }
     case 'custom':
       if (customRange?.from) {
         return { 
@@ -197,6 +246,6 @@ function calculateDates(period: string, customRange?: DateRange) {
       }
       return null;
     default:
-      return { from: format(subDays(from, 7), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
+      return { from: format(subDays(from, 6), 'yyyy-MM-dd'), to: format(to, 'yyyy-MM-dd') };
   }
 }
