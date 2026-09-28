@@ -4,7 +4,6 @@ import { format, startOfMonth, subMonths, endOfMonth, subDays, startOfDay, endOf
 import { ptBR } from "date-fns/locale";
 import type { DateRange } from "react-day-picker";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { supabase } from "@/integrations/supabase/client";
 
 // Components
 import { DashboardHeader } from "./components/DashboardHeader";
@@ -39,17 +38,7 @@ export function MarketingDashboard() {
       const dates = calculateDates(period, customRange);
       if (!dates) return;
 
-      const { data: sessionData } = await supabase.auth.getSession();
-      const accessToken = sessionData.session?.access_token;
-      if (!accessToken) {
-        throw new Error("Sessão expirada. Entre novamente no painel.");
-      }
-
-      const response = await fetch(`/api/meta/dashboard?from=${dates.from}&to=${dates.to}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await fetch(`/api/meta/dashboard?from=${dates.from}&to=${dates.to}`);
 
       if (!response.ok) {
         throw new Error(`Erro ${response.status}`);
