@@ -3,7 +3,7 @@ export async function onRequestGet(context) {
 
   const META_ACCESS_TOKEN = env.META_ACCESS_TOKEN;
   const META_AD_ACCOUNT_ID = env.META_AD_ACCOUNT_ID;
-  const META_GRAPH_API_VERSION = env.META_GRAPH_API_VERSION;
+  const META_GRAPH_API_VERSION = /^v(?:2[1-9]|[3-9]\\d)\\.0$/.test(env.META_GRAPH_API_VERSION || "") ? env.META_GRAPH_API_VERSION : "v26.0";
 
   // Validate configuration
   if (!META_ACCESS_TOKEN || !META_AD_ACCOUNT_ID || !META_GRAPH_API_VERSION) {

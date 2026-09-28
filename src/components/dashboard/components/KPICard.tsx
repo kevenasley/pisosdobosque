@@ -1,13 +1,104 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
 
-export function KPICard({ title, value, desc, variant = "default" }: { title: string; value: string; desc: string; variant?: "default" | "green" }) {
+type TrendPreference = "up" | "down" | "neutral";
+
+type KPICardProps = {
+  title: string;
+  value: string;
+  desc: string;
+  variant?: "default" | "green";
+  trendValue?: number | null;
+  trendPreference?: TrendPreference;
+};
+
+export function KPICard({
+  title,
+  value,
+  desc,
+  variant = "default",
+  trendValue,
+  trendPreference = "neutral",
+}: KPICardProps) {
+  const hasTrend =
+    typeof trendValue === "number" && Number.isFinite(trendValue);
+
+  const direction = hasTrend
+    ? trendValue > 0
+      ? "up"
+      : trendValue < 0
+        ? "down"
+        : "flat"
+    : "flat";
+
+  const isPositive =
+    trendPreference === "neutral"
+      ? null
+      : trendPreference === "up"
+        ? direction === "up"
+        : direction === "down";
+
+  const TrendIcon =
+    direction === "up"
+      ? ArrowUpRight
+      : direction === "down"
+        ? ArrowDownRight
+        : Minus;
+
   return (
-    <Card className={cn("shadow-sm border-brand-green/10", variant === "green" && "bg-brand-green-teal/5 border-brand-green-teal/20")}>
+    <Card
+      className={cn(
+        "h-full border-brand-green/10 shadow-sm",
+        variant === "green" &&
+          "border-brand-green-teal/20 bg-brand-green-teal/5",
+      )}
+    >
       <CardContent className="p-4 md:p-6">
-        <p className="text-[10px] md:text-xs uppercase font-bold text-muted-foreground mb-1">{title}</p>
-        <h3 className={cn("text-2xl md:text-3xl font-bold mb-1", variant === "green" ? "text-brand-green-teal" : "text-slate-800")}>{value}</h3>
-        <p className="text-xs md:text-sm text-muted-foreground leading-tight">{desc}</p>
+        <p className="mb-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground md:text-xs">
+          {title}
+        </p>
+
+        <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
+          <h3
+            className={cn(
+              "text-2xl font-bold md:text-3xl",
+              variant === "green"
+                ? "text-brand-green-teal"
+                : "text-slate-800",
+            )}
+          >
+            {value}
+          </h3>
+
+          {hasTrend && (
+            <span
+              className={cn(
+                "mb-0.5 inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-bold md:text-xs",
+                isPositive === true && "bg-emerald-50 text-emerald-700",
+                isPositive === false && "bg-rose-50 text-rose-700",
+                isPositive === null && "bg-slate-100 text-slate-600",
+              )}
+              title="Comparação com o período anterior equivalente"
+            >
+              <TrendIcon className="h-3.5 w-3.5" />
+              {Math.abs(trendValue).toLocaleString("pt-BR", {
+                maximumFractionDigits: 1,
+              })}
+              %
+            </span>
+          )}
+        </div>
+
+        <p className="mt-2 text-xs leading-snug text-muted-foreground md:text-sm">
+          {desc}
+        </p>
+
+        {hasTrend && (
+          <p className="mt-2 text-[10px] text-slate-400 md:text-xs">
+            Comparado ao período anterior
+          </p>
+        )}
       </CardContent>
     </Card>
   );
