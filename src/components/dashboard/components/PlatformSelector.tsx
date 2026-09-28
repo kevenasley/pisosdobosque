@@ -2,12 +2,12 @@ import { cn } from "@/lib/utils";
 
 export function PlatformSelector({ active, onChange }: { active: "meta" | "google"; onChange: (p: "meta" | "google") => void }) {
   return (
-    <div className="max-w-7xl mx-auto px-4 mt-6">
-      <div className="flex bg-white p-1 rounded-lg border border-brand-green/10 shadow-sm w-full overflow-hidden">
+    <div className="mx-auto mt-3 max-w-7xl px-3 sm:mt-4 sm:px-4 md:mt-6">
+      <div className="flex w-full overflow-hidden rounded-xl border border-brand-green/10 bg-white p-1 shadow-sm">
         <button
           onClick={() => onChange("meta")}
           className={cn(
-            "flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-md text-sm font-bold transition-all whitespace-nowrap",
+            "flex-1 flex items-center justify-center gap-2 rounded-lg px-2 py-2.5 text-xs font-bold transition-all whitespace-nowrap sm:py-3 sm:text-sm",
             active === "meta" ? "bg-brand-green-teal text-white" : "text-slate-600 hover:bg-slate-50"
           )}
         >
