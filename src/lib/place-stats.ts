@@ -3,8 +3,8 @@ import { GOOGLE_PLACE_STATS } from "./place-stats.generated";
 /**
  * Dados do Google Business Profile (avaliações / horários).
  *
- * Build 100% estático (Cloudflare Pages): não há servidor para chamar a
- * Places API, então usamos valores fixos revisados manualmente.
+ * Rating e quantidade de avaliações vêm de um arquivo gerado automaticamente
+ * pela Google Places API uma vez por semana via GitHub Actions.
  */
 
 export type GoogleReview = {
@@ -41,7 +41,7 @@ export const PLACE_STATS: PlaceStats = {
   reviews: [],
   opening: {
     openNow: null,
-    statusText: "Seg–Sex 8h–18h30 · Sáb 8h–17h",
+    statusText: "Seg–Sex 8h–12h e 13h30–18h30 · Sáb 8h–12h e 13h30–17h",
     weekdayDescriptions: [
       "domingo: Fechado",
       "segunda-feira: 08:00–12:00, 13:30–18:30",
