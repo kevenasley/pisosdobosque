@@ -354,6 +354,7 @@ import {
   usePlaceStats,
 } from "@/components/PlaceStatsProvider";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { PLACE_STATS } from "@/lib/place-stats";
 
 
 import heroVendedor from "@/assets/hero-vendedor.webp";
@@ -462,10 +463,10 @@ export const Route = createFileRoute("/")({
           ],
           address: {
             "@type": "PostalAddress",
-            streetAddress: "Av. Capitão Garibaldi Pinto dos Santos, 488",
+            streetAddress: "Av. Capitão Garibaldi Pinto dos Santos, 442",
             addressLocality: "Cachoeirinha",
             addressRegion: "RS",
-            postalCode: "94940-030",
+            postalCode: "94960-120",
             addressCountry: "BR",
           },
           openingHoursSpecification: [
@@ -473,19 +474,31 @@ export const Route = createFileRoute("/")({
               "@type": "OpeningHoursSpecification",
               dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
               opens: "08:00",
+              closes: "12:00",
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              opens: "13:30",
               closes: "18:30",
             },
             {
               "@type": "OpeningHoursSpecification",
               dayOfWeek: "Saturday",
               opens: "08:00",
+              closes: "12:00",
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: "Saturday",
+              opens: "13:30",
               closes: "17:00",
             },
           ],
           aggregateRating: {
             "@type": "AggregateRating",
-            ratingValue: "4.9",
-            reviewCount: "2397",
+            ratingValue: String(PLACE_STATS.rating),
+            reviewCount: String(PLACE_STATS.userRatingCount),
           },
         }),
       },
@@ -2249,7 +2262,7 @@ function About() {
               {
                 icon: MapPin,
                 label: "Localização",
-                text: "Av. Capitão Garibaldi Pinto dos Santos, 488 — Cachoeirinha/RS",
+                text: "Av. Capitão Garibaldi Pinto dos Santos, 442 — Cachoeirinha/RS",
               },
               {
                 icon: Phone,
@@ -2542,7 +2555,7 @@ function Footer() {
                   rel="noopener noreferrer"
                   className="[text-wrap:balance] transition hover:text-brand-orange"
                 >
-                  Av. Capitão Garibaldi Pinto dos Santos, 488
+                  Av. Capitão Garibaldi Pinto dos Santos, 442
                   <br />
                   Jardim do Bosque — Cachoeirinha/RS
                 </a>
@@ -2581,7 +2594,7 @@ function Footer() {
         <div className="mt-12 border-t border-white/10 pt-6">
           <div className="flex flex-col items-center justify-between gap-4 pb-20 text-xs text-white/75 md:flex-row md:pb-0">
             <p className="text-center md:text-left">
-              © 2027 Pisos do Bosque. Todos os direitos reservados.
+              © {new Date().getFullYear()} Pisos do Bosque. Todos os direitos reservados.
             </p>
             <p className="text-center text-white/70 md:text-right">
               Comercio de Pisos do Bosque LTDA - 24.933.391/0001-65
