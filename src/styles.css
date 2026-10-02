@@ -121,7 +121,7 @@
   }
 
   html {
-    /* Native fallback; primary scroll motion is rAF-based (see smooth-scroll.ts) */
+    /* Lightweight native smooth scrolling for in-page navigation. */
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     overflow-x: clip;
@@ -148,19 +148,6 @@
     color: white;
   }
 }
-
-/* Lenis smooth scroll */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
 
 @utility gradient-hero {
   background-image: var(--gradient-hero);
@@ -321,10 +308,6 @@ html.lenis body {
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Prevent browser jumping for internal anchor links while smooth scrolling */
-  :root {
-    scroll-behavior: auto !important;
-  }
 }
 
 /* Desktop-only: pointer cursor on all interactive elements (Tailwind v4 preflight
