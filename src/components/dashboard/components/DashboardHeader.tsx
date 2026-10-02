@@ -1,10 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
+import { FileDown, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 
-export function DashboardHeader({ loading, onRefresh }: { loading: boolean; onRefresh: () => void }) {
+export function DashboardHeader({
+  loading,
+  onRefresh,
+  onExport,
+  exportDisabled = false,
+}: {
+  loading: boolean;
+  onRefresh: () => void;
+  onExport: () => void;
+  exportDisabled?: boolean;
+}) {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
 
@@ -43,12 +53,25 @@ export function DashboardHeader({ loading, onRefresh }: { loading: boolean; onRe
           />
         </a>
 
-        <div className="flex items-center gap-2 md:gap-4">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => onRefresh()} 
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onExport}
+            disabled={exportDisabled || loading}
+            title="Exportar relatório em PDF"
+            className="h-10 w-10 rounded-xl border-brand-green p-0 text-brand-green hover:bg-brand-green hover:text-white md:h-9 md:w-auto md:px-3"
+          >
+            <FileDown className="h-4 w-4 md:mr-2" aria-hidden="true" />
+            <span className="sr-only md:not-sr-only">Exportar PDF</span>
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onRefresh()}
             disabled={loading}
+            title="Atualizar dados"
             className="h-10 w-10 rounded-xl border-brand-green p-0 text-brand-green hover:bg-brand-green hover:text-white md:h-9 md:w-auto md:px-3"
           >
             <RefreshCw className={cn("h-4 w-4 md:mr-2", loading && "animate-spin")} aria-hidden="true" />
