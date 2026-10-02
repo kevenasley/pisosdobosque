@@ -47,7 +47,7 @@ export function DashboardHeader({ loading, onRefresh }: { loading: boolean; onRe
           <Button 
             variant="outline" 
             size="sm" 
-            onClick={onRefresh} 
+            onClick={() => onRefresh()} 
             disabled={loading}
             className="h-10 w-10 rounded-xl border-brand-green p-0 text-brand-green hover:bg-brand-green hover:text-white md:h-9 md:w-auto md:px-3"
           >
