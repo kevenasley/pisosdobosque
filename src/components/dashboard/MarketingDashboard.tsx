@@ -11,6 +11,7 @@ import { KPICard } from "./components/KPICard";
 import { AdJourney } from "./components/AdJourney";
 import { SecondaryMetrics } from "./components/SecondaryMetrics";
 import { GoogleAdsEmpty } from "./components/GoogleAdsEmpty";
+import { exportMarketingReportPdf } from "@/lib/dashboard/export-report";
 
 export function MarketingDashboard() {
   const [loading, setLoading] = useState(true);
@@ -156,6 +157,32 @@ export function MarketingDashboard() {
       })
     : null;
 
+  const handleExportPdf = () => {
+    if (!filtered) {
+      toast.error("Ainda não há dados para exportar.");
+      return;
+    }
+
+    try {
+      exportMarketingReportPdf({
+        periodLabel: periodText,
+        campaignName: selectedCampaignName,
+        generatedAt: new Date().toISOString(),
+        spend: filtered.spend || 0,
+        conversations: filtered.conversations || 0,
+        impressions: filtered.impressions || 0,
+        linkClicks: filtered.link_clicks || 0,
+        leads: filtered.leads || 0,
+        comparison,
+      });
+    } catch (error) {
+      console.error("Erro ao exportar relatório:", error);
+      toast.error(
+        "Não foi possível abrir o relatório. Verifique se o navegador está bloqueando pop-ups.",
+      );
+    }
+  };
+
   if (loading && !data) return (
     <div className="min-h-screen bg-brand-cream flex items-center justify-center">
       <div className="text-center space-y-4">
@@ -167,7 +194,12 @@ export function MarketingDashboard() {
 
   return (
     <div className="min-h-screen bg-brand-cream pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-12">
-      <DashboardHeader loading={loading} onRefresh={fetchData} />
+      <DashboardHeader
+        loading={loading}
+        onRefresh={fetchData}
+        onExport={handleExportPdf}
+        exportDisabled={!filtered}
+      />
 
       <PlatformSelector active={platform} onChange={setPlatform} />
 
