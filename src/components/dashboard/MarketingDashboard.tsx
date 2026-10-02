@@ -31,8 +31,10 @@ export function MarketingDashboard() {
     }).format(value);
   };
 
-  const fetchData = useCallback(async () => {
-    const dates = calculateDates(period, customRange);
+  const fetchData = useCallback(async (
+    override?: { from: string; to: string } | { preset: "maximum" },
+  ) => {
+    const dates = override || calculateDates(period, customRange);
     if (!dates) {
       setLoading(false);
       return;
@@ -46,11 +48,14 @@ export function MarketingDashboard() {
     setLoading(true);
 
     try {
-      const params = new URLSearchParams({
-        from: dates.from,
-        to: dates.to,
-        _ts: Date.now().toString(),
-      });
+      const params = new URLSearchParams({ _ts: Date.now().toString() });
+
+      if ("preset" in dates) {
+        params.set("preset", dates.preset);
+      } else {
+        params.set("from", dates.from);
+        params.set("to", dates.to);
+      }
 
       const response = await fetch(`/api/meta/dashboard?${params.toString()}`, {
         cache: "no-store",
@@ -110,8 +115,12 @@ export function MarketingDashboard() {
     if (clear) {
       setCustomRange(undefined);
       setPeriod("last_7_days");
-    } else {
-      void fetchData();
+      return;
+    }
+
+    const dates = calculateDates("custom", customRange);
+    if (dates && !("preset" in dates)) {
+      void fetchData(dates);
     }
   };
 
@@ -131,9 +140,12 @@ export function MarketingDashboard() {
   const comparison =
     campaign === "all" ? data?.comparison : null;
 
-  const periodText = data?.period
-    ? formatDashboardPeriod(data.period.from, data.period.to)
-    : periodLabels[period] || "Período selecionado";
+  const periodText =
+    data?.period?.mode === "maximum" || period === "maximum"
+      ? "Tempo máximo"
+      : data?.period?.from && data?.period?.to
+        ? formatDashboardPeriod(data.period.from, data.period.to)
+        : periodLabels[period] || "Período selecionado";
 
   const generatedAtText = data?.generated_at
     ? new Date(data.generated_at).toLocaleString("pt-BR", {
@@ -354,6 +366,7 @@ const periodLabels: Record<string, string> = {
   last_30_days: "Últimos 30 dias",
   this_month: "Este mês",
   last_month: "Mês passado",
+  maximum: "Tempo máximo",
   custom: "Personalizado",
 };
 
@@ -381,6 +394,8 @@ function calculateDates(period: string, customRange?: DateRange) {
       const lastMonth = subMonths(new Date(), 1);
       return { from: format(startOfMonth(lastMonth), 'yyyy-MM-dd'), to: format(endOfMonth(lastMonth), 'yyyy-MM-dd') };
     }
+    case 'maximum':
+      return { preset: "maximum" as const };
     case 'custom':
       if (customRange?.from) {
         return { 

@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { DateRange } from "react-day-picker";
 import { SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
 
 export function CampaignFilters({
   campaign,
@@ -19,6 +20,8 @@ export function CampaignFilters({
   periodLabels,
   onApplyCustom,
 }: any) {
+  const [calendarOpen, setCalendarOpen] = useState(false);
+
   return (
     <section className="rounded-2xl border border-brand-green/10 bg-white p-3.5 shadow-sm sm:p-4">
       <div className="mb-3 flex items-center gap-2 md:hidden">
@@ -82,7 +85,7 @@ export function CampaignFilters({
 
         {period === "custom" && (
           <div className="w-full sm:col-span-2 md:w-auto">
-            <Popover>
+            <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="h-11 w-full rounded-xl md:w-auto">
                   Calendário personalizado
@@ -105,13 +108,19 @@ export function CampaignFilters({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => onApplyCustom(true)}
+                    onClick={() => {
+                      onApplyCustom(true);
+                      setCalendarOpen(false);
+                    }}
                   >
                     Limpar
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => onApplyCustom(false)}
+                    onClick={() => {
+                      onApplyCustom(false);
+                      setCalendarOpen(false);
+                    }}
                     disabled={!customRange?.from}
                   >
                     Aplicar
