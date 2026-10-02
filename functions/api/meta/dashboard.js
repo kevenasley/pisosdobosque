@@ -39,36 +39,55 @@ export async function onRequest(context) {
   }
 
   const url = new URL(request.url);
+  const preset = url.searchParams.get("preset");
+  const isMaximum = preset === "maximum";
   const from = url.searchParams.get("from");
   const to = url.searchParams.get("to");
 
-  const fromDate = parseDate(from);
-  const toDate = parseDate(to);
+  const fromDate = isMaximum ? null : parseDate(from);
+  const toDate = isMaximum ? null : parseDate(to);
 
-  if (!fromDate || !toDate) {
+  if (!isMaximum && (!fromDate || !toDate)) {
     return json({ success: false, error: "INVALID_DATE_FORMAT" }, 400);
   }
 
-  if (toDate < fromDate) {
+  if (!isMaximum && toDate < fromDate) {
     return json({ success: false, error: "INVALID_DATE_RANGE" }, 400);
   }
 
-  const diffDays =
-    Math.floor((toDate.getTime() - fromDate.getTime()) / 86400000) + 1;
+  const diffDays = isMaximum
+    ? null
+    : Math.floor((toDate.getTime() - fromDate.getTime()) / 86400000) + 1;
 
-  if (diffDays > 90) {
+  // O período personalizado pode ser longo; mantemos apenas um limite de
+  // segurança. Para todo o histórico, o frontend usa preset=maximum.
+  if (!isMaximum && diffDays > 3660) {
     return json({ success: false, error: "RANGE_TOO_LARGE" }, 400);
   }
 
-  async function fetchMetaInsights(since, until) {
+  async function fetchMetaInsights({ since, until, maximum = false }) {
     const params = new URLSearchParams({
       level: "campaign",
-      time_increment: "1",
-      time_range: JSON.stringify({ since, until }),
       fields:
         "date_start,date_stop,campaign_id,campaign_name,spend,impressions,actions",
       limit: "100",
     });
+
+    if (maximum) {
+      params.set("date_preset", "maximum");
+    } else {
+      params.set("time_range", JSON.stringify({ since, until }));
+
+      // A granularidade diária é útil em períodos curtos. Em intervalos longos
+      // agregamos por campanha para evitar milhares de linhas desnecessárias.
+      const days =
+        Math.floor(
+          (parseDate(until).getTime() - parseDate(since).getTime()) / 86400000,
+        ) + 1;
+      if (days <= 90) {
+        params.set("time_increment", "1");
+      }
+    }
 
     let allData = [];
     let nextUrl =
@@ -107,19 +126,32 @@ export async function onRequest(context) {
     return allData;
   }
 
-  const prevToDate = new Date(fromDate);
-  prevToDate.setUTCDate(prevToDate.getUTCDate() - 1);
+  let prevFrom = null;
+  let prevTo = null;
 
-  const prevFromDate = new Date(prevToDate);
-  prevFromDate.setUTCDate(prevFromDate.getUTCDate() - (diffDays - 1));
+  if (!isMaximum) {
+    const prevToDate = new Date(fromDate);
+    prevToDate.setUTCDate(prevToDate.getUTCDate() - 1);
 
-  const prevFrom = prevFromDate.toISOString().slice(0, 10);
-  const prevTo = prevToDate.toISOString().slice(0, 10);
+    const prevFromDate = new Date(prevToDate);
+    prevFromDate.setUTCDate(prevFromDate.getUTCDate() - (diffDays - 1));
+
+    prevFrom = prevFromDate.toISOString().slice(0, 10);
+    prevTo = prevToDate.toISOString().slice(0, 10);
+  }
 
   try {
+    const currentPromise = isMaximum
+      ? fetchMetaInsights({ maximum: true })
+      : fetchMetaInsights({ since: from, until: to });
+
+    const previousPromise = isMaximum
+      ? Promise.resolve([])
+      : fetchMetaInsights({ since: prevFrom, until: prevTo });
+
     const [currentRaw, previousRaw] = await Promise.all([
-      fetchMetaInsights(from, to),
-      fetchMetaInsights(prevFrom, prevTo),
+      currentPromise,
+      previousPromise,
     ]);
 
     const processData = (raw) => {
@@ -327,12 +359,35 @@ export async function onRequest(context) {
       },
     };
 
+    const maximumBounds = isMaximum
+      ? currentRaw.reduce(
+          (acc, item) => {
+            const start = item.date_start || null;
+            const stop = item.date_stop || null;
+            return {
+              from:
+                !acc.from || (start && start < acc.from) ? start : acc.from,
+              to:
+                !acc.to || (stop && stop > acc.to) ? stop : acc.to,
+            };
+          },
+          { from: null, to: null },
+        )
+      : null;
+
     return json({
       success: true,
       generated_at: new Date().toISOString(),
       meta_api_version: META_GRAPH_API_VERSION,
-      period: { from, to, days: diffDays },
-      previous_period: { from: prevFrom, to: prevTo },
+      period: isMaximum
+        ? {
+            mode: "maximum",
+            from: maximumBounds?.from,
+            to: maximumBounds?.to,
+            days: null,
+          }
+        : { mode: "range", from, to, days: diffDays },
+      previous_period: isMaximum ? null : { from: prevFrom, to: prevTo },
       totals: current.totals,
       comparison,
       daily: current.daily,
