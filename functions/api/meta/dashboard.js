@@ -27,6 +27,40 @@ function parseDate(value) {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isTransientMetaError(status, result) {
+  const code = Number(result?.error?.code);
+  return (
+    status === 408 ||
+    status === 429 ||
+    status >= 500 ||
+    [1, 2, 4, 17, 32, 613].includes(code)
+  );
+}
+
+function classifyMetaError(result) {
+  const code = Number(result?.error?.code);
+  if ([102, 190].includes(code)) return "META_AUTH_ERROR";
+  if ([10, 200].includes(code)) return "META_PERMISSION_ERROR";
+  if (code === 100) return "META_REQUEST_ERROR";
+  return "META_API_ERROR";
+}
+
+function createMetaError(result, status) {
+  const error = new Error(
+    result?.error?.message || `Meta API HTTP ${status}`,
+  );
+  error.metaCode = result?.error?.code ?? null;
+  error.metaSubcode = result?.error?.error_subcode ?? null;
+  error.metaType = result?.error?.type ?? null;
+  error.httpStatus = status;
+  error.publicCode = classifyMetaError(result);
+  return error;
+}
+
 export async function onRequest(context) {
   const { request, env } = context;
 
@@ -97,21 +131,50 @@ export async function onRequest(context) {
     const maxPages = 100;
 
     while (nextUrl && pageCount < maxPages) {
-      const response = await fetch(nextUrl, {
-        cache: "no-store",
-        headers: {
-          Authorization: `Bearer ${META_ACCESS_TOKEN}`,
-          "Cache-Control": "no-cache",
-        },
-      });
+      let result = null;
+      let response = null;
+      let lastNetworkError = null;
 
-      const result = await response.json();
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        try {
+          response = await fetch(nextUrl, {
+            cache: "no-store",
+            headers: {
+              Authorization: `Bearer ${META_ACCESS_TOKEN}`,
+              "Cache-Control": "no-cache",
+            },
+          });
 
-      if (!response.ok || result?.error) {
-        const message =
-          result?.error?.message ||
-          `Meta API HTTP ${response.status}`;
-        throw new Error(message);
+          result = await response.json();
+
+          if (response.ok && !result?.error) {
+            break;
+          }
+
+          if (!isTransientMetaError(response.status, result) || attempt === 2) {
+            throw createMetaError(result, response.status);
+          }
+        } catch (error) {
+          if (error?.publicCode) throw error;
+          lastNetworkError = error;
+          if (attempt === 2) {
+            const networkError = new Error(
+              error?.message || "Falha de rede ao consultar a Meta",
+            );
+            networkError.publicCode = "META_NETWORK_ERROR";
+            throw networkError;
+          }
+        }
+
+        await wait(400 * 2 ** attempt);
+      }
+
+      if (!response || !result) {
+        const networkError = new Error(
+          lastNetworkError?.message || "Falha de rede ao consultar a Meta",
+        );
+        networkError.publicCode = "META_NETWORK_ERROR";
+        throw networkError;
       }
 
       allData = allData.concat(Array.isArray(result.data) ? result.data : []);
@@ -395,13 +458,29 @@ export async function onRequest(context) {
     });
   } catch (error) {
     console.error("[meta-dashboard]", error);
+
+    const errorCode = error?.publicCode || "META_API_ERROR";
+    const status =
+      errorCode === "META_AUTH_ERROR"
+        ? 401
+        : errorCode === "META_PERMISSION_ERROR"
+          ? 403
+          : 502;
+
     return json(
       {
         success: false,
-        error: error?.message || "META_API_ERROR",
+        error: errorCode,
+        message: error?.message || "Falha ao consultar a Meta Ads",
+        meta_error: {
+          code: error?.metaCode ?? null,
+          subcode: error?.metaSubcode ?? null,
+          type: error?.metaType ?? null,
+        },
         meta_api_version: META_GRAPH_API_VERSION,
+        generated_at: new Date().toISOString(),
       },
-      500,
+      status,
     );
   }
 }
