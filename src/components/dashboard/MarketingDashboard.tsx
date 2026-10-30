@@ -13,15 +13,31 @@ import { SecondaryMetrics } from "./components/SecondaryMetrics";
 import { GoogleAdsEmpty } from "./components/GoogleAdsEmpty";
 import { exportMarketingReportPdf } from "@/lib/dashboard/export-report";
 
+const DASHBOARD_CACHE_KEY = "pisos-meta-dashboard-cache-v1";
+const DASHBOARD_CACHE_MAX_AGE = 14 * 24 * 60 * 60 * 1000;
+
+class DashboardFetchError extends Error {
+  code: string;
+
+  constructor(code: string, message: string) {
+    super(message);
+    this.name = "DashboardFetchError";
+    this.code = code;
+  }
+}
+
 export function MarketingDashboard() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
+  const [error, setError] = useState<DashboardFetchError | null>(null);
+  const [usingCachedData, setUsingCachedData] = useState(false);
   const [campaign, setCampaign] = useState("all");
   const [period, setPeriod] = useState("last_7_days");
   const [customRange, setCustomRange] = useState<DateRange | undefined>();
   const [platform, setPlatform] = useState<"meta" | "google">("meta");
   const requestIdRef = useRef(0);
   const abortRef = useRef<AbortController | null>(null);
+  const dataKeyRef = useRef<string | null>(null);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("pt-BR", {
@@ -41,11 +57,29 @@ export function MarketingDashboard() {
       return;
     }
 
+    const cacheKey =
+      "preset" in dates
+        ? `preset:${dates.preset}`
+        : `range:${dates.from}:${dates.to}`;
+
+    const cached = readDashboardCache(cacheKey);
+
+    if (cached && dataKeyRef.current !== cacheKey) {
+      setData(cached.data);
+      dataKeyRef.current = cacheKey;
+      setUsingCachedData(true);
+    } else if (!cached && dataKeyRef.current !== cacheKey) {
+      setData(null);
+      dataKeyRef.current = null;
+      setUsingCachedData(false);
+    }
+
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
     const requestId = ++requestIdRef.current;
 
+    setError(null);
     setLoading(true);
 
     try {
@@ -64,27 +98,65 @@ export function MarketingDashboard() {
         headers: { Accept: "application/json" },
       });
 
-      if (!response.ok) {
-        throw new Error(`Erro ${response.status}`);
-      }
-
       const contentType = response.headers.get("content-type") || "";
       if (!contentType.includes("application/json")) {
-        throw new Error("Resposta inesperada do servidor");
+        throw new DashboardFetchError(
+          "ACCESS_SESSION_EXPIRED",
+          "A sessão de acesso ao painel precisa ser renovada.",
+        );
       }
 
       const res = await response.json();
-      if (!res?.success) {
-        throw new Error(res?.error || "Falha ao consultar Meta Ads");
+
+      if (!response.ok || !res?.success) {
+        throw new DashboardFetchError(
+          res?.error || `HTTP_${response.status}`,
+          res?.message || "Falha ao consultar a Meta Ads.",
+        );
       }
 
       if (requestId === requestIdRef.current) {
         setData(res);
+        dataKeyRef.current = cacheKey;
+        setUsingCachedData(false);
+        setError(null);
+        writeDashboardCache(cacheKey, res);
       }
-    } catch (error) {
-      if (error instanceof DOMException && error.name === "AbortError") return;
-      console.error("Erro ao buscar dados:", error);
-      toast.error("Falha ao carregar dados do Meta Ads");
+    } catch (caught) {
+      if (caught instanceof DOMException && caught.name === "AbortError") return;
+
+      const dashboardError =
+        caught instanceof DashboardFetchError
+          ? caught
+          : new DashboardFetchError(
+              "NETWORK_ERROR",
+              caught instanceof Error
+                ? caught.message
+                : "Falha inesperada ao carregar os dados.",
+            );
+
+      console.error("Erro ao buscar dados:", dashboardError);
+
+      if (requestId === requestIdRef.current) {
+        const fallback = readDashboardCache(cacheKey);
+
+        if (fallback) {
+          setData(fallback.data);
+          dataKeyRef.current = cacheKey;
+          setUsingCachedData(true);
+        } else {
+          setData(null);
+          dataKeyRef.current = null;
+          setUsingCachedData(false);
+        }
+
+        setError(dashboardError);
+        toast.error(
+          fallback
+            ? "Não foi possível atualizar. Exibindo os últimos dados salvos."
+            : "Não foi possível carregar os dados da Meta Ads.",
+        );
+      }
     } finally {
       if (requestId === requestIdRef.current) {
         setLoading(false);
@@ -229,14 +301,22 @@ export function MarketingDashboard() {
                     className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold sm:px-3 sm:py-1.5 sm:text-xs ${
                       loading
                         ? "bg-amber-50 text-amber-700"
-                        : "bg-emerald-50 text-emerald-700"
+                        : error
+                          ? usingCachedData
+                            ? "bg-amber-50 text-amber-700"
+                            : "bg-rose-50 text-rose-700"
+                          : "bg-emerald-50 text-emerald-700"
                     }`}
                   >
                     {loading
                       ? "Atualizando dados..."
-                      : generatedAtText
-                        ? `Atualizado em ${generatedAtText}`
-                        : "Dados atualizados"}
+                      : error
+                        ? usingCachedData
+                          ? "Últimos dados salvos"
+                          : "Falha na atualização"
+                        : generatedAtText
+                          ? `Atualizado em ${generatedAtText}`
+                          : "Dados atualizados"}
                   </span>
                 </div>
               </div>
@@ -302,6 +382,49 @@ export function MarketingDashboard() {
                 </>
               )}
             </section>
+
+            {error && (
+              <section
+                className={`rounded-2xl border p-4 shadow-sm sm:p-5 ${
+                  usingCachedData
+                    ? "border-amber-200 bg-amber-50"
+                    : "border-rose-200 bg-rose-50"
+                }`}
+              >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p
+                      className={`text-sm font-bold ${
+                        usingCachedData ? "text-amber-900" : "text-rose-900"
+                      }`}
+                    >
+                      {usingCachedData
+                        ? "Não foi possível atualizar agora"
+                        : "Não foi possível carregar os dados"}
+                    </p>
+                    <p
+                      className={`mt-1 text-xs leading-relaxed sm:text-sm ${
+                        usingCachedData ? "text-amber-800" : "text-rose-800"
+                      }`}
+                    >
+                      {getDashboardErrorMessage(error)}
+                      {usingCachedData && generatedAtText
+                        ? ` Últimos dados válidos: ${generatedAtText}.`
+                        : ""}
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => void fetchData()}
+                    disabled={loading}
+                    className="shrink-0 rounded-xl border border-current px-3 py-2 text-xs font-bold transition-opacity hover:opacity-80 disabled:opacity-50"
+                  >
+                    Tentar novamente
+                  </button>
+                </div>
+              </section>
+            )}
 
             <CampaignFilters
               campaign={campaign}
@@ -388,6 +511,78 @@ export function MarketingDashboard() {
       </main>
     </div>
   );
+}
+
+function readDashboardCache(cacheKey: string) {
+  if (typeof window === "undefined") return null;
+
+  try {
+    const raw = window.localStorage.getItem(DASHBOARD_CACHE_KEY);
+    if (!raw) return null;
+
+    const cache = JSON.parse(raw);
+    const entry = cache?.[cacheKey];
+
+    if (
+      !entry?.data?.success ||
+      typeof entry.savedAt !== "number" ||
+      Date.now() - entry.savedAt > DASHBOARD_CACHE_MAX_AGE
+    ) {
+      return null;
+    }
+
+    return entry;
+  } catch {
+    return null;
+  }
+}
+
+function writeDashboardCache(cacheKey: string, data: any) {
+  if (typeof window === "undefined") return;
+
+  try {
+    const raw = window.localStorage.getItem(DASHBOARD_CACHE_KEY);
+    const cache = raw ? JSON.parse(raw) : {};
+
+    cache[cacheKey] = {
+      savedAt: Date.now(),
+      data,
+    };
+
+    const trimmed = Object.fromEntries(
+      Object.entries(cache)
+        .sort(
+          ([, a]: any, [, b]: any) =>
+            Number(b?.savedAt || 0) - Number(a?.savedAt || 0),
+        )
+        .slice(0, 10),
+    );
+
+    window.localStorage.setItem(
+      DASHBOARD_CACHE_KEY,
+      JSON.stringify(trimmed),
+    );
+  } catch {
+    // Cache é apenas uma camada de resiliência; falhas aqui não bloqueiam o painel.
+  }
+}
+
+function getDashboardErrorMessage(error: DashboardFetchError) {
+  switch (error.code) {
+    case "META_AUTH_ERROR":
+      return "A conexão com a Meta Ads expirou ou foi invalidada. O token de acesso precisa ser renovado na Cloudflare.";
+    case "META_PERMISSION_ERROR":
+      return "A Meta recusou a permissão para consultar esta conta de anúncios. Verifique as permissões do token.";
+    case "META_NETWORK_ERROR":
+    case "NETWORK_ERROR":
+      return "A Meta Ads ou a conexão de rede está temporariamente indisponível. O painel tentará novamente ao atualizar.";
+    case "CONFIG_MISSING":
+      return "A configuração da Meta Ads está incompleta na Cloudflare.";
+    case "ACCESS_SESSION_EXPIRED":
+      return "Sua sessão protegida do painel expirou. Recarregue a página e autentique-se novamente no Cloudflare Access.";
+    default:
+      return error.message || "Ocorreu uma falha ao consultar a Meta Ads.";
+  }
 }
 
 const periodLabels: Record<string, string> = {
