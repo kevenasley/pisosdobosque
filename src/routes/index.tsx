@@ -44,6 +44,9 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { PLACE_STATS } from "@/lib/place-stats";
 
+// Campanha sazonal: altere para false para restaurar a apresentação original.
+const BLACK_FRIDAY_ACTIVE = true;
+
 
 import heroVendedor from "@/assets/hero-vendedor.webp";
 import heroVendedorMobile from "@/assets/hero-vendedor-mobile.webp";
@@ -501,6 +504,13 @@ function Header() {
         scrolled ? "border-border/60 shadow-sm" : "border-transparent"
       }`}
     >
+      {BLACK_FRIDAY_ACTIVE && (
+        <div className="black-friday-topbar" role="status">
+          <span className="black-friday-topbar__label">BLACK FRIDAY</span>
+          <span className="black-friday-topbar__divider" aria-hidden="true">•</span>
+          <span>Consulte as condições especiais com nossa equipe</span>
+        </div>
+      )}
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
         <a
           href="#top"
@@ -629,6 +639,14 @@ function Hero() {
               </div>
             </div>
           </div>
+          {BLACK_FRIDAY_ACTIVE && (
+            <div className="mb-4 flex justify-center md:justify-start">
+              <span className="black-friday-hero-badge">
+                <span aria-hidden="true">✦</span>
+                BLACK FRIDAY 2026
+              </span>
+            </div>
+          )}
           <h1 className="font-display text-[2rem] font-bold leading-[1.1] [text-wrap:balance] md:text-[2.75rem] lg:text-[3.25rem]">
             Somos conhecidos por ter os{" "}
             <span className="font-extrabold">pisos mais baratos</span> da região!
@@ -662,7 +680,7 @@ function Hero() {
             ariaLabel="Fale conosco no WhatsApp"
             className="mx-auto mt-8 w-full max-w-xs py-4 text-base md:mx-0 md:max-w-md"
           >
-            Fale Conosco no WhatsApp
+            {BLACK_FRIDAY_ACTIVE ? "Consultar condições no WhatsApp" : "Fale Conosco no WhatsApp"}
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative flex items-center justify-center self-center">
@@ -1222,6 +1240,26 @@ function Products() {
             preços competitivos e entrega garantida no prazo.
           </p>
         </Reveal>
+
+        {BLACK_FRIDAY_ACTIVE && (
+          <div className="black-friday-products-banner">
+            <div className="black-friday-products-banner__copy">
+              <span className="black-friday-products-banner__eyebrow">BLACK FRIDAY PISOS DO BOSQUE</span>
+              <p>Está planejando sua obra ou reforma? Consulte as condições especiais com nossa equipe.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => openLeadCapture({
+                ctaOrigin: "black_friday_products_banner",
+                message: "Olá! Acessei o site durante a Black Friday e gostaria de consultar as condições especiais.",
+              })}
+              className="black-friday-products-banner__button"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+              Consultar condições
+            </button>
+          </div>
+        )}
 
         <div
           role="tablist"
@@ -2378,7 +2416,7 @@ function MobileCTABar() {
 function HomePage() {
   return (
     <PlaceStatsProvider>
-      <div className="min-h-screen bg-background font-sans">
+      <div className={`min-h-screen bg-background font-sans ${BLACK_FRIDAY_ACTIVE ? "black-friday-theme" : ""}`}>
         <a
           href="#top"
           onClick={(e) => { e.preventDefault(); smoothScrollTo("top"); }}
