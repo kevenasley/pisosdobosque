@@ -372,4 +372,178 @@
   visibility: hidden !important;
 }
 
+/* Campanha temporária Black Friday 2026.
+   Para restaurar o visual original, defina BLACK_FRIDAY_ACTIVE = false em routes/index.tsx. */
+.black-friday-topbar {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1rem;
+  background: #111111;
+  color: #f9fafb;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  text-align: center;
+}
+
+.black-friday-topbar__label {
+  color: #fb923c;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.black-friday-topbar__divider {
+  color: #fbbf24;
+}
+
+.black-friday-theme header a[aria-label="Fale conosco no WhatsApp"] {
+  border-color: #f97316 !important;
+  color: #ea580c !important;
+}
+
+.black-friday-theme header a[aria-label="Fale conosco no WhatsApp"]:hover {
+  background: #f97316 !important;
+  color: #ffffff !important;
+}
+
+.black-friday-theme #top {
+  background-image:
+    radial-gradient(circle at 82% 18%, rgba(249, 115, 22, 0.2), transparent 29%),
+    linear-gradient(135deg, #111111 0%, #202020 58%, #292524 100%) !important;
+}
+
+.black-friday-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(251, 146, 60, 0.55);
+  border-radius: 9999px;
+  background: rgba(249, 115, 22, 0.14);
+  padding: 0.45rem 0.85rem;
+  color: #fed7aa;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+.black-friday-hero-badge > span {
+  color: #fbbf24;
+  font-size: 0.95rem;
+}
+
+.black-friday-theme #top button {
+  background-color: #f97316 !important;
+  color: #ffffff !important;
+}
+
+.black-friday-theme #top button:hover {
+  background-color: #ea580c !important;
+}
+
+.black-friday-theme #top + section {
+  border-color: #333333 !important;
+  background-color: #171717 !important;
+}
+
+@media (min-width: 768px) {
+  .black-friday-theme #top + section .font-display {
+    color: #fb923c !important;
+  }
+
+  .black-friday-theme #top + section p:not(.font-display) {
+    color: #e5e7eb !important;
+  }
+}
+
+.black-friday-products-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-top: 2rem;
+  border: 1px solid rgba(249, 115, 22, 0.42);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 90% 15%, rgba(249, 115, 22, 0.18), transparent 34%),
+    linear-gradient(120deg, #171717 0%, #262626 100%);
+  padding: 1.35rem 1.5rem;
+  color: #ffffff;
+  box-shadow: 0 18px 42px -28px rgba(0, 0, 0, 0.65);
+}
+
+.black-friday-products-banner__copy {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.black-friday-products-banner__eyebrow {
+  color: #fb923c;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.black-friday-products-banner__copy p {
+  color: #f3f4f6;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.black-friday-products-banner__button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 0.6rem;
+  background: #f97316;
+  padding: 0.85rem 1.15rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(249, 115, 22, 0.22);
+}
+
+.black-friday-products-banner__button:hover {
+  background: #ea580c;
+  transform: translateY(-1px);
+}
+
+.black-friday-theme #produtos .group p.font-display {
+  color: #b45309 !important;
+}
+
+.black-friday-theme #produtos .group span.bg-brand-whatsapp {
+  background-color: #f97316 !important;
+}
+
+.black-friday-theme .fixed.inset-x-0.bottom-0 button {
+  background-color: #f97316 !important;
+}
+
+@media (max-width: 640px) {
+  .black-friday-topbar {
+    min-height: 34px;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0.5rem 0.65rem;
+    font-size: 0.65rem;
+  }
+
+  .black-friday-products-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.15rem;
+    text-align: center;
+  }
+
+  .black-friday-products-banner__button {
+    width: 100%;
+  }
+}
 
