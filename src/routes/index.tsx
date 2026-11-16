@@ -508,7 +508,8 @@ function Header() {
         <div className="black-friday-topbar" role="status">
           <span className="black-friday-topbar__label">BLACK FRIDAY</span>
           <span className="black-friday-topbar__divider" aria-hidden="true">•</span>
-          <span>Consulte as condições especiais com nossa equipe</span>
+          <span className="hidden sm:inline">Consulte as condições especiais com nossa equipe</span>
+          <span className="sm:hidden">Consulte condições especiais</span>
         </div>
       )}
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 md:px-8">
@@ -639,14 +640,6 @@ function Hero() {
               </div>
             </div>
           </div>
-          {BLACK_FRIDAY_ACTIVE && (
-            <div className="mb-4 flex justify-center md:justify-start">
-              <span className="black-friday-hero-badge">
-                <span aria-hidden="true">✦</span>
-                BLACK FRIDAY 2026
-              </span>
-            </div>
-          )}
           <h1 className="font-display text-[2rem] font-bold leading-[1.1] [text-wrap:balance] md:text-[2.75rem] lg:text-[3.25rem]">
             Somos conhecidos por ter os{" "}
             <span className="font-extrabold">
@@ -683,9 +676,9 @@ function Hero() {
           </div>
           <WhatsAppButton
             ariaLabel="Fale conosco no WhatsApp"
-            className="mx-auto mt-8 w-full max-w-xs py-4 text-base md:mx-0 md:max-w-md"
+            className="mx-auto mt-8 w-full max-w-xs whitespace-nowrap py-4 text-sm md:mx-0 md:max-w-md md:text-base"
           >
-            {BLACK_FRIDAY_ACTIVE ? "Consultar condições no WhatsApp" : "Fale Conosco no WhatsApp"}
+            {BLACK_FRIDAY_ACTIVE ? "Consultar no WhatsApp" : "Fale Conosco no WhatsApp"}
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative flex items-center justify-center self-center">

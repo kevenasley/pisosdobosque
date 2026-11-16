@@ -376,6 +376,7 @@
    Para restaurar o visual original, defina BLACK_FRIDAY_ACTIVE = false em routes/index.tsx. */
 .black-friday-topbar {
   display: flex;
+  flex-wrap: nowrap;
   min-height: 36px;
   align-items: center;
   justify-content: center;
@@ -387,6 +388,7 @@
   font-weight: 500;
   letter-spacing: 0.025em;
   text-align: center;
+  white-space: nowrap;
 }
 
 .black-friday-topbar__label {
@@ -413,26 +415,6 @@
   background-image:
     radial-gradient(circle at 82% 18%, rgba(249, 115, 22, 0.2), transparent 29%),
     linear-gradient(135deg, #111111 0%, #202020 58%, #292524 100%) !important;
-}
-
-.black-friday-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid rgba(251, 146, 60, 0.55);
-  border-radius: 9999px;
-  background: rgba(249, 115, 22, 0.14);
-  padding: 0.45rem 0.85rem;
-  color: #fed7aa;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
-}
-
-.black-friday-hero-badge > span {
-  color: #fbbf24;
-  font-size: 0.95rem;
 }
 
 .black-friday-theme #top button {
@@ -528,10 +510,10 @@
 @media (max-width: 640px) {
   .black-friday-topbar {
     min-height: 34px;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    padding: 0.5rem 0.65rem;
-    font-size: 0.65rem;
+    flex-wrap: nowrap;
+    gap: 0.3rem;
+    padding: 0.45rem 0.5rem;
+    font-size: 0.62rem;
   }
 
   .black-friday-products-banner {
