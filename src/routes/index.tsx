@@ -44,10 +44,6 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { PLACE_STATS } from "@/lib/place-stats";
 
-// Campanha sazonal: altere para false para restaurar a apresentação original.
-const BLACK_FRIDAY_ACTIVE = true;
-
-
 import heroVendedor from "@/assets/hero-vendedor.webp";
 import heroVendedorMobile from "@/assets/hero-vendedor-mobile.webp";
 import toolHammer from "@/assets/tool-hammer.webp";
@@ -68,6 +64,9 @@ import showroom5 from "@/assets/showroom-5.webp";
 import showroom6 from "@/assets/showroom-6.webp";
 import showroom7 from "@/assets/showroom-7.webp";
 import showroom8 from "@/assets/showroom-8.webp";
+
+// Campanha sazonal: altere para false para restaurar a apresentação original.
+const BLACK_FRIDAY_ACTIVE = true;
 const logoAsset = { url: "/logo-pisos-do-bosque.webp" };
 const solLouca = "/products/sol-louca.webp";
 const solPorta = "/products/sol-porta.webp";
