@@ -44,7 +44,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { PLACE_STATS } from "@/lib/place-stats";
 
-import heroBlackFriday from "@/assets/hero-black-friday-dark.webp";
+import heroBlackFriday from "@/assets/hero-black-friday";
 import heroVendedor from "@/assets/hero-vendedor.webp";
 import heroVendedorMobile from "@/assets/hero-vendedor-mobile.webp";
 import toolHammer from "@/assets/tool-hammer.webp";
@@ -641,13 +641,11 @@ function Hero() {
             </div>
           </div>
           <h1 className="font-display text-[2rem] font-bold leading-[1.1] [text-wrap:balance] md:text-[2.75rem] lg:text-[3.25rem]">
-            Somos conhecidos por ter os{" "}
-            <span className="font-extrabold">
-              pisos <span className={BLACK_FRIDAY_ACTIVE ? "text-[#fb923c]" : ""}>mais baratos!</span>
-            </span>{" "}
+            Somos conhecidos por ter os pisos{" "}
             <span className={BLACK_FRIDAY_ACTIVE ? "font-extrabold text-[#fb923c]" : "font-extrabold"}>
-              da região!
-            </span>
+              mais baratos
+            </span>{" "}
+            da região!
           </h1>
 
 
