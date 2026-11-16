@@ -417,6 +417,37 @@
     linear-gradient(135deg, #111111 0%, #202020 58%, #292524 100%) !important;
 }
 
+/* Humanized seasonal hero: rounded photo with subtle edge integration.
+   Keep these effects scoped to Black Friday so the original hero remains intact. */
+.black-friday-hero-photo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: #1c1917;
+  box-shadow:
+    0 24px 65px -27px rgba(0, 0, 0, 0.8),
+    0 0 55px -14px rgba(249, 115, 22, 0.18),
+    0 0 0 1px rgba(251, 146, 60, 0.12);
+}
+
+.black-friday-hero-photo::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(90deg, rgba(20, 20, 20, 0.24) 0%, transparent 14%, transparent 83%, rgba(25, 22, 20, 0.27) 100%),
+    linear-gradient(0deg, rgba(20, 20, 20, 0.25) 0%, transparent 16%, transparent 88%, rgba(20, 20, 20, 0.08) 100%);
+}
+
+.black-friday-hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .black-friday-theme #top button {
   background-color: #f97316 !important;
   color: #ffffff !important;
