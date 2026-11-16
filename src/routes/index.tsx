@@ -44,7 +44,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { PLACE_STATS } from "@/lib/place-stats";
 
-import heroBlackFriday from "@/assets/hero-black-friday-dai.webp";
+import heroBlackFriday from "@/assets/hero-black-friday-dai-smile.avif";
 import heroVendedor from "@/assets/hero-vendedor.webp";
 import heroVendedorMobile from "@/assets/hero-vendedor-mobile.webp";
 import toolHammer from "@/assets/tool-hammer.webp";
@@ -680,7 +680,9 @@ function Hero() {
           </WhatsAppButton>
         </Reveal>
         <Reveal delay={150} className="relative flex items-center justify-center self-center">
-          <div className="relative mx-auto w-full max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6">
+          <div className={BLACK_FRIDAY_ACTIVE
+              ? "relative mx-auto w-full max-w-[300px] sm:max-w-[340px] md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6"
+              : "relative mx-auto w-full max-w-[240px] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl 2xl:translate-x-6"}>
             {/* Soft radial glow to anchor the image */}
             <div
               aria-hidden
@@ -696,12 +698,14 @@ function Hero() {
               <img
                 src={BLACK_FRIDAY_ACTIVE ? heroBlackFriday : heroVendedor}
                 srcSet={BLACK_FRIDAY_ACTIVE ? undefined : `${heroVendedorMobile} 600w, ${heroVendedor} 900w`}
-                sizes="(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px"
+                sizes={BLACK_FRIDAY_ACTIVE
+                  ? "(max-width: 639px) 300px, (max-width: 767px) 340px, (max-width: 1023px) 448px, (max-width: 1279px) 512px, (max-width: 1535px) 576px, 640px"
+                  : "(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px"}
                 alt={BLACK_FRIDAY_ACTIVE
-                  ? "Representação da Dai, da Pisos do Bosque, segurando uma placa de porcelanato"
+                  ? "Imagem promocional ilustrativa da Dai sorrindo e segurando uma placa de porcelanato"
                   : "Vendedor da Pisos do Bosque segurando placa de porcelanato"}
-                width={BLACK_FRIDAY_ACTIVE ? 960 : 480}
-                height={BLACK_FRIDAY_ACTIVE ? 960 : 480}
+                width={BLACK_FRIDAY_ACTIVE ? 1254 : 480}
+                height={BLACK_FRIDAY_ACTIVE ? 1254 : 480}
                 fetchPriority="high"
                 loading="eager"
                 decoding="async"
