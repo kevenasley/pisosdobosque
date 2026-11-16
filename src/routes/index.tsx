@@ -2354,12 +2354,28 @@ function FloatingWhatsApp() {
 }
 
 function BackToTop() {
+  const [isDesktop, setIsDesktop] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  // Renderiza este controle somente em telas desktop.
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateViewport = () => setIsDesktop(mediaQuery.matches);
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop) return;
     const onScroll = () => setVisible(window.scrollY > 600);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isDesktop]);
+
+  if (!isDesktop) return null;
+
   return (
     <button
       type="button"
