@@ -44,7 +44,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { PLACE_STATS } from "@/lib/place-stats";
 
-import heroBlackFriday from "@/assets/hero-black-friday";
+import heroBlackFriday from "@/assets/hero-black-friday-dai.webp";
 import heroVendedor from "@/assets/hero-vendedor.webp";
 import heroVendedorMobile from "@/assets/hero-vendedor-mobile.webp";
 import toolHammer from "@/assets/tool-hammer.webp";
@@ -692,20 +692,22 @@ function Hero() {
                     : "radial-gradient(closest-side, rgba(255,255,255,0.35), transparent 70%)",
               }}
             />
-            <img
-              src={BLACK_FRIDAY_ACTIVE ? heroBlackFriday : heroVendedor}
-              srcSet={BLACK_FRIDAY_ACTIVE ? undefined : `${heroVendedorMobile} 600w, ${heroVendedor} 900w`}
-              sizes="(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px"
-              alt={BLACK_FRIDAY_ACTIVE
-                ? "Consultor segurando revestimento em composição especial de Black Friday"
-                : "Vendedor da Pisos do Bosque segurando placa de porcelanato"}
-              width={480}
-              height={480}
-              fetchPriority="high"
-              loading="eager"
-              decoding="async"
-              className="w-full drop-shadow-2xl"
-            />
+            <div className={BLACK_FRIDAY_ACTIVE ? "black-friday-hero-photo" : undefined}>
+              <img
+                src={BLACK_FRIDAY_ACTIVE ? heroBlackFriday : heroVendedor}
+                srcSet={BLACK_FRIDAY_ACTIVE ? undefined : `${heroVendedorMobile} 600w, ${heroVendedor} 900w`}
+                sizes="(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px"
+                alt={BLACK_FRIDAY_ACTIVE
+                  ? "Representação da Dai, da Pisos do Bosque, segurando uma placa de porcelanato"
+                  : "Vendedor da Pisos do Bosque segurando placa de porcelanato"}
+                width={BLACK_FRIDAY_ACTIVE ? 960 : 480}
+                height={BLACK_FRIDAY_ACTIVE ? 960 : 480}
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
+                className={BLACK_FRIDAY_ACTIVE ? "block h-auto w-full" : "w-full drop-shadow-2xl"}
+              />
+            </div>
           </div>
         </Reveal>
 
