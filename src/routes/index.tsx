@@ -44,6 +44,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { PLACE_STATS } from "@/lib/place-stats";
 
+import heroBlackFriday from "@/assets/hero-black-friday-dark.webp";
 import heroVendedor from "@/assets/hero-vendedor.webp";
 import heroVendedorMobile from "@/assets/hero-vendedor-mobile.webp";
 import toolHammer from "@/assets/tool-hammer.webp";
@@ -648,7 +649,12 @@ function Hero() {
           )}
           <h1 className="font-display text-[2rem] font-bold leading-[1.1] [text-wrap:balance] md:text-[2.75rem] lg:text-[3.25rem]">
             Somos conhecidos por ter os{" "}
-            <span className="font-extrabold">pisos mais baratos</span> da região!
+            <span className="font-extrabold">
+              pisos <span className={BLACK_FRIDAY_ACTIVE ? "text-[#fb923c]" : ""}>mais baratos!</span>
+            </span>{" "}
+            <span className={BLACK_FRIDAY_ACTIVE ? "font-extrabold text-[#fb923c]" : "font-extrabold"}>
+              da região!
+            </span>
           </h1>
 
 
@@ -690,16 +696,20 @@ function Hero() {
               className="pointer-events-none absolute inset-0 -z-10 blur-2xl"
               style={{
                 background:
-                  "radial-gradient(closest-side, rgba(255,255,255,0.35), transparent 70%)",
+                  BLACK_FRIDAY_ACTIVE
+                    ? "radial-gradient(closest-side, rgba(249,115,22,0.18), transparent 72%)"
+                    : "radial-gradient(closest-side, rgba(255,255,255,0.35), transparent 70%)",
               }}
             />
             <img
-              src={heroVendedor}
-              srcSet={`${heroVendedorMobile} 600w, ${heroVendedor} 900w`}
+              src={BLACK_FRIDAY_ACTIVE ? heroBlackFriday : heroVendedor}
+              srcSet={BLACK_FRIDAY_ACTIVE ? undefined : `${heroVendedorMobile} 600w, ${heroVendedor} 900w`}
               sizes="(max-width: 767px) 240px, (max-width: 1023px) 320px, (max-width: 1279px) 448px, (max-width: 1535px) 512px, 640px"
-              alt="Vendedor da Pisos do Bosque segurando placa de porcelanato"
-              width={900}
-              height={900}
+              alt={BLACK_FRIDAY_ACTIVE
+                ? "Consultor segurando revestimento em composição especial de Black Friday"
+                : "Vendedor da Pisos do Bosque segurando placa de porcelanato"}
+              width={480}
+              height={480}
               fetchPriority="high"
               loading="eager"
               decoding="async"
